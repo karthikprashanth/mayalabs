@@ -1,0 +1,17 @@
+<?php
+$this->jQuery()->enable();
+echo $this->headScript()->prependFile($this->baseUrl().'/js/ajaxvalidation.js');
+echo $this->adminId;
+//echo $this->form;
+$this->tabPane("GTList", $this->form, array('title' => 'GT Add'));
+echo $this->tabContainer("GTList", array());
+echo $this->message;
+?>
+<script type="text/javascript">
+    $(document).ready(function(){
+	    $("input").blur(function(){
+	        var formElementId = ($(this).parent().prev().find('label').attr('for'));
+	        doValidation($(this).attr('id'),'../gasturbine/addvalidate/');
+	   });
+	});
+</script>

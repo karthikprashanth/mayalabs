@@ -1,0 +1,62 @@
+<?php
+	
+	$this->jQuery()->enable();
+	
+	$i=0;
+	foreach($this->pdet as $list)
+	{
+		if($list['plantId'] != 1)
+		{
+			$data[$i] = $list['plantName'];
+			$i++;
+		}
+	}
+	echo "<div class='clist-search ui-corner-all' style='margin-bottom: 20px;'>";
+	echo "<span style = 'font-size:1.0em'>Plant Name : </span>" .$this->autoComplete("ac1","",array('source' => $data));
+	echo "<div style='clear:both; height:10px;'>&nbsp</div>";
+	echo "</div>";	
+	echo "<div id = 'result'></div>";
+?>
+
+<script type = "text/javascript">
+	$(document).ready(function(){
+		text = document.getElementById("ac1").value;
+		$.ajax({
+            data: "term=" + text,
+            url: "/plant/results",
+            success: function(msg){
+                if (msg != ''){
+                    $("#result").html(msg);
+                }
+            }
+        });	
+		$("#ac1").keypress(function(event){
+			if(event.which == 13)
+			{
+				text = document.getElementById("ac1").value;
+				$.ajax({
+	            data: "term=" + text,
+	            url: "/plant/results",
+	            success: function(msg){
+	                if (msg != ''){
+	                    $("#result").html(msg);
+	                }
+	            }
+	        });
+	      }
+		});
+		$(".ui-autocomplete").click(function() {
+			text = document.getElementById("ac1").value;
+	   		$.ajax({
+	            data: "term=" + text,
+	            url: "/plant/results",
+	            success: function(msg){
+	                if (msg != ''){
+	                    $("#result").html(msg);
+	                }
+	            }
+	        });
+		});	
+	});	
+	
+</script>

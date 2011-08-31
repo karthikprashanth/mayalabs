@@ -1,0 +1,171 @@
+<link href="/js/tablecloth/tablecloth.css" rel="stylesheet" type="text/css"/>
+<script type='text/javascript' src='/js/tablecloth/tablecloth.js'></script>
+<?php
+
+$corporate = "<table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
+
+            <tr>
+                <th>Name:</th>
+                <th><b>" . $this->plantData['corporateName'] . "</b></th>
+            </tr>
+
+            <tr>
+                <td>Location:</td>
+                <td>" . $this->plantData['corporateLocation'] . "</td>
+            </tr>
+
+            <tr>
+                <td>Province:</td>
+                <td>" . $this->plantData['corporateProvince'] . "</td>
+            </tr>
+
+            <tr>
+                <td>State:</td>
+                <td>" . $this->plantData['corporateState'] . "</td>
+            </tr>
+
+            <tr>
+                <td>Country:</td>
+                <td>" . $this->plantData['corporateCountry'] . "</td>
+            </tr>
+
+            <tr>
+                <td>Zip:</td>
+                <td>" . $this->plantData['corporateZip'] . "</td>
+            </tr>
+
+            <tr>
+                <td>Telephone:</td>
+                <td>" . $this->plantData['corporateTelephone'] . "</td>
+            </tr>
+
+            <tr>
+                <td>Website:</td>
+                <td>" . $this->plantData['corporateWebsite'] . "</td>
+            </tr>
+</table>";
+
+$plant = "<table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
+
+            <tr>
+                <th>Name:</th>
+                <th>" . $this->plantData['plantName'] . "</th>
+            </tr>
+
+            <tr>
+                <td>Location:</td>
+                <td>" . $this->plantData['plantLocation'] . "</td>
+            </tr>
+
+            <tr>
+                <td>State:</td>
+                <td>" . $this->plantData['plantState'] . "</td>
+            </tr>
+
+            <tr>
+                <td>Country:</td>
+                <td>" . $this->plantData['plantCountry'] . "</td>
+            </tr>
+
+            <tr>
+                <td>Zip:</td>
+                <td>" . $this->plantData['plantZip'] . "</td>
+            </tr>
+
+            <tr>
+                <td>Telephone:</td>
+                <td>" . $this->plantData['plantTelephone'] . "</td>
+            </tr>
+
+            <tr>
+                <td>Website:</td>
+                <td>" . $this->plantData['plantWebsite'] . "</td>
+            </tr>
+       </table>";
+
+$gt = "<table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
+
+            <tr>
+                <th>Number:</th>
+                <th style='min-width:50%;'>" . $this->plantData['numOfGT'] . "</th>
+            </tr>
+
+            <tr>
+                <td>Make:</td>
+                <td>" . $this->plantData['GTMake'] . "</td>
+            </tr>
+
+            <tr>
+                <td>Maximum Ambient Temperature:</td>
+                <td>" . $this->plantData['plantAmbientTempMax'] . "</td>
+            </tr>
+
+            <tr>
+                <td>Minimum Ambient Temperature:</td>
+                <td>" . $this->plantData['plantAmbientTempMin'] . "</td>
+            </tr>
+
+            <tr>
+                <td>Average Ambient Temperature:</td>
+                <td>" . $this->plantData['plantAmbientTempAvg'] . "</td>
+            </tr>
+
+            <tr>
+                <td>PLF Maximum:</td>
+                <td>" . $this->plantData['PLFMax'] . "</td>
+            </tr>
+
+            <tr>
+                <td>PLF Minimum:</td>
+                <td>" . $this->plantData['PLFMin'] . "</td>
+            </tr>
+
+
+            <tr>
+                <td>PLF Average:</td>
+                <td>" . $this->plantData['PLFAvg'] . "</td>
+            </tr>
+
+
+            <tr>
+                <td>Start Maximum:</td>
+                <td>" . $this->plantData['GTStartMax'] . "</td>
+            </tr>
+
+
+            <tr>
+                <td>Start Minimum:</td>
+                <td>" . $this->plantData['GTStartMin'] . "</td>
+            </tr>
+
+
+            <tr>
+                <td>Start Average:</td>
+                <td>" . $this->plantData['GTStartAvg'] . "</td>
+            </tr>
+
+
+            <tr>
+                <td>Trip Maximum:</td>
+                <td>" . $this->plantData['GTTripMax'] . "</td>
+            </tr>
+
+
+            <tr>
+                <td>Trip Minimum:</td>
+                <td>" . $this->plantData['GTTripMin'] . "</td>
+            </tr>
+
+
+            <tr>
+                <td>Trip Average:</td>
+                <td>" . $this->plantData['GTTripAvg'] . "</td>
+            </tr>
+       </table>";
+
+$this->tabPane("plantdata", $corporate, array('title' => 'Corporate Info'));
+$this->tabPane("plantdata", $plant, array('title' => 'Plant Info'));
+$this->tabPane("plantdata", $gt, array('title' => 'GT Info'));
+
+echo $this->tabContainer("plantdata", array());
+?>

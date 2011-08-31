@@ -1,0 +1,42 @@
+<table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>File Type</th>
+            <th>User</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php 
+        $prestype['pdf'] = "PDF File";
+		$prestype['jpeg'] = "Image File";
+		$prestype['jpg'] = "Image File";
+		$prestype['png'] = "Image File";
+		$prestype['gif'] = "Image File";
+		$prestype['doc'] = "Word Document File";
+		$prestype['docx'] = "Word Document File";
+		$prestype['xls'] = "Excel Sheet";
+		$prestype['xlsx'] = "Excel Sheet";
+		$prestype['ppt'] = "Powerpoint Presentation";
+		$prestype['pptx'] = "Powerpoint Presentation";
+        $umodel = new Model_DbTable_Userprofile();
+        foreach ($this->presentations as $presentation) : ?>
+            <tr>
+                <td><?php
+                $user = $umodel->getUser($presentation['userupdate']);
+				$uname = $user['firstName'] . " " . $user['lastName'] . " - " . $user['plantName'];
+            echo "<a href='" . $this->url(array('action' => 'view')) . "?id=" . $this->escape($presentation['presentationId']) . "'>" . $presentation['title'] . "</a><br/>";
+        ?></td>
+        	<td><?php echo $prestype[$presentation['filetype']]; ?></td>
+            <td><?php echo $uname; ?></td>
+            <td><?php echo $this->escape($presentation['timeupdate']); ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <form action="<?php echo $this->url(array('action' => 'add')); ?>" method="post">
+        <input type="hidden" name="gtid" value="<?php echo $this->escape($this->id); ?>" />
+    <input class='gt-add' type="submit" name="add" value="Add New Presentation" />
+</form>

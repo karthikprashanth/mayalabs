@@ -1,0 +1,37 @@
+<?php
+foreach($this->plist as $pvalue){
+     $list=$list."<a href='".$this->baseUrl()."/presentation/view/?id=".$this->escape(key($pvalue))."'>".current($pvalue)."</a><br/>";
+}
+
+$ssModel = $this->subSysModel;
+$ss = $ssModel->getSubSystem($this->lte['subSysId']);
+$system = $this->sysModel->getSystem($ss['sysId']);
+$dataid = $this->lte['id'];
+
+
+$editlink = "<div style='float:left;' class='gt-edit'><a href = '/lte/edit?id=$dataid' style='color: #719b3e;'>Edit</a></div>";
+
+$content = "<div class='gtdata-title'>".$this->lte['title'];
+$content = $content." <span style='color:#77B464;'>".$system['sysName'] . "/" . $ss['subSysName'] ."</span>";
+$content = $content." <span style='color:#268FBB;'>".$this->gt['GTName']."</span><br/>";
+$content = $content." <span style='color:#268FBB; font-size: 12px; font-style: normal; font-weight:bold;'>Updated On ".$this->lte['updatedate']."</span></div>";
+$content = $content."<div class='gtdata-data'>".$this->lte['data']."</div>";
+if(strcmp($list,""))
+	$list="<span style='color:#d95e1c;'>No Presentations Added</span>";
+$content = $content."<div class='gtdata-presentations'><div style='font-size: 16px; padding-bottom: 5px;'>Presentations:</div>$list</div>";
+
+$content = $content .$editlink;
+
+$content = $content . "<form action = '/reports/generate' method = 'post' style='float:right'>
+	<input type = 'hidden' name = 'type' value = 'lte'>
+	<input type = 'hidden' name = 'id' value = '".$this->lte['id']."'>
+	<input class = 'gt-report' type = 'submit' name = 'report' value = 'Generate LTEs Report'>
+</form>";
+$content = $content . "<div align='right'>
+	<form action = '/reports/configure?id=".$this->lte['id']."&type=gtdataview' method = 'post'>
+		<input class = 'gt-configure	' type = 'submit' name = 'reportgen' value = 'Configure Report'>
+	</form>
+</div>";
+$this->tabPane("LTEView",$content,array('title' => 'LTE View'));
+echo $this->tabContainer("LTEView",array());
+?>

@@ -1,0 +1,45 @@
+<script type="text/javascript" src="/js/tablesorter.js"></script>
+<link href='/css/tablesorter/style.css' rel='stylesheet' type='text/css' />
+<script type="text/javascript">
+    $(function() {
+        $( "#tables2" ).tablesorter({sortList:[[0,0],[2,1]], widgets: ['zebra']});
+    });
+</script>
+<?php
+
+if ($this->schCount == 0) {
+    echo "<center>No schedule available</center>";
+
+    if ($this->iscc) {
+        echo "<center><form method = 'post' action = '/schedule/add?id=$this->id'><input type = 'submit' value = 'Add Schedule'></form></center>";
+    }
+    exit;
+}
+
+echo "<h3>Conference held from " . $this->eventDet['first_day'] . " to " . $this->eventDet['last_day'] . "</h3>";
+$role = Zend_Registry::get('role');
+if($role == 'sa')
+{
+	echo "<a href = '/schedule/edit?id=" . $this->id . "'>Edit Schedule</a>";
+	echo "<a href = '/schedule/delete?id=" . $this->id . "'>Delete Schedule</a>";
+	echo "<a href = '/schedule/add-event-list?id=" . $this->id . "&n=1'>Add a new event</a>";
+}
+echo "<table id='tables2' class='tablesorter'>";
+echo "<thead><tr>";
+echo "<th>No.</th>";
+echo "<th>Date</th>";
+echo "<th>Timings</th>";
+echo "<th>Description</th></tr></thead><tbody>";
+$i = 1;
+
+foreach ($this->eventList as $eList) {
+    echo "<tr>";
+    echo "<td>" . $i . "</td>";
+    echo "<td>" . $eList['event_date'] . "</td>";
+    echo "<td>" . $eList['timings'] . "</td>";
+    echo "<td>" . $eList['description'] . "</td>";
+    echo "</tr>";
+    $i++;
+}
+echo "</tbody></table>";
+?>

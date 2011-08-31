@@ -1,0 +1,36 @@
+<?php
+foreach($this->plist as $pvalue){
+     $list=$list."<a href='".$this->baseUrl()."/presentation/view/?id=".$this->escape(key($pvalue))."'>".current($pvalue)."</a><br/>";
+}
+$dataid = $this->upgrade['id'];
+
+$editlink = "<div style='float:left;' class='gt-edit'><a href = '/upgrades/edit?id=$dataid' style='color: #719b3e;'>Edit</a></div>";
+
+$ssModel = $this->subSysModel;
+$ss = $ssModel->getSubSystem($this->upgrade['subSysId']);
+$system = $this->sysModel->getSystem($ss['sysId']);
+
+$content = $content . "<div class='gtdata-title'>".$this->upgrade['title'];
+$content = $content." <span style='color:#77B464;'>".$system['sysName'] . "/" . $ss['subSysName'] ."</span>";
+$content = $content." <span style='color:#268FBB;'>".$this->gt['GTName']."</span><br/>";
+$content = $content." <span style='color:#268FBB; font-size: 12px; font-style: normal; font-weight:bold;'>Updated On ".$this->upgrade['updatedate']."</span></div>";
+$content = $content."<div class='gtdata-data'>".$this->upgrade['data']."</div>";
+if($list == "")
+	$list="<span style='color:#d95e1c;'>No Presentations Added</span>";
+$content = $content."<div class='gtdata-presentations'><div style='font-size: 16px; padding-bottom: 5px;'>Presentations:</div>$list</div>";
+
+$content = $content .$editlink;
+
+$content = $content . "<form action = '/reports/generate' method = 'post' style='float:right;'>
+	<input type = 'hidden' name = 'type' value = 'upgrade'>
+	<input type = 'hidden' name = 'id' value = '".$this->upgrade['id']."'>
+	<input class='gt-report' type = 'submit' name = 'report' value = 'Generate Upgrades Report'>
+</form>";
+$content = $content . "<div align='right'>
+	<form action = '/reports/configure?id=".$this->upgrade['id']."&type=gtdataview' method = 'post'>
+		<input class='gt-configure' type = 'submit' name = 'reportgen' value = 'Configure Report'>
+	</form>
+</div>";
+$this->tabPane("upgradeView",$content,array('title' => 'Upgrade View'));
+echo $this->tabContainer("upgradeView",array());
+?>

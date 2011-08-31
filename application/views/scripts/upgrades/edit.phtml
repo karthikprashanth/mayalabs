@@ -1,0 +1,32 @@
+<?php
+echo $this->headScript()->prependFile($this->baseUrl().'/js/tiny_mce/tiny_mce.js');
+$this->jQuery()->enable();
+$this->tabPane("UpgradeEdit",$this->form . "<br>" . $this->message,array('title' => 'Upgrade Edit'));
+echo $this->tabContainer("UpgradeEdit",array());
+?>
+<script type="text/javascript" src='/js/tinyMCEinit.js'></script>
+<div id = "spinnerimage" style = "display:none">Uploading ... <img src = "/images/spinner.gif"></div>
+<script type = "text/javascript">
+	$(document).ready(function(){
+	$("#submitbutton").click(function() {
+		var file = document.getElementById("content").value;
+		if (file != "")
+		{
+			document.getElementById("spinnerimage").style.display = "block";
+		}
+	});
+    $("#sysId").change( function() {
+        $.ajax({
+            type: "POST",
+            data: "id=" + $(this).val(),
+            url: "/findings/index",
+            success: function(msg){
+                if (msg != ''){
+                    $("#subSysId").html(msg).show();
+                    
+                }
+            }
+        });
+    });
+});
+</script>

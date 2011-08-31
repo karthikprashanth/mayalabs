@@ -1,0 +1,97 @@
+
+<?php
+	$sysmodel = new Model_DbTable_Gtsystems();
+	$syslist = $sysmodel->fetchAll();
+	foreach($syslist as $list)
+	{
+		echo "<div style = 'display:none' id = 'sys" . $list['sysId'] . "'>" . $list['sysName'] . "</div>";
+	}
+	$subsysmodel = new Model_DbTable_Gtsubsystems();
+	$subsyslist = $subsysmodel->fetchAll();
+	foreach($subsyslist as $list)
+	{
+		echo "<div style = 'display:none' id = 'subsys" . $list['id'] . "'>" . $list['subSysName'] . "</div>";
+	}
+	echo "<div style = 'display:none' id = 'query'>" . $this->query . "</div>";
+?>
+<div class="hm-search ui-corner-all" style="margin-bottom: 20px;">
+    <div style="padding: 10px; font-family:arial,helvetica,verdana,sans-serif; font-size: 20px; color: #2e4e68; background: url(../images/bulb.png) left no-repeat; padding-left: 40px;">Query the <span style="color: #3f6413">hive</span> knowledge base</div>
+    <form action = "/search/index" method='get'>
+        <input type="text" id="keyword" name="keyword" class='ui-corner-left' value="<?php if(isset($this->keyword))echo $this->keyword;else echo "Type Keywords to Search..."; ?>" onfocus="if(this.value == 'Type Keywords to Search...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Type Keywords to Search...';}"/>
+        <input type="submit" value="" style='-moz-border-radius-topleft: 0px; -moz-border-radius-bottomleft: 0px; -webkit-border-bottom-left-radius: 0px; -khtml-border-top-left-radius: 0px; -khtml-border-bottom-left-radius: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;'/>
+		<div id="advancedSearch" class="hidden" style="margin-bottom: 10px;"><?php echo $this->advSearch; ?>			
+			<div id="removeAdvancedSearch" style="float:right; color: #2e4e68; padding: 5px; margin-right: 7px;" class='hidden'><a href="#" onclick="normalSearch();" style="text-decoration: none;">Hide Options</a></div>			
+		</div>		
+	</form>
+    <div id="displayAdvancedSearch" style="float:right; color: #2e4e68; padding: 5px; margin-right: 7px;"><a href="#" onclick="advancedSearch();" style="text-decoration: none;">Advanced Search</a></div>
+    <div style="clear:both;height:5px;">&nbsp;</div>
+</div>
+
+<div id = "results"></div>
+
+<script type = "text/javascript">
+		$("#searchform").submit( function() {
+			return false;
+		});
+        $(document).ready(function(){
+        	var query = document.getElementById("query").innerHTML;
+        	if(query != "")
+        	{
+        		$.ajax({
+		            data: "keyword=" + query,
+		            url: "/search/view",
+		            success: function(msg){
+		                if (msg != ''){
+		                    $("#results").html(msg);
+		                    
+		                }
+		            }
+		        });
+        	}
+			$('#keyword').keypress(function(event) {
+			  	if(event.which == 13)
+			  	{
+			  		var query = "";
+			    	var text = document.getElementById("keyword").value;
+			    	if(text != null && text != "")
+			    	{
+			    		query = text;
+			    	}
+			    	var plantname = document.getElementById("plantname").value;
+			    	
+			    	var type = document.getElementById("type").value;
+			    	
+			    	var sysid = document.getElementById("sysId").value;
+			    	var sysobj = document.getElementById("sys"+sysid);
+			    	if(sysobj != null)
+			    	{
+			    		var sysname = document.getElementById("sys"+sysid).innerHTML;	
+			    		
+			    	}
+			        var subsysid = document.getElementById("subSysId").value;
+			        var subsysobj = document.getElementById("subsys"+subsysid);
+			        if(subsysobj != null)
+			        {
+			        	var subsysname = document.getElementById("subsys"+subsysid).innerHTML;
+			        	
+			        }
+			  		window.location = "http://www.hiveusers.com/search/index?keyword=" + query + "&plantname=" + plantname
+			  		+"&type=" + type + "&sysname=" + sysname + "&subsysname=" + subsysname;
+			  	}
+			});
+			$("#sysId").change( function() {
+	        $.ajax({
+	            type: "POST",
+	            data: "id=" + $(this).val(),
+	            url: "/findings/index",
+	            success: function(msg){
+	                if (msg != ''){
+	                    $("#subSysId").html(msg).show();
+	                    
+	                }
+	            }
+	        });
+	   });
+		});
+	
+</script>

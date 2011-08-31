@@ -1,0 +1,108 @@
+<?php
+	echo "<center>" . $this->form . "</center>";
+	$sysmodel = new Model_DbTable_Gtsystems();
+	$syslist = $sysmodel->fetchAll();
+	foreach($syslist as $list)
+	{
+		echo "<div style = 'display:none' id = 'sys" . $list['sysId'] . "'>" . $list['sysName'] . "</div>";
+	}
+	$subsysmodel = new Model_DbTable_Gtsubsystems();
+	$subsyslist = $subsysmodel->fetchAll();
+	foreach($subsyslist as $list)
+	{
+		echo "<div style = 'display:none' id = 'subsys" . $list['id'] . "'>" . $list['subSysName'] . "</div>";
+	}
+	
+?>
+<center><button id = 'submitbutton'>Search</button></center>
+<div id = "results"></div>
+
+<script type = "text/javascript">
+	
+	$(document).ready(function(){
+		$("#keyword").keypress( function(event) {
+			if(event.which == 13)
+			{
+				var query = "";
+		    	var text = document.getElementById("keyword").value;
+		    	if(text != null && text != "")
+		    	{
+		    		
+		    		query = query  + " " + text;
+		    	}
+		    	$.ajax({
+		            data: "keyword=" + query,
+		            url: "/search/view",
+		            success: function(msg){
+		                if (msg != ''){
+		                    $("#results").html(msg);
+		                    
+		                }
+		            }
+		        });
+			}
+		});
+		$("#searchform").submit( function(){
+			return false;
+		});
+		$('#submitbutton').click( function() {
+			var query = "";
+	    	var text = document.getElementById("keyword").value;
+	    	if(text != null && text != "")
+	    	{
+	    		
+	    		query = query  + " " + text;
+	    	}
+	    	var plantname = document.getElementById("plantname").value;
+	    	if(plantname != null)
+	    	{
+	    		query = query + " " + plantname;
+	    	}
+	    	var type = document.getElementById("type").value;
+	    	if(type != null)
+	    	{
+	    		query = query + " " + type;
+	    		
+	    		
+	    	}
+	    	var sysid = document.getElementById("sysId").value;
+	    	var sysobj = document.getElementById("sys"+sysid);
+	    	if(sysobj != null)
+	    	{
+	    		var sysname = document.getElementById("sys"+sysid).innerHTML;	
+	    		query = query + " " + sysname;
+	    	}
+	        var subsysid = document.getElementById("subSysId").value;
+	        var subsysobj = document.getElementById("subsys"+subsysid);
+	        if(subsysobj != null)
+	        {
+	        	var subsysname = document.getElementById("subsys"+subsysid).innerHTML;
+	        	query = query + " " + subsysname;
+	        }
+	        $.ajax({
+	            data: "keyword=" + query,
+	            url: "/search/view",
+	            success: function(msg){
+	                if (msg != ''){
+	                    $("#results").html(msg);
+	                    
+	                }
+	            }
+	        });
+	        
+		});
+	    $("#sysId").change( function() {
+	        $.ajax({
+	            type: "POST",
+	            data: "id=" + $(this).val(),
+	            url: "/findings/index",
+	            success: function(msg){
+	                if (msg != ''){
+	                    $("#subSysId").html(msg).show();
+	                    
+	                }
+	            }
+	        });
+	    });
+	});	
+</script>

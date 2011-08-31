@@ -1,0 +1,55 @@
+<ul id="sidemenu" class="sidemenu">
+    <li class = "ui-corner-top sidemenu-head">
+        <?php echo $this->name; ?>
+    </li>    
+    <li class="sidemenu-profile" onmouseover="glow(this,'e5f1fa')" onmouseout="unglow(this)">
+        <a href="<?php echo $this->baseUrl(); ?>/userprofile/index">        
+        <img src="<?php echo $this->baseUrl(); ?>/images/<?php echo $this->role; ?>.png" alt="User Role"/>
+        <span>Edit Profile</span>
+        </a>
+    </li>    
+    <li class="sidemenu-item-gt sidemenu-item" onmouseover="glow(this,'e5f1fa')" onmouseout="unglow(this)">
+        <a href="<?php echo $this->baseUrl(); ?>/plant/view?id=<?php echo $this->pid; ?>"><?php echo $this->pname; ?></a>
+		<span><p>
+		<?php			
+			foreach($this->gt as $gt){
+				$id = $gt['GTId'];
+				$name = $gt['GTName'];
+				echo "<a href= '/gasturbine/view?id=$id' style='margin:0; padding:0; font-size:11px; font-weight:normal;'>$name</a>";
+				echo " <a href='/gasturbine/view?id=$id#ui-tabs-2' style='margin:0; padding:0; font-size:11px; color:#77b464;'>F</a>";
+				echo " <a href='/gasturbine/view?id=$id#ui-tabs-3' style='margin:0; padding:0; font-size:11px; color:#268fbb;'>U</a>";
+				echo " <a href='/gasturbine/view?id=$id#ui-tabs-4' style='margin:0; padding:0; font-size:11px; color:#e5a440;'>L</a><br/>";
+			}
+		?>
+        </p></span>
+    </li>
+    <li class="sidemenu-item-forum sidemenu-item" onmouseover="glow(this,'e5f1fa')" onmouseout="unglow(this)">
+        <a href="/forums">
+        <span>Forums
+        <p>Forums for discussion on anything.</p></span>
+        </a>
+    </li>
+    <li class="sidemenu-item-company sidemenu-item" onmouseover="glow(this,'e5f1fa')" onmouseout="unglow(this)">
+        <a href="/plant/clist">
+            <span>Company Listing
+            <p>List of all the companies in our archive.</p></span>
+        </a>
+    </li>
+    <li class="sidemenu-item-conference sidemenu-item" onmouseover="glow(this,'e5f1fa')" onmouseout="unglow(this)">
+        <a href="/conference/index">
+        <span>Conference
+        <p>Details on the conferences.</p></span></a>
+    </li>
+    <li class="sidemenu-item-bookmarks sidemenu-item" onmouseover="glow(this,'e5f1fa')" onmouseout="unglow(this)">
+        <a href="/bookmark/longlist">
+            <span>Bookmarks
+            <p>Your bookmarked pages across the site.</p></span>
+        </a>
+    </li>
+    <li class="sidemenu-item-hivematrix sidemenu-item" onmouseover="glow(this,'e5f1fa')" onmouseout="unglow(this)">
+        <a href="/search/searchmatrix">
+            <span>Hive Matrix
+            <p>Search the extensive hive database.</p></span>
+        </a>
+    </li>
+</ul>

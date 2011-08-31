@@ -1,0 +1,8 @@
+<?php if(Zend_Registry::get('role') == 'sa') : ?>
+	<form action = "/search/searchindex">
+		<input type = "submit" value = "Index Search Engine">
+	</form><br>
+	<form action = "/administration/mailnotify">
+		<input type = "submit" value = "Fortnight Mail">
+	</form>
+<?php endif; ?>

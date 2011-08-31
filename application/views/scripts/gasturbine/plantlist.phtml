@@ -1,0 +1,26 @@
+<?php
+if (count($this->GTData) == 0) {$list =  "<center>No gasturbines added</center>";}
+$list = $list . "<table>";
+foreach ($this->GTData as $gasturbines) {
+    $list = $list . "<tr>";
+    $list = $list . "<td><a href='/gasturbine/view?id=" . $this->escape($gasturbines['GTId']) . "'>" . $gasturbines['GTName'] . "</a></td>";
+    $valid = false;
+    foreach($this->gt as $temp)
+    {
+    	if((int)$temp['GTId'] == (int)$gasturbines['GTId'])
+    	{
+    		$valid = true;
+    	}
+    }
+    if($valid){
+	    $list = $list . "<td><a href='" . $this->url(array('action' => 'edit')) . "?id=" . $this->escape($gasturbines['GTId']) . "'>Edit</a></td>";
+	    $list = $list . "</tr>";
+	}
+}
+$list = $list . "</table>";
+$this->tabPane("GTList", $list, array('title' => 'GT List'));
+echo $this->tabContainer("GTList", array());
+if(count($this->GTData) != 0){
+	echo "<div style='padding:20px;'>".$this->paginationControl($this->GTData,'Sliding','pagination.phtml')."</div>";
+}
+?>

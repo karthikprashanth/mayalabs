@@ -1,0 +1,74 @@
+<!--<script type="text/javascript" src="../js/tablesorter.js"></script>
+<link href='../css/tablesorter/style.css' rel='stylesheet' type='text/css' />
+<script type="text/javascript">
+$(document).ready(function() { 
+    $("#tables").tablesorter({headers: { 3: { sorter: false }, 4: { sorter: false }, 5: { sorter: false }, 6: { sorter: false }},sortList:[[0,0],[2,1],[4,0],[6,0]], widgets: ['zebra']}); 
+});
+</script>-->
+
+<script type="text/javascript" src="/js/tablecloth/tablecloth.js"></script>
+<link href='/js/tablecloth/tablecloth.css' rel='stylesheet' type='text/css' />
+
+<table cellspacing="0" cellpadding="0" onmouseover="tablecloth();">
+<thead>
+<tr>
+<th style="width: 30px;">Username</th>
+<th>Name</th>
+<th>Role</th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<?php foreach($this->users as $user) : ?>
+
+<tr>
+<td><?php echo $this->escape($user['username']);?></td>
+<td><?php echo $this->escape($user['firstName']).', '.$this->escape($user['lastName']); ?></td>
+<td><?php echo $this->escape($user['role']);?></td>
+<td>
+
+<form action="<?php echo $this->url(array('action'=>'deleteacc')); ?>" method="post">
+<input type="hidden" name="id" value="<?php echo $this->escape($user['id']);?>" />
+<?php if($user['role'] == 'sa') : ?>
+<input type="submit" name="del" value="Delete"	/>
+<?php else: ?>
+<input type="submit"  name="del" value="Delete" />
+<?php endif; ?>
+</form>
+
+</td>
+<td>
+<form action="<?php echo $this->url(array('action'=>'resetpassword')); ?>" method="post">
+<input type="hidden" name="id" value="<?php echo $this->escape($user['id']);?>" />
+<input type="submit" name="resetpass" value="Reset Password" />
+</form>
+</td>
+<td>
+<form action="<?php echo $this->url(array('action'=>'transform')); ?>" method="post">
+<input type="hidden" name="id" value="<?php echo $this->escape($user['id']);?>" />
+<input type="submit" name="transform" value="Transform" />
+</form>
+</td>
+
+<?php
+	if($this->validcc==0){
+		
+		echo "<td><form action = '/hive/public/administration/setcc?id=".$user['id']."' method='post'>";
+		echo "<input type='submit' name='setcc' value = 'Set Conference Chairman'>";
+		echo "</form></td>";
+	}
+	else{
+		if($this->validcc==$user['id']){
+			echo "<td><form action = '/hive/public/administration/unsetcc?id=".$user['id']."' method='post'>";
+			echo "<input type='submit' name='setcc' value = 'Unset Conference Chairman'>";
+			echo "</form></td>";
+		}
+	}
+			
+?>
+</tr>
+<?php endforeach; ?>
+</tbody>
+</table>

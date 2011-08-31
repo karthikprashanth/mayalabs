@@ -1,0 +1,36 @@
+<?php
+echo $this->headScript()->prependFile($this->baseUrl().'/js/tiny_mce/tiny_mce.js');
+//echo $this->form;
+$this->spinner = "<div id = 'spinnerimage' style = 'display:none'>Uploading ... <img src = '/images/spinner.gif'></div>";
+$this->tabcontent = $this->form . "<br>" . $this->message . "<br>" . $this->spinner;
+$this->tabPane("upgradeAdd",$this->tabcontent,array('title' => 'Upgrade Add'));
+echo $this->tabContainer("upgradeAdd",array());
+
+?>
+
+<!-- TinyMCE --><script type="text/javascript" src='/js/tinyMCEinit.js'></script><!-- /TinyMCE -->
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#submitbutton").click(function() {
+		var file = document.getElementById("content").value;
+		if (file != "")
+		{
+			document.getElementById("spinnerimage").style.display = "block";
+		}
+	});
+    $("#sysId").change( function() {
+        $.ajax({
+            type: "POST",
+            data: "id=" + $(this).val(),
+            url: "/findings/index",
+            success: function(msg){
+                if (msg != ''){
+                    $("#subSysId").html(msg).show();
+                    
+                }
+            }
+        });
+    });
+});
+</script>

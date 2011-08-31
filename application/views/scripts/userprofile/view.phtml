@@ -1,0 +1,41 @@
+<link href="/js/tablecloth/tablecloth.css" rel="stylesheet" type="text/css"/>
+<script type='text/javascript' src='/js/tablecloth/tablecloth.js'></script>
+<?php
+$data="<table  cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
+    
+    <tr>
+        <td>Name</td>
+        <td><b>".$this->profileData['firstName']." ".$this->profileData['lastName']."</b></td>
+    </tr>
+    
+	<tr>
+        <td>Plant</td>
+        <td>".$this->uPlantName."</td>
+    </tr>
+    
+    <tr>
+        <td>Designation</td>
+        <td>".$this->profileData['designation']."</td>
+    </tr>
+
+    <tr>
+        <td>Phone</td>
+        <td>".$this->profileData['phone']."</td>
+    </tr>
+
+    <tr>
+        <td>Mobile</td>
+        <td>".$this->profileData['mobile']."</td>
+    </tr>
+
+    <tr>
+        <td>E-Mail</td>
+        <td>".$this->profileData['email']."</td>
+    </tr>
+    
+</table>";
+
+
+$this->tabPane("userdata",$data,array('title' => 'User Info'));
+echo $this->tabContainer("userdata",array()); 
+?>

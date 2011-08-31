@@ -1,0 +1,101 @@
+<?php echo $this->doctype(); ?>
+<html>
+    <head>
+        <?php $this->jQuery()->enable(); ?>
+        <?php echo $this->headTitle(); ?>
+        <?php echo $this->headMeta(); ?>
+
+        <link href="/images/logo_icon.png" rel="Shortcut Icon" type="image/ico" />
+
+        <?php echo $this->headLink()->prependStylesheet($this->baseUrl() . '/css/style.css'); ?>
+        <?php echo $this->headLink()->prependStylesheet($this->baseUrl() . '/css/ddsmoothmenu.css'); ?>
+        <?php
+        if ($this->jQuery()->isEnabled()) {
+            $this->jQuery()->setLocalPath($this->baseUrl() . '/js/jquery/js/jquery-1.5.1.min.js')
+                    ->setUiLocalPath($this->baseUrl() . '/js/jquery/js/jquery-ui-1.8.14.custom.min.js')
+                    ->addStylesheet($this->baseUrl() . '/js/jquery/css/jquery-ui-1.8.14.custom.css');
+            echo $this->jQuery();
+            echo $this->headScript()->prependFile($this->baseUrl() . '/js/ddsmoothmenu.js');
+            echo $this->headScript()->prependFile($this->baseUrl() . '/js/customScripts.js');
+        }
+        ?>
+        <script type="text/javascript">            
+            window.onload=function(){
+                $('.active a').css('background-color','#83ac52');
+                $('.active ul li a').css('background-color','#2e4e68');
+                $('.active a').addClass('ui-corner-top');
+                $('.active ul li a').removeClass('ui-corner-top');
+            };
+        </script>
+    </head>
+
+    <body>
+        <div id="header-bg">
+            <div id="header">
+                <div id="header-logo">
+                    <a href="<?php echo $this->baseUrl() . "/dashboard/index" ?>"><img src="<?php echo $this->baseUrl(); ?>/images/logo_small_new.png"/></a>
+                </div>
+
+                <div id="header-menu">                    
+                    <div id="smoothmenu1" class="ddsmoothmenu" >
+                        <?php
+                        $role = Zend_Registry::get('role');
+                        $navContainer = Zend_Registry::get('navcontainer');
+                        $uid = Zend_Auth::getInstance()->getStorage()->read()->id;
+                        $umodel = new Model_DbTable_Userprofile();
+                        $user = $umodel->getUser($uid);
+                        if ($role != 'sa') {
+                            $pid = $user['plantId'];
+                            $navContainer->findOneBy('codename', 'userplantview')->setParams(array('id' => $pid));
+							$navContainer->findOneBy('codename', 'userplantedit')->setParams(array('id' => $pid));
+                        }
+                        echo $this->navigation()->menu()->renderMenu();
+                        ?>
+                    </div>
+                </div>
+                <div id="search-box-menu" class="search-box">
+                    <img src="<?php echo $this->baseUrl(); ?>/images/search-form-left.png" alt="search"/>
+                    <form method="get" action="/search/index">
+                        <input type="text" size="15" class="search-field" name="keyword" value="Search.." onfocus="if(this.value == 'Search..') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search..';}"/>
+                        <input type="submit"  value="" class="search-go" style="border:0; margin:0; padding:0; -moz-border-radius: 0; -webkit-border-radius: 0; -khtml-border-radius: 0; -border-radius: 0;  background-color: #2e4e68;"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="container">
+            <div id="main">
+                <div id="sidebar1">
+                    <?php echo $this->layout()->sidebar1; ?>
+                    </div>
+                <div id="content-container">
+                        <div id="sidebar2">
+						<?php 
+							if(!Zend_Registry::isRegistered('sidebar2')) {
+                        ?>
+							<div id="advert"><?php echo $this->layout()->advert; ?></div>
+                            <div id="bookmark"><?php echo $this->layout()->bookmark; ?></div>
+						<?php } ?>
+                        </div>
+                        <div id="breadcrumbs">
+                        <?php
+                            $breadcontainer = Zend_Registry::get('breadcontainer');
+                            echo $this->navigation($breadcontainer)
+                                        ->breadcrumbs()
+                                        ->setLinkLast(true)
+                                        ->setMinDepth(1)
+                                        ->render();
+                        ?>
+						</div>						
+                        <p><?php echo $this->layout()->content;  ?></p>
+                        <p><?php echo $this->layout()->notifications; ?></p>
+                </div>
+            </div>
+        </div>
+        <div style='clear:both;'>&nbsp;</div>
+        <div id="footer">
+			Copyright 2010
+        </div>
+
+    </body>
+</html>

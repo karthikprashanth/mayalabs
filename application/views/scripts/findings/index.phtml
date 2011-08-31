@@ -1,0 +1,8 @@
+<?php
+	echo "<option value = ''>Select an Option</option>";
+	foreach($this->sslist as $list)
+	{
+		echo "<option value = '".$list['id']."'>".$list['subSysName']."</option>";
+		
+	}
+?>

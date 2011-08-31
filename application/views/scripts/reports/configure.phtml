@@ -1,0 +1,93 @@
+<?php
+	echo $this->form;
+?>
+
+
+<div id = "findingcheck" onclick = 'findings()'>Uncheck All Findings</div>
+<div id = "upgradecheck" onclick = 'upgrades()'>Uncheck All Upgrades</div>
+<div id = "ltecheck" onclick = 'ltes()'>Uncheck All LTEs</div>
+
+<script type = 'text/javascript'>
+	var f = document.getElementsByName("findings[]");
+	var u = document.getElementsByName("upgrades[]");
+	var l = document.getElementsByName("ltes[]");
+	if(f.length == 0)
+	{
+		document.getElementById("findingcheck").style.display = "none";
+	}
+	if(u.length == 0)
+	{
+		document.getElementById("upgradecheck").style.display = "none";
+	}
+	if(l.length == 0)
+	{
+		document.getElementById("ltecheck").style.display = "none";
+	}
+	function findings()
+	{
+		var f = document.getElementsByName("findings[]");
+		var i = 0;
+		if(document.getElementById('findingcheck').innerHTML == "Uncheck All Findings") {
+			
+			document.getElementById('findingcheck').innerHTML = "Check All Findings";
+			for(i=0;i<f.length;i++)
+			{
+				f[i].checked = false;
+			}
+		}
+		else {
+			document.getElementById('findingcheck').innerHTML = "Uncheck All Findings";
+			for(i=0;i<f.length;i++)
+			{
+				f[i].checked = true;
+			}
+			
+		}
+			
+	}
+	
+	function upgrades()
+	{
+		var u = document.getElementsByName("upgrades[]");
+		var i = 0;
+		if(document.getElementById('upgradecheck').innerHTML == "Uncheck All Upgrades") {
+			
+			document.getElementById('upgradecheck').innerHTML = "Check All Upgrades";
+			for(i=0;i<u.length;i++)
+			{
+				u[i].checked = false;
+			}
+		}
+		else {
+			document.getElementById('upgradecheck').innerHTML = "Uncheck All Upgrades";
+			for(i=0;i<u.length;i++)
+			{
+				u[i].checked = true;
+			}
+			
+		}
+	}
+	
+	function ltes()
+	{
+		var l = document.getElementsByName("ltes[]");
+		var i = 0;
+		if(document.getElementById('ltecheck').innerHTML == "Uncheck All LTEs") {
+			
+			document.getElementById('ltecheck').innerHTML = "Check All LTEs";
+			for(i=0;i<l.length;i++)
+			{
+				l[i].checked = false;
+			}
+		}
+		else {
+			document.getElementById('ltecheck').innerHTML = "Uncheck All LTEs";
+			for(i=0;i<l.length;i++)
+			{
+				l[i].checked = true;
+			}
+			
+		}
+	}
+	
+</script>
