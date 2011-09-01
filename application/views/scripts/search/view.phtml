@@ -9,19 +9,27 @@
         $umodel = new Model_DbTable_Userprofile();
 		$i=1;
         ?>
-
-        <?php foreach ($this->searchData as $data) : ?>
+		
+        <?php
+        $gtmodel = new Model_DbTable_Gasturbine();
+		$pmodel = new Model_DbTable_Plant();
+		$sysmodel = new Model_DbTable_Gtsystems();
+		$subsysmodel = new Model_DbTable_Gtsubsystems();
+		$umodel = new Model_DbTable_Userprofile();
+        foreach ($this->searchData as $data) : ?>
         <?php
         	//$data['data'] = strip_tags($data['data'],'<b>');
+            
+            
             $gt = $gtmodel->getGT($data['gtid']);
             $plant = $pmodel->getPlant($gt['plantId']);
-            $sys = $sysmodel->getSystem($data['sysId']);
-            $subsys = $subsysmodel->getSubSystem($data['subSysId']);
+			
             $user = $umodel->getUser($data['userupdate']);
 			$uplant = $pmodel->getPlant($user['plantId']);
             $username = $user['firstName'] . "  " . $user['lastName'];
 			$uplantname = $uplant['plantName'];
-			$pos = strpos($data['data'],$this->queryStr); 
+			$pos = strpos($data['data'],$this->queryStr);
+			
 			if($pos)
 			{
 				if(($pos-200) < 0)
@@ -58,7 +66,7 @@
         	
 	    <div class = 'tendivgt search-result' id = 'tengroup<?php echo $i; ?>' onmouseover="glow(this,'f0f7ec'); this.style.borderLeft='solid 2px #2e4e68';" onmouseout="unglow(this); this.style.borderLeft='none';">
 	    
-	    <div class='search-result-title'><?php echo "<a href = '" . $data['url'] . "'>" . $data['title']; ?><i>(<?php echo ucfirst($data['type']); ?>)</i></a></div>
+	    <div class='search-result-title'><?php echo "<a href = '" . $this->baseUrl() . $data['url'] . "'>" . $data['title']; ?><i>(<?php echo ucfirst($data['type']); ?>)</i></a></div>
 	    <b><div class='search-result-details'><span class='search-result-ss'><?php echo $data['sysname'] . " / " . $data['subsysname']; ?>   </span>
 	    <span class='search-result-gt'><?php echo $gt['GTName']; ?></span>
 		<span class='search-result-plant'><?php echo $plant['plantName']; ?></span></div></b>

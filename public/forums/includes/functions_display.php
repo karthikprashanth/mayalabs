@@ -309,7 +309,6 @@ function display_forums($root_data = '', $display_moderators = true, $return_mod
 				'S_IS_CAT'				=> true,
 				'FORUM_ID'				=> $row['forum_id'],
 				'FORUM_NAME'			=> $row['forum_name'],
-				'PLANTNAME' 			=> "Hive Team",
 				'FORUM_DESC'			=> generate_text_for_display($row['forum_desc'], $row['forum_desc_uid'], $row['forum_desc_bitfield'], $row['forum_desc_options']),
 				'FORUM_FOLDER_IMG'		=> '',
 				'FORUM_FOLDER_IMG_SRC'	=> '',

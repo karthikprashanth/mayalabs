@@ -3713,7 +3713,7 @@ function msg_handler($errno, $msg_text, $errfile, $errline)
 				{
 					add_log('critical', 'LOG_IMAGE_GENERATION_ERROR', $errfile, $errline, $msg_text);
 				}
-				// echo '<br /><br />BACKTRACE<br />' . get_backtrace() . '<br />' . "\n";
+				echo '<br /><br />BACKTRACE<br />' . get_backtrace() . '<br />' . "\n";
 			}
 
 			return;
@@ -4399,7 +4399,7 @@ function page_header($page_title = '', $display_online_list = true, $item_id = 0
 	// Fetch the plantid of the user
 	$sql = "SELECT * FROM userprofile WHERE id = " . $user->data['user_id'];
 	$result = $db->sql_query($sql);
-	$re = $db->sql_fetchrow(($result);
+	$re = $db->sql_fetchrow(($result));
 	$uplantid = $re['plantId'];
 	$db->sql_freeresult($result);
 		

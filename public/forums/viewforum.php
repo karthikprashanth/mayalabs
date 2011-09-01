@@ -629,16 +629,14 @@ if (sizeof($topic_list))
 		$u_mcp_queue = ($topic_unapproved || $posts_unapproved) ? append_sid("{$phpbb_root_path}mcp.$phpEx", 'i=queue&amp;mode=' . (($topic_unapproved) ? 'approve_details' : 'unapproved_posts') . "&amp;t=$topic_id", true, $user->session_id) : '';
 		
 		
-		$con = mysql_connect('hiveuserscom.ipagemysql.com', 'hiveusers', 'swordfish');
-		mysql_select_db('hive');
 		$sql = "SELECT * FROM forum_users WHERE user_id = " . $row['topic_poster'];
-		$hresult = mysql_query($sql);
-		$r = mysql_fetch_array($hresult);
+		$hresult = $db->sql_query($sql);
+		$r = $db->sql_fetchrow($hresult);
 		$plantname = $r['user_plantname'];
 		$fullname = $r['user_fullname'];
 		$sql = "SELECT * FROM forum_users WHERE user_id = " . $row['topic_last_poster_id'];
-		$hresult = mysql_query($sql);
-		$r = mysql_fetch_array($hresult);
+		$hresult = $db->sql_query($sql);
+		$r = $db->sql_fetchrow($hresult);
 		$lfullname = $r['user_fullname'];
 		// Send vars to template
 		$template->assign_block_vars('topicrow', array(

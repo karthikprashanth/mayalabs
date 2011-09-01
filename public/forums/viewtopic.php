@@ -1492,11 +1492,10 @@ for ($i = 0, $end = sizeof($post_list); $i < $end; ++$i)
 		!$row['post_edit_locked']
 	)));
 	
-	$con = mysql_connect('hiveuserscom.ipagemysql.com', 'hiveusers', 'swordfish');
-	mysql_select_db('hive');
+	
 	$sql = "SELECT * FROM forum_users WHERE user_id = " . $row['user_id'];
-	$hresult = mysql_query($sql);
-	$r = mysql_fetch_array($hresult);
+	$hresult = $db->sql_query($sql);
+	$r = $db->sql_fetchrow($hresult);
 	$plantname = $r['user_plantname'];
 	$fullname = $r['user_fullname'];
 	
