@@ -1736,31 +1736,30 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
         $db->sql_query($sql);
 
         //send mail
-        $con = mysql_connect('hiveuserscom.ipagemysql.com', 'hiveusers', 'swordfish');
-        mysql_select_db('hive');
+        
         $sql = "SELECT * FROM forum_topics where topic_id = " . $catId;
-        $hresult = mysql_query($sql);
+        $hresult = $db->sql_query($sql);
 
-        $topicResult = mysql_fetch_array($hresult);
+        $topicResult = $db->sql_fetchrow($hresult);
         $topicName = $topicResult['topic_title'];
 
         $forumId = $topicResult['forum_id'];
         $uid = $topicResult['topic_poster'];
         $sql = "SELECT * FROM userprofile where id = " . $user->data['user_id'];
-        $hresult = mysql_query($sql);
-        $userData = mysql_fetch_array($hresult);
+        $hresult = $db->sql_query($sql);
+        $userData = $db->sql_fetchrow($hresult);
         $user_name = $userData['firstName'] . " " . $userData['lastName'];
 		$uplantid = $userData['plantId'];
 
         $sql = "SELECT * FROM forum_forums where forum_id = " . $forumId;
-        $hresult = mysql_query($sql);
-        $forumData = mysql_fetch_array($hresult);
+        $hresult = $db->sql_query($sql);
+        $forumData = $db->sql_fetchrow($hresult);
 
         $forumName = $forumData['forum_name'];
 		
 		$sql = "SELECT * FROM plants WHERE plantId = " . $uplantid;
-		$up = mysql_query($sql);
-		$uplantdata = mysql_fetch_array($up);
+		$up = $db->sql_query($sql);
+		$uplantdata = $db->sql_fetchrow($up);
 		$uplantname = $uplantdata['plantName'];
 		
         $message = "<div style='width: 100%; '><div style='border-bottom: solid 1px #aaa; margin-bottom: 10px;'>";
@@ -1777,10 +1776,10 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
         $headers .= "Content-type:text/html;charset=iso-8859-1" . "\r\n";
 
         $sql = "SELECT email,firstName FROM userprofile";
-        $hresult = mysql_query($sql);
+        $hresult = $db->sql_query($sql);
 
         $recipients = "";
-        while ($userInfo = mysql_fetch_array($hresult)) {
+        while ($userInfo = $db->sql_fetchrow($hresult)) {
             $recipients = $recipients . $userInfo['email'] . ",";
         }
 
@@ -1789,10 +1788,6 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
         $subject = "Forum Notification";
 
         mail($recipients, $subject, $message, $headers);
-		
-		
-		
-        mysql_close($con);
 		
 		
         unset($sql_data[TOPICS_TABLE]['sql']);
@@ -1813,15 +1808,14 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
         $data['post_id'] = $db->sql_nextid();
 		
 		$topicid = $data['topic_id'];
-		
-		$con = mysql_connect('hiveuserscom.ipagemysql.com', 'hiveusers', 'swordfish');
-        mysql_select_db('hive');
+		$con = mysql_connect("localhost","root","");
+		mysql_select_db("hive");
 		$sql = "SELECT * FROM forum_posts WHERE topic_id = " . $topicid;
 		$result = mysql_query($sql);
 		while($post = mysql_fetch_assoc($result))
 		{
-			$sql = "INSERT INTO search_post_index VALUES(" . $post['post_id'] . "," . $topicid . "," . $post['forum_id'] . "," . $user->data['user_id'] . ",'" . $post['post_subject'] . "','" . $post['post_text'] . "')";
-			$r = mysql_query($sql);
+			$sql = "INSERT INTO search_post_index(post_id,topic_id,forum_id,poster_id,post_subject,post_text) VALUES(" . $post['post_id'] . "," . $topicid . "," . $post['forum_id'] . "," . $user->data['user_id'] . ",'" . $post['post_subject'] . "','" . $post['post_text'] . "')";
+			$r = $db->sql_query($sql);
 		}
         if ($post_mode == 'post') {
             $sql_data[TOPICS_TABLE]['sql'] = array(
@@ -1844,37 +1838,36 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
             $db->sql_query($sql);
 
             //send mail
-            $con = mysql_connect('hiveuserscom.ipagemysql.com', 'hiveusers', 'swordfish');
-            mysql_select_db('hive');
+            
             $sql = "SELECT * FROM forum_posts where post_id = " . $catId;
-            $hresult = mysql_query($sql);
+            $hresult = $db->sql_query($sql);
 
-            $postResult = mysql_fetch_array($hresult);
+            $postResult = $db->sql_fetchrow($hresult);
             $postName = $postResult['post_subject'];
 
             $topicId = $postResult['topic_id'];
             $forumId = $postResult['forum_id'];
             $uid = $postResult['poster_id'];
             $sql = "SELECT * FROM userprofile where id = " . $user->data['user_id'];
-            $hresult = mysql_query($sql);
-            $userData = mysql_fetch_array($hresult);
+            $hresult = $db->sql_query($sql);
+            $userData = $db->sql_fetchrow($hresult);
             $user_name = $userData['firstName'] . " " . $userData['lastName'];
 			$uplantid = $userData['plantId'];
 			
             $sql = "SELECT * FROM forum_forums where forum_id = " . $forumId;
-            $hresult = mysql_query($sql);
-            $forumData = mysql_fetch_array($hresult);
+            $hresult = $db->sql_query($sql);
+            $forumData = $db->sql_fetchrow($hresult);
 
             $forumName = $forumData['forum_name'];
 			
 			$sql = "SELECT * FROM plants WHERE plantId = " . $uplantid;
-			$up = mysql_query($sql);
-			$uplantdata = mysql_fetch_array($up);
+			$up = $db->sql_query($sql);
+			$uplantdata = $db->sql_fetchrow($up);
 			$uplantname = $uplantdata['plantName'];
             
             $sql = "SELECT * FROM forum_topics where topic_id = " . $topicId;
-            $hresult = mysql_query($sql);
-            $topicData = mysql_fetch_array($hresult);
+            $hresult = $db->sql_query($sql);
+            $topicData = $db->sql_fetchrow($hresult);
             $topicName = $topicData['topic_title'];
 
             $message = "<div style='width: 100%; '><div style='border-bottom: solid 1px #aaa; margin-bottom: 10px;'>";
@@ -1891,29 +1884,29 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
             $headers .= "Content-type:text/html;charset=iso-8859-1" . "\r\n";
 
             $sql = "SELECT email,firstName FROM userprofile";
-            $hresult = mysql_query($sql);
+            $hresult = $db->sql_query($sql);
 
             $recipients = "";
             $userInfo = NULL;
-            while ($userInfo = mysql_fetch_array($hresult)) {
+            while ($userInfo = $db->sql_fetchrow($hresult)) {
                 $recipients = $recipients . $userInfo['email'] . ",";
             }
 
             $recipients = substr($recipients, 0, strlen($recipients) - 1);
 
             $subject = "Forum Notification";
-
+			
             mail($recipients, $subject, $message, $headers);
             
             //search_post_index
             $sql = "SELECT post_subject,post_text FROM forum_posts WHERE post_id = " . $catId;
-			$result = mysql_query($sql);
-			$postDet = mysql_fetch_array($result);
+			$result = $db->sql_query($sql);
+			$postDet = $db->sql_fetchrow($result);
 			$postSub = $postDet['post_subject'];
 			$postText = $postDet['post_text'];
             $sql = "INSERT INTO search_post_index VALUES(" . $catId . "," . $topicId . "," . $forumId . "," . $user->data['user_id'] . ",'" . $postSub . "','" . $postText . "')";
-			mysql_query($sql);
-            mysql_close($con);			
+			$db->sql_query($sql);
+			
        	}
 
         unset($sql_data[POSTS_TABLE]['sql']);
@@ -1990,37 +1983,36 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
         $db->sql_query($sql);
 
         //send mail
-        $con = mysql_connect('hiveuserscom.ipagemysql.com', 'hiveusers', 'swordfish');
-        mysql_select_db('hive');
+        
         $sql = "SELECT * FROM forum_posts where post_id = " . $catId;
-        $hresult = mysql_query($sql);
+        $hresult = $db->sql_query($sql);
 
-        $postResult = mysql_fetch_array($hresult);
+        $postResult = $db->sql_fetchrow($hresult);
         $postName = $postResult['post_subject'];
 
         $topicId = $postResult['topic_id'];
         $forumId = $postResult['forum_id'];
         $uid = $postResult['poster_id'];
         $sql = "SELECT * FROM userprofile where id = " . $user->data['user_id'];
-        $hresult = mysql_query($sql);
-        $userData = mysql_fetch_array($hresult);
+        $hresult = $db->sql_query($sql);
+        $userData = $db->sql_fetchrow($hresult);
         $user_name = $userData['firstName'] . " " . $userData['lastName'];
 		$uplantid = $userData['plantId']; 
         
         $sql = "SELECT * FROM forum_forums where forum_id = " . $forumId;
-        $hresult = mysql_query($sql);
-        $forumData = mysql_fetch_array($hresult);
+        $hresult = $db->sql_query($sql);
+        $forumData = $db->sql_fetchrow($hresult);
 
         $forumName = $forumData['forum_name'];
 
         $sql = "SELECT * FROM forum_topics where topic_id = " . $topicId;
-        $hresult = mysql_query($sql);
-        $topicData = mysql_fetch_array($hresult);
+        $hresult = $db->sql_query($sql);
+        $topicData = $db->sql_fetchrow($hresult);
         $topicName = $topicData['topic_title'];
 		
 		$sql = "SELECT * FROM plants WHERE plantId = " . $uplantid;
-		$up = mysql_query($sql);
-		$uplantdata = mysql_fetch_array($up);
+		$up = $db->sql_query($sql);
+		$uplantdata = $db->sql_fetchrow($up);
 		$uplantname = $uplantdata['plantName'];
 
         	$message = "<div style='width: 100%; '><div style='border-bottom: solid 1px #aaa; margin-bottom: 10px;'>";
@@ -2037,11 +2029,11 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
         $headers .= "Content-type:text/html;charset=iso-8859-1" . "\r\n";
 
         $sql = "SELECT email,firstName FROM userprofile";
-        $hresult = mysql_query($sql);
+        $hresult = $db->sql_query($sql);
 
         $recipients = "";
         $userInfo = NULL;
-        while ($userInfo = mysql_fetch_array($hresult)) {
+        while ($userInfo = $db->sql_fetchrow($hresult)) {
             $recipients = $recipients . $userInfo['email'] . ",";
         }
 
@@ -2050,7 +2042,6 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
         $subject = "Forum Notification";
 
         mail($recipients, $subject, $message, $headers);
-        mysql_close($con);
     }
 
     // Update Poll Tables

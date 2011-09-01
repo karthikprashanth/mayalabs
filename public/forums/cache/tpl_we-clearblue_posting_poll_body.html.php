@@ -2,14 +2,12 @@
 	<div class="inner"><span class="corners-top"><span></span></span>
 
 	<fieldset class="fields2">
-	<?php if ($this->_rootref['S_SHOW_POLL_BOX']) {  if ($this->_rootref['S_POLL_DELETE']) {  ?>
-
+	<?php if ($this->_rootref['S_SHOW_POLL_BOX']) {  if ($this->_rootref['S_POLL_DELETE']) {  ?>
 			<dl>
 				<dt><label for="poll_delete"><?php echo ((isset($this->_rootref['L_POLL_DELETE'])) ? $this->_rootref['L_POLL_DELETE'] : ((isset($user->lang['POLL_DELETE'])) ? $user->lang['POLL_DELETE'] : '{ POLL_DELETE }')); ?>:</label></dt>
 				<dd><label for="poll_delete"><input type="checkbox" name="poll_delete" id="poll_delete"<?php if ($this->_rootref['S_POLL_DELETE_CHECKED']) {  ?> checked="checked"<?php } ?> /> </label></dd>
 			</dl>
-		<?php } ?>
-
+		<?php } ?>
 		<dl>
 			<dt><label for="poll_title"><?php echo ((isset($this->_rootref['L_POLL_QUESTION'])) ? $this->_rootref['L_POLL_QUESTION'] : ((isset($user->lang['POLL_QUESTION'])) ? $user->lang['POLL_QUESTION'] : '{ POLL_QUESTION }')); ?>:</label></dt>
 			<dd><input type="text" name="poll_title" id="poll_title" maxlength="255" value="<?php echo (isset($this->_rootref['POLL_TITLE'])) ? $this->_rootref['POLL_TITLE'] : ''; ?>" class="inputbox" /></dd>
@@ -32,22 +30,19 @@
 			<dd><?php echo ((isset($this->_rootref['L_POLL_FOR_EXPLAIN'])) ? $this->_rootref['L_POLL_FOR_EXPLAIN'] : ((isset($user->lang['POLL_FOR_EXPLAIN'])) ? $user->lang['POLL_FOR_EXPLAIN'] : '{ POLL_FOR_EXPLAIN }')); ?></dd>
 		</dl>
 
-		<?php if ($this->_rootref['S_POLL_VOTE_CHANGE']) {  ?>
-
+		<?php if ($this->_rootref['S_POLL_VOTE_CHANGE']) {  ?>
 			<hr class="dashed" />
 			
 			<dl>
 				<dt><label for="poll_vote_change"><?php echo ((isset($this->_rootref['L_POLL_VOTE_CHANGE'])) ? $this->_rootref['L_POLL_VOTE_CHANGE'] : ((isset($user->lang['POLL_VOTE_CHANGE'])) ? $user->lang['POLL_VOTE_CHANGE'] : '{ POLL_VOTE_CHANGE }')); ?>:</label></dt>
 				<dd><label for="poll_vote_change"><input type="checkbox" id="poll_vote_change" name="poll_vote_change"<?php echo (isset($this->_rootref['VOTE_CHANGE_CHECKED'])) ? $this->_rootref['VOTE_CHANGE_CHECKED'] : ''; ?> /> <?php echo ((isset($this->_rootref['L_POLL_VOTE_CHANGE_EXPLAIN'])) ? $this->_rootref['L_POLL_VOTE_CHANGE_EXPLAIN'] : ((isset($user->lang['POLL_VOTE_CHANGE_EXPLAIN'])) ? $user->lang['POLL_VOTE_CHANGE_EXPLAIN'] : '{ POLL_VOTE_CHANGE_EXPLAIN }')); ?></label></dd>
 			</dl>
-		<?php } } else if ($this->_rootref['S_POLL_DELETE']) {  ?>
-
+		<?php } } else if ($this->_rootref['S_POLL_DELETE']) {  ?>
 		<dl class="fields1">
 			<dt><label for="poll_delete"><?php echo ((isset($this->_rootref['L_POLL_DELETE'])) ? $this->_rootref['L_POLL_DELETE'] : ((isset($user->lang['POLL_DELETE'])) ? $user->lang['POLL_DELETE'] : '{ POLL_DELETE }')); ?>:</label></dt>
 			<dd><label for="poll_delete"><input type="checkbox" name="poll_delete" id="poll_delete"<?php if ($this->_rootref['S_POLL_DELETE_CHECKED']) {  ?> checked="checked"<?php } ?> /> </label></dd>
 		</dl>
-	<?php } ?>
-
+	<?php } ?>
 	</fieldset>
 
 	<span class="corners-bottom"><span></span></span></div>

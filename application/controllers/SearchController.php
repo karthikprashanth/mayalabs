@@ -61,49 +61,88 @@ class SearchController extends Zend_Controller_Action
 			$queryStr = $this->_getParam('keyword',0);
 			$this->_helper->getHelper('layout')->disableLayout();
 			$t1= time();
-			$index = Zend_Search_Lucene::open("/var/www/hivelive/search/gtdata");
+			$appath = substr(APPLICATION_PATH,0,strlen(APPLICATION_PATH)-12);
+			$path = $appath . DIRECTORY_SEPARATOR . "search" . DIRECTORY_SEPARATOR . "gtdata";
+			$index = Zend_Search_Lucene::open($path);
 			$queryStr = $queryStr."*";
 			$query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
   			$results = $index->find($query);
+			
+			$gtdatamodel = new Model_DbTable_Gtdata();
+			$plantmodel  = new Model_DbTable_Plant();
+			$umodel = new Model_DbTable_Userprofile();
+			$gtmodel = new Model_DbTable_Gasturbine();
+			$gtsysmodel = new Model_DbTable_Gtsystems();
+			$gtsubsysmodel = new Model_DbTable_Gtsubsystems();
 			$count = 0;
+			
 			foreach($results as $result)
 			{
-				$data[$count]['url'] = $result->url;
-				$data[$count]['id'] = $result->id;
-				$data[$count]['gtid'] = $result->gtid;
-				$data[$count]['updatedate'] = $result->updatedate;
-				$data[$count]['data'] = $query->highlightMatches($result->data);
-				$data[$count]['type'] = $query->highlightMatches($result->type);
-				$data[$count]['username'] = $query->highlightMatches($result->username);
-				$data[$count]['sysname'] = $query->highlightMatches($result->sysname);
-				$data[$count]['subsysname'] = $query->highlightMatches($result->subsysname);
-				$data[$count]['userplantname'] = $query->highlightMatches($result->userplantname);
-				$data[$count]['userupdate'] = $result->userupdate;
-				$data[$count]['sysId'] = $result->sysId;
-				$data[$count]['subSysId'] = $result->subSysId;
-				$data[$count]['title'] = $query->highlightMatches($result->title);
-				$data[$count]['score'] = $result->score;
+				
+				$data[$count]['id'] = $result->dataid;
+				
+				$gtdataid = $data[$count]['id'];
+				
+				$gtdata = $gtdatamodel->getData($gtdataid);
+				
+				$user = $umodel->getUser($gtdata['userupdate']);
+				$uplant = $plantmodel->getPlant($user['plantId']);
+				$uplantname = $uplant['plantName'];
+				
+				$sys = $gtsysmodel->getSystem($gtdata['sysId']);
+				$sysname = $sys['sysName'];
+				$subsys = $gtsubsysmodel->getSubSystem($gtdata['subSysId']);
+				$subsysname = $subsys['subSysName'];
+				$data[$count]['url'] = $type[$gtdata['type']] . "/view?id=" . $id;				
+				$data[$count]['gtid'] = $gtdata['gtid'];
+				$data[$count]['updatedate'] = $gtdata['updatedate'];
+				$data[$count]['data'] = $query->highlightMatches($gtdata['data']);
+				$data[$count]['type'] = $query->highlightMatches($gtdata['type']);
+				$data[$count]['userupdate'] = $gtdata['userupdate'];
+				$data[$count]['userplantname'] = $query->highlightMatches($uplantname);
+				$data[$count]['sysname'] = $sysname;
+				$data[$count]['subsysname'] = $subsysname;
+				$data[$count]['title'] = $query->highlightMatches($gtdata['title']);
+				$data[$count]['score'] = $result->score;	
 				$count++;
 			}
+			$appath = substr(APPLICATION_PATH,0,strlen(APPLICATION_PATH)-12);
+			$path = $appath . DIRECTORY_SEPARATOR . "search" . DIRECTORY_SEPARATOR . "forum";
+			$forumIndex = Zend_Search_Lucene::open($path);
 			
-			$forumIndex = Zend_Search_Lucene::open("/var/www/hivelive/search/forum");
 			$results = $forumIndex->find($query);
+			
+			$forummodel = new Model_DbTable_Forum_Data();
+			$postmodel = new Model_DbTable_Forum_Posts();
+			$topicsmodel = new Model_DbTable_Forum_Topics();
 			
 			$count = 0;
 			foreach($results as $result)
 			{
-				$fdata[$count]['url'] = $result->url;
-				$fdata[$count]['post_id'] = $result->post_id;
-				$fdata[$count]['topic_id'] = $result->topic_id;
-				$fdata[$count]['forum_id'] = $result->forum_id;
-				$fdata[$count]['poster_id'] = $result->poster_id;
-				$fdata[$count]['post_subject'] = $query->highlightMatches($result->post_subject);
-				$fdata[$count]['forumname'] = $query->highlightMatches($result->forumname);
-				$fdata[$count]['topicname'] = $query->highlightMatches($result->topicname);
-				$fdata[$count]['postername'] = $query->highlightMatches($result->postername);
-				$fdata[$count]['userplantname'] = $query->highlightMatches($result->userplantname);
-				$fdata[$count]['post_text'] = $query->highlightMatches($result->post_text);
 				
+				$fdata[$count]['post_id'] = $result->post_id;
+				$pid = $fdata[$count]['post_id'];
+				$post = $postmodel->getPost($pid);
+				$fid = $post['forum_id'];
+				$tid = $post['topic_id'];
+				$uid = $post['poster_id'];
+				$topic = $topicsmodel->getTopic($tid);
+				$topicname = $topic['topic_title'];
+				$forum = $forummodel->getForum($fid);
+				$forumname = $forum['forum_name'];
+				
+				$fdata[$count]['url'] = "http://localhost/hivelive/public/forum/viewtopic.php?f=" .$fid ."&t=".$pid;
+				$fdata[$count]['post_id'] = $pid;
+				$fdata[$count]['topic_id'] = $tid;
+				$fdata[$count]['forum_id'] = $fid;
+				$fdata[$count]['poster_id'] = $uid;
+				$fdata[$count]['post_subject'] = $post['post_subject'];
+				$fdata[$count]['post_text'] = $post['post_text'];
+				$fdata[$count]['topicname'] = $topicname;
+				$fdata[$count]['forumname'] = $forumname;
+				$fdata[$count]['userplantname'] = $uplantname;
+				
+							
 				$count++;
 			}
 			$this->view->queryStr = $queryStr;
@@ -121,45 +160,47 @@ class SearchController extends Zend_Controller_Action
 		
 		$gtdatamodel = new Model_DbTable_Gtdata();
 		$gtdata = $gtdatamodel->fetchAll();
-		$type['finding'] = "findings";
-		$type['upgrade'] = "upgrades";
-		$type['lte'] = 'lte';
-		
-		$index = Zend_Search_Lucene::create('/var/www/hivelive/search/gtdata');
+		/*$type['finding'] = "Finding";
+		$type['upgrade'] = "Upgrade";
+		$type['lte'] = 'LTE';*/
+		$umodel = new Model_DbTable_Userprofile();
+		$upmodel = new Model_DbTable_Plant();
+		$sysmodel = new Model_DbTable_Gtsystems();
+		$subsysmodel = new Model_DbTable_Gtsubsystems();
+		$appath = substr(APPLICATION_PATH,0,strlen(APPLICATION_PATH)-12);
+		$path = $appath . DIRECTORY_SEPARATOR . "search" . DIRECTORY_SEPARATOR . "gtdata";
+		$index = Zend_Search_Lucene::create($path);
 		
 		foreach($gtdata as $list)
 		{
-			$umodel = new Model_DbTable_Userprofile();
+			echo $list['id'] . "  " . $list['title'] . "<br>";
+			
 			$user = $umodel->getUser($list['userupdate']);
-			$username = $user['firstName'] . " " . $user['lastName'];
-			$upmodel = new Model_DbTable_Plant();
+			
 			$uplant = $upmodel->getPlant($user['plantId']);
 			$uplantname = $uplant['plantName'];
-			$sysmodel = new Model_DbTable_Gtsystems();
+			
 			$sysname = $sysmodel->getSystem($list['sysId']);
 			$sysname = $sysname['sysName'];
-			$subsysmodel = new Model_DbTable_Gtsubsystems();
+			
 			$subsysname = $subsysmodel->getSubSystem($list['subSysId']);
 			$subsysname = $subsysname['subSysName'];
 			$doc = new Zend_Search_Lucene_Document();
-			$doc->addField(Zend_Search_Lucene_Field::Keyword('url',
-			"http://www.hiveusers.com/" . $type[$list['type']] . "/view?id=" .$list['id']));
-			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('id',$list['id']));
-			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('gtid',$list['gtid']));
-			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('updatedate',$list['updatedate']));
-			$doc->addField(Zend_Search_Lucene_Field::Text('title',$list['title']));
-			$doc->addField(Zend_Search_Lucene_Field::Text('data',$list['data']));
-			$doc->addField(Zend_Search_Lucene_Field::Text('type',$list['type']));
-			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('userupdate',$list['userupdate']));
+			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('dataid',$list['id']));
+			/*$doc->addField(Zend_Search_Lucene_Field::UnIndexed('gtid',$list['gtid']));
+			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('updatedate',$list['updatedate']));*/
+			$doc->addField(Zend_Search_Lucene_Field::UnStored('title',$list['title']));
+			$doc->addField(Zend_Search_Lucene_Field::UnStored('data',$list['data']));
+			$doc->addField(Zend_Search_Lucene_Field::UnStored('type',$list['type']));
+			/*$doc->addField(Zend_Search_Lucene_Field::UnIndexed('userupdate',$list['userupdate']));
 			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('sysId',$list['sysId']));  
-			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('subSysId',$list['subSysId']));
-			$doc->addField(Zend_Search_Lucene_Field::Text('username',$username));
-			$doc->addField(Zend_Search_Lucene_Field::Text('sysname',$sysname));  
-			$doc->addField(Zend_Search_Lucene_Field::Text('subsysname',$subsysname));
-			$doc->addField(Zend_Search_Lucene_Field::Text('userplantname',$uplantname));
+			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('subSysId',$list['subSysId']));*/
+			$doc->addField(Zend_Search_Lucene_Field::UnStored('sysname',$sysname));  
+			$doc->addField(Zend_Search_Lucene_Field::UnStored('subsysname',$subsysname));
+			$doc->addField(Zend_Search_Lucene_Field::UnStored('userplantname',$uplantname));
 			
 			$index->addDocument($doc);
-		}
+		}		
 		$index->commit();  
 		$index->optimize();
 		
@@ -169,35 +210,40 @@ class SearchController extends Zend_Controller_Action
 		$forumPosts = $forumPostModel->getFieldsForSearch();
 		
 		
-		$index = Zend_Search_Lucene::create('/var/www/hivelive/search/forum');
+		$appath = substr(APPLICATION_PATH,0,strlen(APPLICATION_PATH)-12);
+		$path = $appath . DIRECTORY_SEPARATOR . "search" . DIRECTORY_SEPARATOR . "forum";
+		$index = Zend_Search_Lucene::create($path);
+		$topicmodel = new Model_DbTable_Forum_Topics();
+		$forummodel = new Model_DbTable_Forum_Data();
+		$posterModel = new Model_DbTable_Userprofile();
+		$plantmodel = new Model_DbTable_Plant();
 		
 		foreach($forumPosts as $list)
 		{
 			$doc = new Zend_Search_Lucene_Document();
-			$topicmodel = new Model_DbTable_Forum_Topics();
+			
 			$topic = $topicmodel->getTopic($list['topic_id']);
 			$topicname = $topic['topic_title'];
-			$forummodel = new Model_DbTable_Forum_Data();
+			
 			$forum = $forummodel->getForum($list['forum_id']);
 			$forumname = $forum['forum_name'];
-			$posterModel = new Model_DbTable_Userprofile();
+			
 			$poster = $posterModel->getUser($list['poster_id']);
-			$postername = $poster['firstName'] . " " . $poster['lastName'];
-			$plantmodel = new Model_DbTable_Plant();
+			
 			$plant = $plantmodel->getPlant($poster['plantId']);
 			$uplantname = $plant['plantName'];
-			$doc->addField(Zend_Search_Lucene_Field::Keyword('url',
-			"/forums/viewtopic.php?f=" .$list['forum_id'] ."&t=".$list['post_id']));
+			/*$doc->addField(Zend_Search_Lucene_Field::Keyword('url',
+			"/forums/viewtopic.php?f=" .$list['forum_id'] ."&t=".$list['post_id']));*/
 			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('post_id',$list['post_id']));
-			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('forum_id',$list['forum_id']));
+			/*$doc->addField(Zend_Search_Lucene_Field::UnIndexed('forum_id',$list['forum_id']));
 			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('topic_id',$list['topic_id']));
-			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('poster_id',$list['poster_id']));
-			$doc->addField(Zend_Search_Lucene_Field::Text('post_subject',$list['post_subject']));
-			$doc->addField(Zend_Search_Lucene_Field::Text('post_text',$list['post_text']));
-			$doc->addField(Zend_Search_Lucene_Field::Text('topicname',$topicname));
-			$doc->addField(Zend_Search_Lucene_Field::Text('forumname',$forumname));
-			$doc->addField(Zend_Search_Lucene_Field::Text('postername',$postername));
-			$doc->addField(Zend_Search_Lucene_Field::Text('userplantname',$uplantname));
+			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('poster_id',$list['poster_id']));*/
+			$doc->addField(Zend_Search_Lucene_Field::UnStored('post_subject',$list['post_subject']));
+			$doc->addField(Zend_Search_Lucene_Field::UnStored('post_text',$list['post_text']));
+			$doc->addField(Zend_Search_Lucene_Field::UnStored('topicname',$topicname));
+			$doc->addField(Zend_Search_Lucene_Field::UnStored('forumname',$forumname));
+			//$doc->addField(Zend_Search_Lucene_Field::Text('postername',$postername));
+			$doc->addField(Zend_Search_Lucene_Field::UnStored('userplantname',$uplantname));
 			$index->addDocument($doc);
 			}
 		$index->commit();  

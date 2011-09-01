@@ -9,19 +9,16 @@
 		bbcodeEnabled = <?php echo (isset($this->_rootref['S_BBCODE_ALLOWED'])) ? $this->_rootref['S_BBCODE_ALLOWED'] : ''; ?>;
 	// ]]>
 	</script>
-	<?php $_history_row_count = (isset($this->_tpldata['history_row'])) ? sizeof($this->_tpldata['history_row']) : 0;if ($_history_row_count) {for ($_history_row_i = 0; $_history_row_i < $_history_row_count; ++$_history_row_i){$_history_row_val = &$this->_tpldata['history_row'][$_history_row_i]; ?>
-
+	<?php $_history_row_count = (isset($this->_tpldata['history_row'])) ? sizeof($this->_tpldata['history_row']) : 0;if ($_history_row_count) {for ($_history_row_i = 0; $_history_row_i < $_history_row_count; ++$_history_row_i){$_history_row_val = &$this->_tpldata['history_row'][$_history_row_i]; ?>
 	<div class="post <?php if (!($_history_row_val['S_ROW_COUNT'] & 1)  ) {  ?>bg1<?php } else { ?>bg3<?php } ?>">
 		<div class="inner"><span class="corners-top"><span></span></span>
 
 		<div class="postbody" id="pr<?php echo $_history_row_val['MSG_ID']; ?>">
-			<?php if ($_history_row_val['U_QUOTE'] || $_history_row_val['MESSAGE_AUTHOR_QUOTE']) {  ?>
-
+			<?php if ($_history_row_val['U_QUOTE'] || $_history_row_val['MESSAGE_AUTHOR_QUOTE']) {  ?>
 			<ul class="profile-icons">
 				<li class="quote-icon"><a <?php if ($_history_row_val['U_QUOTE']) {  ?>href="<?php echo $_history_row_val['U_QUOTE']; ?>"<?php } else { ?>href="#postingbox" onclick="addquote(<?php echo $_history_row_val['MSG_ID']; ?>, '<?php echo $_history_row_val['MESSAGE_AUTHOR_QUOTE']; ?>', '<?php echo ((isset($this->_rootref['LA_WROTE'])) ? $this->_rootref['LA_WROTE'] : ((isset($this->_rootref['L_WROTE'])) ? addslashes($this->_rootref['L_WROTE']) : ((isset($user->lang['WROTE'])) ? addslashes($user->lang['WROTE']) : '{ WROTE }'))); ?>');"<?php } ?> title="<?php echo ((isset($this->_rootref['L_QUOTE'])) ? $this->_rootref['L_QUOTE'] : ((isset($user->lang['QUOTE'])) ? $user->lang['QUOTE'] : '{ QUOTE }')); ?> <?php echo $_history_row_val['MESSAGE_AUTHOR']; ?>"><span><?php echo ((isset($this->_rootref['L_QUOTE'])) ? $this->_rootref['L_QUOTE'] : ((isset($user->lang['QUOTE'])) ? $user->lang['QUOTE'] : '{ QUOTE }')); ?> <?php echo $_history_row_val['MESSAGE_AUTHOR']; ?></span></a></li>
 			</ul>
-			<?php } ?>
-
+			<?php } ?>
 
 			<h3><a href="<?php echo $_history_row_val['U_VIEW_MESSAGE']; ?>" <?php if ($_history_row_val['S_CURRENT_MSG']) {  ?>class="current"<?php } ?>><?php echo $_history_row_val['SUBJECT']; ?></a></h3>
 			<p class="author"><?php echo $_history_row_val['MINI_POST_IMG']; ?> <?php echo ((isset($this->_rootref['L_SENT_AT'])) ? $this->_rootref['L_SENT_AT'] : ((isset($user->lang['SENT_AT'])) ? $user->lang['SENT_AT'] : '{ SENT_AT }')); ?>: <strong><?php echo $_history_row_val['SENT_DATE']; ?></strong><br />
@@ -32,8 +29,7 @@
 
 		<span class="corners-bottom"><span></span></span></div>
 	</div>
-	<?php }} ?>
-
+	<?php }} ?>
 </div>
 
 <hr />

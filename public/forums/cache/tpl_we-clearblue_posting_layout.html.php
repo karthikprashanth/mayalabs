@@ -1,34 +1,25 @@
-<?php if (!defined('IN_PHPBB')) exit; $this->_tpl_include('overall_header.html'); if ($this->_rootref['TOPIC_TITLE']) {  ?>
-
+<?php if (!defined('IN_PHPBB')) exit; $this->_tpl_include('overall_header.html'); if ($this->_rootref['TOPIC_TITLE']) {  ?>
 	<h2><a href="<?php echo (isset($this->_rootref['U_VIEW_TOPIC'])) ? $this->_rootref['U_VIEW_TOPIC'] : ''; ?>"><?php echo (isset($this->_rootref['TOPIC_TITLE'])) ? $this->_rootref['TOPIC_TITLE'] : ''; ?></a></h2>
-<?php } else { ?>
-
+<?php } else { ?>
 	<h2><a href="<?php echo (isset($this->_rootref['U_VIEW_FORUM'])) ? $this->_rootref['U_VIEW_FORUM'] : ''; ?>"><?php echo (isset($this->_rootref['FORUM_NAME'])) ? $this->_rootref['FORUM_NAME'] : ''; ?></a></h2>
-<?php } if ($this->_rootref['S_FORUM_RULES']) {  ?>
-
+<?php } if ($this->_rootref['S_FORUM_RULES']) {  ?>
 	<div class="rules">
 		<div class="inner"><span class="corners-top"><span></span></span>
 		
-		<?php if ($this->_rootref['U_FORUM_RULES']) {  ?>
-
+		<?php if ($this->_rootref['U_FORUM_RULES']) {  ?>
 			<a href="<?php echo (isset($this->_rootref['U_FORUM_RULES'])) ? $this->_rootref['U_FORUM_RULES'] : ''; ?>"><?php echo ((isset($this->_rootref['L_FORUM_RULES'])) ? $this->_rootref['L_FORUM_RULES'] : ((isset($user->lang['FORUM_RULES'])) ? $user->lang['FORUM_RULES'] : '{ FORUM_RULES }')); ?></a>
-		<?php } else { ?>
-
+		<?php } else { ?>
 			<strong class="rules-header"><?php echo ((isset($this->_rootref['L_FORUM_RULES'])) ? $this->_rootref['L_FORUM_RULES'] : ((isset($user->lang['FORUM_RULES'])) ? $user->lang['FORUM_RULES'] : '{ FORUM_RULES }')); ?></strong>
-			<?php echo (isset($this->_rootref['FORUM_RULES'])) ? $this->_rootref['FORUM_RULES'] : ''; ?>
-
-		<?php } ?>
-
+			<?php echo (isset($this->_rootref['FORUM_RULES'])) ? $this->_rootref['FORUM_RULES'] : ''; ?>
+		<?php } ?>
 		
 		<span class="corners-bottom"><span></span></span></div>
 	</div>
-<?php } ?>
-
+<?php } ?>
 
 <form id="postform" method="post" action="<?php echo (isset($this->_rootref['S_POST_ACTION'])) ? $this->_rootref['S_POST_ACTION'] : ''; ?>"<?php echo (isset($this->_rootref['S_FORM_ENCTYPE'])) ? $this->_rootref['S_FORM_ENCTYPE'] : ''; ?>>
 
-<?php if ($this->_rootref['S_DRAFT_LOADED']) {  ?>
-
+<?php if ($this->_rootref['S_DRAFT_LOADED']) {  ?>
 	<div class="panel">
 		<div class="inner"><span class="corners-top"><span></span></span>
 		
@@ -37,8 +28,7 @@
 		
 		<span class="corners-bottom"><span></span></span></div>
 	</div>
-<?php } if ($this->_rootref['S_POST_REVIEW']) {  $this->_tpl_include('posting_review.html'); } if ($this->_rootref['S_UNGLOBALISE']) {  ?>
-
+<?php } if ($this->_rootref['S_POST_REVIEW']) {  $this->_tpl_include('posting_review.html'); } if ($this->_rootref['S_UNGLOBALISE']) {  ?>
 	<div class="panel bg3">
 		<div class="inner"><span class="corners-top"><span></span></span>
 		<fieldset class="fields1">
@@ -57,27 +47,22 @@
 
 		<span class="corners-bottom"><span></span></span></div>
 	</div>
-<?php } if ($this->_rootref['S_DISPLAY_PREVIEW']) {  $this->_tpl_include('posting_preview.html'); } ?>
-
+<?php } if ($this->_rootref['S_DISPLAY_PREVIEW']) {  $this->_tpl_include('posting_preview.html'); } ?>
 
 <div class="panel" id="postingbox">
 	<div class="inner"><span class="corners-top"><span></span></span>
 	
 	<h3><?php echo ((isset($this->_rootref['L_POST_A'])) ? $this->_rootref['L_POST_A'] : ((isset($user->lang['POST_A'])) ? $user->lang['POST_A'] : '{ POST_A }')); ?></h3>
 
-	<?php $this->_tpldata['DEFINE']['.']['EXTRA_POSTING_OPTIONS'] = 1; $this->_tpl_include('posting_editor.html'); ?>
-
-	<?php echo (isset($this->_rootref['S_FORM_TOKEN'])) ? $this->_rootref['S_FORM_TOKEN'] : ''; ?>
-
+	<?php $this->_tpldata['DEFINE']['.']['EXTRA_POSTING_OPTIONS'] = 1; $this->_tpl_include('posting_editor.html'); ?>
+	<?php echo (isset($this->_rootref['S_FORM_TOKEN'])) ? $this->_rootref['S_FORM_TOKEN'] : ''; ?>
 	<span class="corners-bottom"><span></span></span></div>
 </div>
 
-<?php if ($this->_rootref['S_SHOW_ATTACH_BOX']) {  $this->_tpl_include('posting_attach_body.html'); } if ($this->_rootref['S_SHOW_POLL_BOX'] || $this->_rootref['S_POLL_DELETE']) {  $this->_tpl_include('posting_poll_body.html'); } if ($this->_rootref['S_DISPLAY_REVIEW']) {  $this->_tpl_include('posting_topic_review.html'); } ?>
-
+<?php if ($this->_rootref['S_SHOW_ATTACH_BOX']) {  $this->_tpl_include('posting_attach_body.html'); } if ($this->_rootref['S_SHOW_POLL_BOX'] || $this->_rootref['S_POLL_DELETE']) {  $this->_tpl_include('posting_poll_body.html'); } if ($this->_rootref['S_DISPLAY_REVIEW']) {  $this->_tpl_include('posting_topic_review.html'); } ?>
 
 </form>
-<?php if (! $this->_rootref['S_PRIVMSGS']) {  ?>
-
+<?php if (! $this->_rootref['S_PRIVMSGS']) {  ?>
 <script type="text/javascript">
 // <![CDATA[
 	subPanels(show_panel);
