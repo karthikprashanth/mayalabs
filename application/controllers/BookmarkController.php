@@ -44,6 +44,7 @@ class BookmarkController extends Zend_Controller_Action
         try {
             $this->_helper->getHelper('layout')->disableLayout();
             $id = $this->getRequest()->getPost('id',0);
+			$mode = $this->getRequest()->getPost('mode',0);
             $userid = Zend_Auth::getInstance()->getStorage()->read()->id;
             $cBookmark = new Model_DbTable_Bookmark();
             $cBookmark->deleteBookmark($id);

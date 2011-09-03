@@ -15,37 +15,16 @@
 	
 ?>
 <center><button id = 'submitbutton'>Search</button></center>
+<li><a id = "gtresults" href = '#'>GT Data</a></li><br>
+<li><a id = "forumresults" href = '#'>Forums</a></li>
+
 <div id = "results"></div>
+
 
 <script type = "text/javascript">
 	
 	$(document).ready(function(){
-		$("#keyword").keypress( function(event) {
-			if(event.which == 13)
-			{
-				var query = "";
-		    	var text = document.getElementById("keyword").value;
-		    	if(text != null && text != "")
-		    	{
-		    		
-		    		query = query  + " " + text;
-		    	}
-		    	$.ajax({
-		            data: "keyword=" + query,
-		            url: "/search/view",
-		            success: function(msg){
-		                if (msg != ''){
-		                    $("#results").html(msg);
-		                    
-		                }
-		            }
-		        });
-			}
-		});
-		$("#searchform").submit( function(){
-			return false;
-		});
-		$('#submitbutton').click( function() {
+		$("#gtresults").click( function(event) {
 			var query = "";
 	    	var text = document.getElementById("keyword").value;
 	    	if(text != null && text != "")
@@ -54,12 +33,12 @@
 	    		query = query  + " " + text;
 	    	}
 	    	var plantname = document.getElementById("plantname").value;
-	    	if(plantname != null)
+	    	if(plantname != null && plantname != "")
 	    	{
 	    		query = query + " " + plantname;
 	    	}
 	    	var type = document.getElementById("type").value;
-	    	if(type != null)
+	    	if(type != null && type != "")
 	    	{
 	    		query = query + " " + type;
 	    		
@@ -80,7 +59,122 @@
 	        	query = query + " " + subsysname;
 	        }
 	        $.ajax({
-	            data: "keyword=" + query,
+	            data: "keyword=" + query + "&ll=1" + "&ul=10" + "&cat=gt",
+	            url: "/search/view",
+	            success: function(msg){
+	                if (msg != ''){
+	                    $("#results").html(msg);
+	                    
+	                }
+	            }
+	        });
+		});
+		$("#forumresults").click( function(event) {
+			var query = "";
+	    	var text = document.getElementById("keyword").value;
+	    	if(text != null && text != "")
+	    	{
+	    		
+	    		query = text;
+	    	}
+	    	var plantname = document.getElementById("plantname").value;
+	    	if(plantname != null && plantname != "")
+	    	{
+	    		query = query + " " + plantname;
+	    	}
+	    	var type = document.getElementById("type").value;
+	    	if(type != null && type != "")
+	    	{
+	    		query = query + " " + type;
+	    		
+	    		
+	    	}
+	    	var sysid = document.getElementById("sysId").value;
+	    	var sysobj = document.getElementById("sys"+sysid);
+	    	if(sysobj != null)
+	    	{
+	    		var sysname = document.getElementById("sys"+sysid).innerHTML;	
+	    		query = query + " " + sysname;
+	    	}
+	        var subsysid = document.getElementById("subSysId").value;
+	        var subsysobj = document.getElementById("subsys"+subsysid);
+	        if(subsysobj != null)
+	        {
+	        	var subsysname = document.getElementById("subsys"+subsysid).innerHTML;
+	        	query = query + " " + subsysname;
+	        }
+	        $.ajax({
+	            data: "keyword=" + query + "&ll=1" + "&ul=10" + "&cat=forum",
+	            url: "/search/view",
+	            success: function(msg){
+	                if (msg != ''){
+	                    $("#results").html(msg);
+	                    
+	                }
+	            }
+	        });
+		});
+		$("#keyword").keypress( function(event) {
+			if(event.which == 13)
+			{
+				var query = "";
+		    	var text = document.getElementById("keyword").value;
+		    	if(text != null && text != "")
+		    	{
+		    		
+		    		query = text;
+		    	}
+		    	$.ajax({
+		            data: "keyword=" + query + "&ll=1" + "&ul=10" + "&cat=gt",
+		            url: "/search/view",
+		            success: function(msg){
+		                if (msg != ''){
+		                    $("#results").html(msg);
+		                    
+		                }
+		            }
+		        });
+			}
+		});
+		$("#searchform").submit( function(){
+			return false;
+		});
+		$('#submitbutton').click( function() {
+			var query = "";
+	    	var text = document.getElementById("keyword").value;
+	    	if(text != null && text != "")
+	    	{
+	    		
+	    		query = text;
+	    	}
+	    	var plantname = document.getElementById("plantname").value;
+	    	if(plantname != null && plantname != "")
+	    	{
+	    		query = query + " " + plantname;
+	    	}
+	    	var type = document.getElementById("type").value;
+	    	if(type != null && type != "")
+	    	{
+	    		query = query + " " + type;
+	    		
+	    		
+	    	}
+	    	var sysid = document.getElementById("sysId").value;
+	    	var sysobj = document.getElementById("sys"+sysid);
+	    	if(sysobj != null)
+	    	{
+	    		var sysname = document.getElementById("sys"+sysid).innerHTML;	
+	    		query = query + " " + sysname;
+	    	}
+	        var subsysid = document.getElementById("subSysId").value;
+	        var subsysobj = document.getElementById("subsys"+subsysid);
+	        if(subsysobj != null)
+	        {
+	        	var subsysname = document.getElementById("subsys"+subsysid).innerHTML;
+	        	query = query + " " + subsysname;
+	        }
+	        $.ajax({
+	            data: "keyword=" + query + "&ll=1" + "&ul=10" + "&cat=gt",
 	            url: "/search/view",
 	            success: function(msg){
 	                if (msg != ''){
@@ -105,4 +199,7 @@
 	        });
 	    });
 	});	
+	
+	
+	
 </script>

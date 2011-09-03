@@ -10,7 +10,7 @@ echo $this->headScript()->prependFile($this->baseUrl().'/js/ajaxbookmark.js');
 <?php foreach($this->longList as $ll){ ?>
 
     <a href ="/<?php echo $this->escape($ll['category'])."/view?id=".$this->escape($ll['catId']);?>"><?php echo $ll['bmName']; ?></a>
-    <button id="remove-bookmark" onclick="removeBookmark('<?php echo $this->escape($ll['bmId']);?>')">Remove Bookmark</button>
+    <button id="remove-bookmark" onclick="removeBookmark('<?php echo $this->escape($ll['bmId']);?>','longlist')">Remove Bookmark</button>
     <br/>
 
 <?php   }?>
