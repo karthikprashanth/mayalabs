@@ -48,8 +48,6 @@ class SearchController extends Zend_Controller_Action
 	{
 		$searchForm = new Form_SearchForm();
 		$searchForm->showfilters();
-		//$searchForm->showSubmit();
-		//$searchForm->submit->setLabel("Search");
 		$this->view->form = $searchForm;
 	}
 	
@@ -58,6 +56,11 @@ class SearchController extends Zend_Controller_Action
 		
 		if($this->getRequest()->isGet())
 		{
+			$cat = $this->_getParam('cat');
+			$ll = $this->_getParam('ll');
+			$ul = $this->_getParam('ul');
+			
+			
 			$queryStr = $this->_getParam('keyword',0);
 			$this->_helper->getHelper('layout')->disableLayout();
 			$t1= time();
@@ -68,88 +71,123 @@ class SearchController extends Zend_Controller_Action
 			$query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
   			$results = $index->find($query);
 			
-			$gtdatamodel = new Model_DbTable_Gtdata();
-			$plantmodel  = new Model_DbTable_Plant();
-			$umodel = new Model_DbTable_Userprofile();
-			$gtmodel = new Model_DbTable_Gasturbine();
-			$gtsysmodel = new Model_DbTable_Gtsystems();
-			$gtsubsysmodel = new Model_DbTable_Gtsubsystems();
-			$count = 0;
-			
-			foreach($results as $result)
+			if($cat == "gt")
 			{
 				
-				$data[$count]['id'] = $result->dataid;
+				$gtdatamodel = new Model_DbTable_Gtdata();
+				$plantmodel  = new Model_DbTable_Plant();
+				$umodel = new Model_DbTable_Userprofile();
+				$gtmodel = new Model_DbTable_Gasturbine();
+				$gtsysmodel = new Model_DbTable_Gtsystems();
+				$gtsubsysmodel = new Model_DbTable_Gtsubsystems();
+				$count = 0;
+				$type['finding'] = "findings";
+				$type['upgrade'] = "upgrades";
+				$type['lte'] = "lte";
+				$i = 1;
+				foreach($results as $result)
+				{
+					if($i<$ll || $i > $ul)
+					{
+						$i++;
+						continue;
+					}
+					$i++;
+					
+					$data[$count]['id'] = $result->dataid;
+					
+					$gtdataid = $data[$count]['id'];
+					
+					$gtdata = $gtdatamodel->getData($gtdataid);
+					
+					$user = $umodel->getUser($gtdata['userupdate']);
+					$uplant = $plantmodel->getPlant($user['plantId']);
+					$uplantname = $uplant['plantName'];
+					
+					$sys = $gtsysmodel->getSystem($gtdata['sysId']);
+					$sysname = $sys['sysName'];
+					$subsys = $gtsubsysmodel->getSubSystem($gtdata['subSysId']);
+					$subsysname = $subsys['subSysName'];
+					$data[$count]['url'] = "/" . $type[$gtdata['type']] . "/view?id=" . $data[$count]['id'];				
+					$data[$count]['gtid'] = $gtdata['gtid'];
+					$data[$count]['updatedate'] = $gtdata['updatedate'];
+					$data[$count]['data'] = $gtdata['data'];
+					$data[$count]['type'] = $gtdata['type'];
+					$data[$count]['userupdate'] = $gtdata['userupdate'];
+					$data[$count]['userplantname'] = $uplantname;
+					$data[$count]['sysname'] = $sysname;
+					$data[$count]['subsysname'] = $subsysname;
+					$data[$count]['title'] = $gtdata['title'];
+					$data[$count]['score'] = $result->score;	
+					$count++;
+				}
 				
-				$gtdataid = $data[$count]['id'];
-				
-				$gtdata = $gtdatamodel->getData($gtdataid);
-				
-				$user = $umodel->getUser($gtdata['userupdate']);
-				$uplant = $plantmodel->getPlant($user['plantId']);
-				$uplantname = $uplant['plantName'];
-				
-				$sys = $gtsysmodel->getSystem($gtdata['sysId']);
-				$sysname = $sys['sysName'];
-				$subsys = $gtsubsysmodel->getSubSystem($gtdata['subSysId']);
-				$subsysname = $subsys['subSysName'];
-				$data[$count]['url'] = $type[$gtdata['type']] . "/view?id=" . $id;				
-				$data[$count]['gtid'] = $gtdata['gtid'];
-				$data[$count]['updatedate'] = $gtdata['updatedate'];
-				$data[$count]['data'] = $query->highlightMatches($gtdata['data']);
-				$data[$count]['type'] = $query->highlightMatches($gtdata['type']);
-				$data[$count]['userupdate'] = $gtdata['userupdate'];
-				$data[$count]['userplantname'] = $query->highlightMatches($uplantname);
-				$data[$count]['sysname'] = $sysname;
-				$data[$count]['subsysname'] = $subsysname;
-				$data[$count]['title'] = $query->highlightMatches($gtdata['title']);
-				$data[$count]['score'] = $result->score;	
-				$count++;
+				$this->view->searchData = $data;
+				$this->view->tgr = $i-1;
 			}
-			$appath = substr(APPLICATION_PATH,0,strlen(APPLICATION_PATH)-12);
-			$path = $appath . DIRECTORY_SEPARATOR . "search" . DIRECTORY_SEPARATOR . "forum";
-			$forumIndex = Zend_Search_Lucene::open($path);
-			
-			$results = $forumIndex->find($query);
-			
-			$forummodel = new Model_DbTable_Forum_Data();
-			$postmodel = new Model_DbTable_Forum_Posts();
-			$topicsmodel = new Model_DbTable_Forum_Topics();
 			
 			$count = 0;
-			foreach($results as $result)
+			
+			if($cat == "forum")
 			{
 				
-				$fdata[$count]['post_id'] = $result->post_id;
-				$pid = $fdata[$count]['post_id'];
-				$post = $postmodel->getPost($pid);
-				$fid = $post['forum_id'];
-				$tid = $post['topic_id'];
-				$uid = $post['poster_id'];
-				$topic = $topicsmodel->getTopic($tid);
-				$topicname = $topic['topic_title'];
-				$forum = $forummodel->getForum($fid);
-				$forumname = $forum['forum_name'];
+				$appath = substr(APPLICATION_PATH,0,strlen(APPLICATION_PATH)-12);
+				$path = $appath . DIRECTORY_SEPARATOR . "search" . DIRECTORY_SEPARATOR . "forum";
+				$forumIndex = Zend_Search_Lucene::open($path);
 				
-				$fdata[$count]['url'] = "http://localhost/hivelive/public/forum/viewtopic.php?f=" .$fid ."&t=".$pid;
-				$fdata[$count]['post_id'] = $pid;
-				$fdata[$count]['topic_id'] = $tid;
-				$fdata[$count]['forum_id'] = $fid;
-				$fdata[$count]['poster_id'] = $uid;
-				$fdata[$count]['post_subject'] = $post['post_subject'];
-				$fdata[$count]['post_text'] = $post['post_text'];
-				$fdata[$count]['topicname'] = $topicname;
-				$fdata[$count]['forumname'] = $forumname;
-				$fdata[$count]['userplantname'] = $uplantname;
+				$results = $forumIndex->find($query);
 				
-							
-				$count++;
+				$forummodel = new Model_DbTable_Forum_Data();
+				$postmodel = new Model_DbTable_Forum_Posts();
+				$topicsmodel = new Model_DbTable_Forum_Topics();
+				$umodel = new Model_DbTable_Userprofile();
+				$plantmodel = new Model_DbTable_Plant();
+				
+				$i=1;
+				foreach($results as $result)
+				{
+						
+					if($i<$ll || $i > $ul)
+					{
+						continue;
+					}
+					$i++;
+					$fdata[$count]['post_id'] = $result->post_id;
+					$pid = $fdata[$count]['post_id'];
+					$post = $postmodel->getPost($pid);
+					$fid = $post['forum_id'];
+					$tid = $post['topic_id'];
+					$uid = $post['poster_id'];
+					
+					$user = $umodel->getUser($uid);
+					$uplant = $plantmodel->getPlant($user['plantId']);
+					$uplantname = $uplant['plantName'];
+					$topic = $topicsmodel->getTopic($tid);
+					$topicname = $topic['topic_title'];
+					$forum = $forummodel->getForum($fid);
+					$forumname = $forum['forum_name'];
+					
+					$fdata[$count]['url'] = "/forums/viewtopic.php?f=" .$fid ."&t=".$pid;
+					$fdata[$count]['post_id'] = $pid;
+					$fdata[$count]['topic_id'] = $tid;
+					$fdata[$count]['forum_id'] = $fid;
+					$fdata[$count]['poster_id'] = $uid;
+					$fdata[$count]['post_subject'] = $post['post_subject'];
+					$fdata[$count]['post_text'] = $post['post_text'];
+					$fdata[$count]['topicname'] = $topicname;
+					$fdata[$count]['forumname'] = $forumname;
+					$fdata[$count]['userplantname'] = $uplantname;
+					
+								
+					$count++;
+					
+				}
+				
+				$this->view->forumData = $fdata;
+				$this->view->fgr = $i-1;
 			}
 			$this->view->queryStr = $queryStr;
-			$this->view->searchData = $data;
-			$this->view->forumData = $fdata;
-			$t2=time();
-			echo "Mass ".$t2-$t1;	                	 
+			$t2=time();	                	 
 		}
 
    	}
@@ -187,14 +225,11 @@ class SearchController extends Zend_Controller_Action
 			$subsysname = $subsysname['subSysName'];
 			$doc = new Zend_Search_Lucene_Document();
 			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('dataid',$list['id']));
-			/*$doc->addField(Zend_Search_Lucene_Field::UnIndexed('gtid',$list['gtid']));
-			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('updatedate',$list['updatedate']));*/
+			
 			$doc->addField(Zend_Search_Lucene_Field::UnStored('title',$list['title']));
 			$doc->addField(Zend_Search_Lucene_Field::UnStored('data',$list['data']));
 			$doc->addField(Zend_Search_Lucene_Field::UnStored('type',$list['type']));
-			/*$doc->addField(Zend_Search_Lucene_Field::UnIndexed('userupdate',$list['userupdate']));
-			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('sysId',$list['sysId']));  
-			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('subSysId',$list['subSysId']));*/
+			
 			$doc->addField(Zend_Search_Lucene_Field::UnStored('sysname',$sysname));  
 			$doc->addField(Zend_Search_Lucene_Field::UnStored('subsysname',$subsysname));
 			$doc->addField(Zend_Search_Lucene_Field::UnStored('userplantname',$uplantname));
@@ -232,17 +267,14 @@ class SearchController extends Zend_Controller_Action
 			
 			$plant = $plantmodel->getPlant($poster['plantId']);
 			$uplantname = $plant['plantName'];
-			/*$doc->addField(Zend_Search_Lucene_Field::Keyword('url',
-			"/forums/viewtopic.php?f=" .$list['forum_id'] ."&t=".$list['post_id']));*/
+			
 			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('post_id',$list['post_id']));
-			/*$doc->addField(Zend_Search_Lucene_Field::UnIndexed('forum_id',$list['forum_id']));
-			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('topic_id',$list['topic_id']));
-			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('poster_id',$list['poster_id']));*/
+			
 			$doc->addField(Zend_Search_Lucene_Field::UnStored('post_subject',$list['post_subject']));
 			$doc->addField(Zend_Search_Lucene_Field::UnStored('post_text',$list['post_text']));
 			$doc->addField(Zend_Search_Lucene_Field::UnStored('topicname',$topicname));
 			$doc->addField(Zend_Search_Lucene_Field::UnStored('forumname',$forumname));
-			//$doc->addField(Zend_Search_Lucene_Field::Text('postername',$postername));
+			
 			$doc->addField(Zend_Search_Lucene_Field::UnStored('userplantname',$uplantname));
 			$index->addDocument($doc);
 			}

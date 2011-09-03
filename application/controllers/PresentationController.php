@@ -63,7 +63,7 @@ class PresentationController extends Zend_Controller_Action
 								'content' => $pdata
 							);
 				        	$userp->insert($columns);
-							$this->_redirect('/gasturbine/view?id='.$formData['GTId']);
+							$this->_redirect('/gasturbine/view?id='.$formData['GTId'].'#ui-tabs-5');
 						}
 						else {
 							$this->view->message = "File Type Not Allowed";
@@ -114,6 +114,20 @@ class PresentationController extends Zend_Controller_Action
 		$this->view->browserfilename = $filename;
 		$this->view->origfilepath = $appath . $filename;
     }
+	
+	public function deleteAction()
+	{
+		if($this->getRequest()->isPost())
+		{
+			
+			$id = $this->getRequest()->getPost('id');
+			$presmodel = new Model_DbTable_Presentation();
+			$pres = $presmodel->getPresentation($id);
+			$gtid = $pres['GTId'];
+			$presmodel->delete('presentationId =' . (int) $id);
+			$this->_redirect("/gasturbine/view?id=".$gtid."#ui-tabs-5");
+		}
+	}
 
 
 }

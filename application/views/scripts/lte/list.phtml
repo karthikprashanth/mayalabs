@@ -1,4 +1,9 @@
-<?php print_r($this->upgrades) ?>
+<?php
+	if(!count($this->ltes))
+	{
+		echo "<center>No LTEs Added</center>";
+	}
+?>
 
 <table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
 <tr>

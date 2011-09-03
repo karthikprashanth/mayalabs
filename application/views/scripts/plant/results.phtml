@@ -24,6 +24,7 @@
 				<tr><td>Location : </td><td><?php echo $result['corporateState'] . " , " . $result['corporateCountry']; ?></td></tr>
 				<tr><td>Website : </td><td><a href = "http://<?php echo $result['plantWebsite']; ?>"><?php echo $result['plantWebsite'];?></a></td></tr>
 				<tr><td>GT Model : </td><td><?php echo $result['GTBaseModel']; ?></td></tr>				
+				<tr><td>Gasturbines : </td><td><?php echo $result['numOfGT'];?>(<a href = "/gasturbine/plantlist?id=<?php echo $result['plantId']; ?>">View</a>)</td></tr>
 				</tbody>
 				</table>
 				<?php if($usercount != 0) : ?>
