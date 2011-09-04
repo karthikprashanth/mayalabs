@@ -186,13 +186,13 @@
             	if($uDet['plantId'] != 1)
 				{
 	                echo "<b>" .$listcat[$list['category']]."</b> - <b><a href=$url>" . $catname . "</a></b><i> was  " . $edit[$list['edit']] . "</i>" . $gextra . $gtdataextra .
-	                "<br><b>Gasturbine</b> : <a href = 'gasturbine/view?id=$datagtid'>$datagtname</a>" . 
+	                "<br><b>Gasturbine</b> : <a href = '/gasturbine/view?id=$datagtid'>$datagtname</a>" . 
 	                "<br><font size = 2><i>by <a href = '/userprofile/view?id=" . $list['userupdate'] ."'>" .$uDet['firstName'] . " " . $uDet['lastName'] . " - <a href='/plant/view?id=" .$uDet['plantId'] ."'>" . $plantname."</i></font></a>";
 				}
 				else
 				{
 					echo "<b>" . $listcat[$list['category']]."</b> - <b><a href=$url>" . $catname . "</a></b><i> was  " . $edit[$list['edit']] . "</i>" . $gextra . $gtdataextra .
-					"<br><b>Gasturbine</b> : <a href = 'gasturbine/view?id=$datagtid'>$datagtname</a>" . 
+					"<br><b>Gasturbine</b> : <a href = '/gasturbine/view?id=$datagtid'>$datagtname</a>" . 
 	                "<br><font size = 2>by <i>" .$uDet['firstName'] . " " . $uDet['lastName'] . " - " . $plantname."</i></font></a>";
 				}
             } else {

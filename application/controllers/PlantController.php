@@ -209,17 +209,22 @@ class PlantController extends Zend_Controller_Action
     {
         $this->_helper->getHelper('layout')->disableLayout();
         $term = $this->_getParam('term');
-		
+		$ll = $this->_getParam('ll');
+		$ul = $this->_getParam('ul');
         $pmodel = new Model_DbTable_Plant();
         $results = $pmodel->getSearchResults($term);
+		$this->view->term = $term;
 		if($term == NULL)
 		{
 			$select = $pmodel->select()->order('plantName');
-			$results = $pmodel->fetchAll($select);
+			$results = $pmodel->getAllPlants();
 		}
         $this->view->results = $results;
+		$this->view->resultcount = $pmodel->getCount();
         $umodel = new Model_DbTable_Userprofile();
         $this->view->usermodel = $umodel;
+		$this->view->ll = $ll;
+		$this->view->ul = $ul;
 		
     }
 }

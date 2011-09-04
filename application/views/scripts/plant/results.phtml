@@ -1,9 +1,17 @@
-<?php foreach($this->results as $result) :?>
+<?php 
+$j=1;
+foreach($this->results as $result) :?>
 <?php 
 	if($result['plantId'] == 1)
 	{
 		continue;
 	}
+	if($j < $this->ll || $j > $this->ul)
+	{
+		$j++;
+		continue;
+	}
+	$j++;
 	$umodel = $this->usermodel;
 	$userlist = $umodel->getUserList($result['plantId']);
 	$usercount = count($userlist);
@@ -14,6 +22,9 @@
 	}
 	$userdet = $userdet . "</tbody></table>";
 ?>
+	<div id = "term" style = "display:none">
+		<?php echo $this->term; ?>
+	</div>
 	<div class = 'clist-result' onmouseover="glow(this,'f0f7ec'); this.style.borderLeft='solid 2px #2e4e68';" onmouseout="unglow(this); this.style.borderLeft='none';">
 			<a href = "/plant/view?id=<?php echo $result['plantId']?>"><span style='font-size: 16px;'><?php echo $result['plantName'];?></span></a>
 			<span class='hide_view result-show' onClick = "showplantdet(<?php echo $result['plantId'];?>)" id = "plantdd<?php echo $result['plantId'];?>">Show Details &gt;&gt;</span>
@@ -33,6 +44,26 @@
 			</div>
 	</div>
 <?php endforeach; ?>
+<?php
+	if($this->term != "")
+	{
+		$this->resultcount = count($this->results);
+	}
+	$i = 1;
+	$max = $this->resultcount;
+	$n = (int)($max/10);
+	if($max % 10 != 0)
+	{
+		$n++;
+	}
+	if($n != 1)
+	{
+		for($i=1;$i<=$n;$i++)
+		{
+			echo "<a id = 'clistpaginate' onclick = 'clistpaginate($i)'>" . $i . "</a>&nbsp;&nbsp;";
+		}	
+	}
+?>
 <script type = "text/javascript">
 	function loadusers(pid) {
 		if(document.getElementById("userdropdown"+pid).innerHTML == "View &gt;&gt;"){
@@ -58,5 +89,22 @@
 			document.getElementById("plantdd"+pid).style.color='#83ac52';
 			document.getElementById("plantdd"+pid).innerHTML = "Show Details &gt;&gt;";
 		}
-	}	
+	}
+	
+	function clistpaginate(i)
+	{
+		var ll = (i-1) * 10;
+		var ul = ll + 10;
+		ll = ll + 1;
+		var query = document.getElementById("term").innerHTML;
+		$.ajax({
+            data: "term=" + query + "&ll=" + ll + "&ul=" + ul,
+            url: "/plant/results",
+            success: function(msg){
+                if (msg != ''){
+                    $("#result").html(msg);   
+                }
+            }
+        });
+	}
 </script>

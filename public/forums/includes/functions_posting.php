@@ -1808,11 +1808,9 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
         $data['post_id'] = $db->sql_nextid();
 		
 		$topicid = $data['topic_id'];
-		$con = mysql_connect("localhost","root","");
-		mysql_select_db("hive");
 		$sql = "SELECT * FROM forum_posts WHERE topic_id = " . $topicid;
-		$result = mysql_query($sql);
-		while($post = mysql_fetch_assoc($result))
+		$result = $db->sql_query($sql);
+		while($post = $db->sql_fetch_assoc($result))
 		{
 			$sql = "INSERT INTO search_post_index(post_id,topic_id,forum_id,poster_id,post_subject,post_text) VALUES(" . $post['post_id'] . "," . $topicid . "," . $post['forum_id'] . "," . $user->data['user_id'] . ",'" . $post['post_subject'] . "','" . $post['post_text'] . "')";
 			$r = $db->sql_query($sql);
@@ -1904,7 +1902,7 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
 			$postDet = $db->sql_fetchrow($result);
 			$postSub = $postDet['post_subject'];
 			$postText = $postDet['post_text'];
-            $sql = "INSERT INTO search_post_index VALUES(" . $catId . "," . $topicId . "," . $forumId . "," . $user->data['user_id'] . ",'" . $postSub . "','" . $postText . "')";
+            $sql = "INSERT INTO search_post_index(post_id,topic_id,forum_id,poster_id,post_subject,post_text) VALUES(" . $catId . "," . $topicId . "," . $forumId . "," . $user->data['user_id'] . ",'" . $postSub . "','" . $postText . "')";
 			$db->sql_query($sql);
 			
        	}

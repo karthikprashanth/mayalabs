@@ -16,13 +16,14 @@
 	echo "<div style='clear:both; height:10px;'>&nbsp</div>";
 	echo "</div>";	
 	echo "<div id = 'result'></div>";
+	
 ?>
 
 <script type = "text/javascript">
 	$(document).ready(function(){
 		text = document.getElementById("ac1").value;
 		$.ajax({
-            data: "term=" + text,
+            data: "term=" + text + "&ll=1" + "&ul=10",
             url: "/plant/results",
             success: function(msg){
                 if (msg != ''){
@@ -35,7 +36,7 @@
 			{
 				text = document.getElementById("ac1").value;
 				$.ajax({
-	            data: "term=" + text,
+	            data: "term=" + text + "&ll=1" + "&ul=10",
 	            url: "/plant/results",
 	            success: function(msg){
 	                if (msg != ''){
@@ -48,7 +49,7 @@
 		$(".ui-autocomplete").click(function() {
 			text = document.getElementById("ac1").value;
 	   		$.ajax({
-	            data: "term=" + text,
+	            data: "term=" + text + "&ll=1" + "&ul=10",
 	            url: "/plant/results",
 	            success: function(msg){
 	                if (msg != ''){
@@ -58,5 +59,20 @@
 	        });
 		});	
 	});	
-	
+	function clistpaginate(i)
+	{
+		var ll = (i-1) * 10;
+		var ul = ll + 10;
+		ll = ll + 1;
+		var query = document.getElementById("ac1").innerHTML;
+		$.ajax({
+            data: "term=" + query + "&ll=" + ll + "&ul=" + ul,
+            url: "/plant/results",
+            success: function(msg){
+                if (msg != ''){
+                    $("#result").html(msg);   
+                }
+            }
+        });
+	}
 </script>

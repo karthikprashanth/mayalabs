@@ -63,8 +63,9 @@ class Model_DbTable_Plant extends Zend_Db_Table_Abstract {
     
     public function getSearchResults($term) {
     	try {
+    	
         $dbAdapter = Zend_Db_Table_Abstract::getDefaultAdapter();
-        $stmt = $dbAdapter->query("SELECT * FROM plants WHERE plantName like '".$term."%' ORDER BY plantName");
+        $stmt = $dbAdapter->query("SELECT * FROM plants WHERE plantName like '%".$term."%' ORDER BY plantName");
         $row = $stmt->fetchAll();
         return $row;
         }
@@ -72,6 +73,26 @@ class Model_DbTable_Plant extends Zend_Db_Table_Abstract {
             echo $e;
         }
     } 
+	
+	public function getAllPlants()
+	{
+		try {
+    	
+        $dbAdapter = Zend_Db_Table_Abstract::getDefaultAdapter();
+        $stmt = $dbAdapter->query("SELECT * FROM plants ORDER BY plantName");
+        $row = $stmt->fetchAll();
+        return $row;
+        }
+        catch(Exception $e) {
+            echo $e;
+        }
+	}
+	
+	public function getCount()
+	{
+		$row = $this->fetchAll();
+		return count($row);
+	}
 }
 
 ?>

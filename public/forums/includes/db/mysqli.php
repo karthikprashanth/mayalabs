@@ -463,6 +463,12 @@ class dbal_mysqli extends dbal
 			break;
 		}
 	}
+
+	function sql_fetch_assoc($result)
+	{
+		$r = @mysqli_fetch_assoc($this->db_connect_id,$result);
+		return $r;
+	}
 }
 
 ?>
