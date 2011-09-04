@@ -18,8 +18,14 @@ class NotificationController extends Zend_Controller_Action
     	if(!$this->_request->isXmlHttpRequest()) {
         	$this->_helper->viewRenderer->setResponseSegment('notifications');
         }
+		if($this->_getParam('mode',"") == "paginate")
+		{
+			$this->_helper->getHelper('layout')->disableLayout();
+		}
+		$ul = $this->_getParam('ul',9);
+		$this->view->ul = $ul;
     	$notification = new Model_DbTable_Notification();
-    	$notiList = $notification->getNotifications();
+    	$notiList = $notification->getNotifications($ul);
     	$this->view->notiList = $notiList;
     	$uProfile = new Model_DbTable_Userprofile();
     	$this->view->uProfile = $uProfile;

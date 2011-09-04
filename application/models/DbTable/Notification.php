@@ -15,10 +15,22 @@ class Model_DbTable_Notification extends Zend_Db_Table_Abstract {
         $this->insert($data);
     }
 
-    public function getNotifications() {
+    public function getNotifications($ul) {
 
-        $result = $this->fetchAll($this->select()->order('timeupdate DESC'));
-        return $result->toArray();
+        try {
+    	if($ul == 0)
+		{
+			$ul = 9;
+		}
+        $dbAdapter = Zend_Db_Table_Abstract::getDefaultAdapter();
+        $stmt = $dbAdapter->query("SELECT * FROM notification ORDER BY timeupdate DESC LIMIT 0," . $ul);
+		
+        $row = $stmt->fetchAll();
+        return $row;
+        }
+        catch(Exception $e) {
+            echo $e;
+        }
     }
 
 }

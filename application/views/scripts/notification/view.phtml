@@ -206,13 +206,46 @@
         echo "<span style='margin-left:10px; float:right;'><font size=2 color=#808080><abbr class='timeago' title='$timeiso'>$timenml</abbr></font></span></div>";
 
         $j++;
-        if($j== 11){
-            echo "<span id='note-view' onClick='expandNotification()' class='note-link'>Click to Expand</span><div id='note-hidden' class='hidden'>";
+        if($j == $this->ul+1){
+        	$x = (int)($j/10);
+            echo "<span id='note-view' onClick='showMore($x)' class='note-link'>Show More</span>";
         }
     }
-    if($j>10){
-        echo "</div><span id='note-hide' onClick='reduceNotification()' class='hidden note-link'>Click to Reduce</span>";
+    if($j != 10)
+    {
+    	$x = (int)($j/10)-1;
+		if($j%10 != 0)
+		{
+			$x++;
+		}
+    	echo "<span id='note-view' onClick='showLess($x)' class='note-link'>Show Less</span>";
     }
     ?>
-        </div>
 </div>
+<script type = "text/javascript">
+	function showMore(x)
+	{
+		var upperlimit = ((x*10)-1)+10;
+		$.ajax({
+            data: "ul=" + upperlimit + "&mode=paginate",
+            url: "/notification/view",
+            success: function(msg){
+                if (msg != ''){
+                    $("#notifications").html(msg);
+                }
+            }
+        });		
+	}
+	function showLess(x)
+	{
+		$.ajax({
+            data: "ul=" + ((x*10)-1) + "&mode=paginate",
+            url: "/notification/view",
+            success: function(msg){
+                if (msg != ''){
+                    $("#notifications").html(msg);
+                }
+            }
+        });		
+	}
+</script>

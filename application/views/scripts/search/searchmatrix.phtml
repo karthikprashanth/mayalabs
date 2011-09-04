@@ -12,17 +12,116 @@
 	{
 		echo "<div style = 'display:none' id = 'subsys" . $list['id'] . "'>" . $list['subSysName'] . "</div>";
 	}
-	
+	echo "<div style = 'display:none' id = 'query'>" . $this->query . "</div>";
 ?>
-<center><button id = 'submitbutton'>Search</button></center>
+<div class="hm-search ui-corner-all" style="margin-bottom: 20px;">
+    <div style="padding: 10px; font-family:arial,helvetica,verdana,sans-serif; font-size: 20px; color: #2e4e68; background: url(../images/bulb.png) left no-repeat; padding-left: 40px;">Query the <span style="color: #3f6413">hive</span> knowledge base</div>
+    <form action = "/search/index" method='get' onsubmit = "return false">
+        <input type="text" id="keyword" name="keyword" class='ui-corner-left' value="<?php if(isset($this->keyword))echo $this->keyword;else echo "Type Keywords to Search..."; ?>" onfocus="focusfunc()" onblur="if (this.value == '') {this.value = 'Type Keywords to Search...';}"/>
+        <input type="submit" id = "subbutton" value="" onclick = 'checktext()' style='-moz-border-radius-topleft: 0px; -moz-border-radius-bottomleft: 0px; -webkit-border-bottom-left-radius: 0px; -khtml-border-top-left-radius: 0px; -khtml-border-bottom-left-radius: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;'/>
+		<div id="advancedSearch" class="hidden" style="margin-bottom: 10px;"><?php echo $this->advSearch; ?>			
+			<div id="removeAdvancedSearch" style="float:right; color: #2e4e68; padding: 5px; margin-right: 7px;" class='hidden'><a href="#" onclick="normalSearch();" style="text-decoration: none;">Hide Options</a></div>			
+		</div>		
+	</form>
+    <div id="displayAdvancedSearch" style="float:right; color: #2e4e68; padding: 5px; margin-right: 7px;"><a href="#" onclick="advancedSearch();" style="text-decoration: none;">Advanced Search</a></div>
+    <div style="clear:both;height:5px;">&nbsp;</div>
+</div>
+<div style = "display:none" id = 'nature'><?php echo $this->nature;?></div>
+<?php if($this->nature == "toggle") : ?>
 <li><a id = "gtresults" href = '#'>GT Data</a></li><br>
 <li><a id = "forumresults" href = '#'>Forums</a></li>
-
+<?php endif; ?>
 <div id = "results"></div>
 
 
 <script type = "text/javascript">
-	
+	function checktext()
+		{
+			var text = document.getElementById("keyword").value;
+			var query = document.getElementById("query").value;
+			if(text != "Type Keywords to Search...")
+			{
+				sendData();
+			}
+			if(query != "")
+			{
+				sendData();
+			}
+		}
+		function focusfunc()
+		{
+			if(document.getElementById("keyword").value == 'Type Keywords to Search...') 
+			{
+				document.getElementById("keyword").value = '';
+			}
+		}
+		function sendData()
+		{
+		
+			var query = document.getElementById("query").innerHTML;
+	    	var text = document.getElementById("keyword").value;
+	    	if(text == "Type Keywords to Search...")
+			{
+				text = "";
+			}
+	    	if(text != null && text != "")
+	    	{
+	    		query = text;
+	    	}
+	    	var plantname = document.getElementById("plantname").value;
+	    	
+	    	var type = document.getElementById("type").value;
+	    	var sysname = "";
+	    	var subsysname = "";
+	    	var sysid = document.getElementById("sysId").value;
+	    	var sysobj = document.getElementById("sys"+sysid);
+	    	if(sysobj != null)
+	    	{
+	    		sysname = document.getElementById("sys"+sysid).innerHTML;	
+	    		
+	    	}
+	        var subsysid = document.getElementById("subSysId").value;
+	        var subsysobj = document.getElementById("subsys"+subsysid);
+	        if(subsysobj != null)
+	        {
+	        	subsysname = document.getElementById("subsys"+subsysid).innerHTML;
+	        	
+	        }
+	  		window.location = "/search/index?keyword=" + query + "&plantname=" + plantname
+	  		+"&type=" + type + "&sysname=" + sysname + "&subsysname=" + subsysname + "&nature=toggle";
+		}
+		$("#searchform").submit( function() {
+			return false;
+		});
+		$("#gtresults").click( function(event) {
+			var query;
+			query = document.getElementById("query").innerHTML;
+	        $.ajax({
+	            data: "keyword=" + query + "&ll=1" + "&ul=10" + "&cat=gt",
+	            url: "/search/view",
+	            success: function(msg){
+	                if (msg != ''){
+	                    $("#results").html(msg);
+	                    
+	                }
+	            }
+	        });
+		});
+		$("#forumresults").click( function(event) {
+			var query;
+			query = document.getElementById("query").innerHTML;
+	    	
+	        $.ajax({
+	            data: "keyword=" + query + "&ll=1" + "&ul=10" + "&cat=forum",
+	            url: "/search/view",
+	            success: function(msg){
+	                if (msg != ''){
+	                    $("#results").html(msg);
+	                    
+	                }
+	            }
+	        });
+		});
 	$(document).ready(function(){
 		$("#gtresults").click( function(event) {
 			var query = "";

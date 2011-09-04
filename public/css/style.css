@@ -753,3 +753,10 @@ a:hover{
 	padding: 5px;
 	border-bottom: solid 1px #2e4e68;
 }
+
+.search-highlighter
+{
+	font-weight: bold;
+	color: #1A4C80;
+	background-color : #c1e199;
+}

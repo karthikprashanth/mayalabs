@@ -42,13 +42,15 @@ class SearchController extends Zend_Controller_Action
 		{
 			$this->view->keyword = $_GET['keyword'];
 		}
+		$this->view->nature = $this->_getParam('nature');
     }
 	
 	public function searchmatrixAction()
 	{
 		$searchForm = new Form_SearchForm();
 		$searchForm->showfilters();
-		$this->view->form = $searchForm;
+		$searchForm->removeElement('keyword');
+		$this->view->advSearch = $searchForm;
 	}
 	
 	public function viewAction()
@@ -185,7 +187,14 @@ class SearchController extends Zend_Controller_Action
 				
 				$this->view->forumData = $fdata;
 				$this->view->fgr = $i-1;
+				
 			}
+			if($ul > $i)
+			{
+				$ul = $i-1;
+			}
+			$this->view->ll = $ll;
+			$this->view->ul = $ul;
 			$this->view->queryStr = $queryStr;
 			$t2=time();	                	 
 		}
