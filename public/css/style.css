@@ -271,7 +271,6 @@ p
     margin-top:-30px;
     height: 30px;
     width: 100%;
-/*    padding-top: 10px;*/
     border-top:solid 5px #83ac52;
     font: 13px "Calibri",Arial,Helvetica,sans-serif;
     color: #FFF;
@@ -591,8 +590,7 @@ input.search-go {
 /* Search-Results */
 
 #search-results{
-	margin: 0 0 0 0;	
-	width:575px;
+	margin: 0 0 0 0;
 }
 
 .search-result{
@@ -663,7 +661,7 @@ input[type="submit"], button{
 	border: solid 1px #2e4e68;
 }
 
-#add-bookmark:hover, #remove-bookmark:hover, .gt-report:hover{
+#add-bookmark:hover, #remove-bookmark:hover, .gt-report:hover, .user-save:hover{
 	background-color: #789dbb;
 }
 
@@ -673,7 +671,7 @@ input[type="submit"], button{
 	border: solid 1px #273c0e;
 }
 
-.gt-configure:hover{
+.gt-configure:hover, .reset-button:hover{
 	background-color: #9cbb77;
 }
 
@@ -759,4 +757,57 @@ a:hover{
 	font-weight: bold;
 	color: #1A4C80;
 	background-color : #c1e199;
+}
+
+/*
+Conference
+*/
+
+.a-add{
+    background: #ecf1e4 url('../images/gt-add.png') -5px no-repeat;
+    color: #68873a;
+    border: solid 1px #68873a;
+    padding: 5px;
+    margin-left: 10px;
+}
+
+.a-add:hover{
+    background-color: #9cbb77;
+    color: #fff;
+}
+
+.a-edit{
+    background: url('../images/gt-edit.png') -5px no-repeat;
+    border: solid 1px #a64324;
+    padding: 5px;
+    margin-left: 10px;
+}
+
+.a-delete{
+    background: #f8f1ef url('../images/gt-delete.png') -5px no-repeat;
+    color: #a64324;
+    border: solid 1px #a64324;
+    padding: 5px;
+    margin-left: 10px;
+}
+
+.a-delete:hover{
+    background-color: #e08c74;
+    color: #fff;
+}
+
+/*
+Administration
+*/
+
+.user-save{
+    background: #477396 url('../images/user-save.png') left no-repeat;
+    color: #fff;
+    border: solid 1px #2e4e68;
+}
+
+.reset-button{
+    background: #719b3e url('../images/reset.png') left no-repeat;
+    color: #fff;
+    border: solid 1px #273c0e;
 }

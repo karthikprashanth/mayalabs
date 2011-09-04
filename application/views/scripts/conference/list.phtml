@@ -63,7 +63,7 @@ $pres = $pres . "<br><br><form action = '" . $this->baseUrl . "/conference/addpr
 if ($i == 0) {
     $pres = NULL;
     $pres = $pres . "<center>No presentations available";
-    $pres = $pres . "<br><br><form action = '" . $this->baseUrl . "/conference/addpresentation?id=".$this->id."' method = 'post'><input type = 'submit' name = 'add' value = 'Add New Presentation'></form></center>";
+    $pres = $pres . "<br><br><form action = '" . $this->baseUrl . "/conference/addpresentation?id=".$this->id."' method = 'post'><input class='gt-add' type = 'submit' name = 'add' value = 'Add New Presentation'></form></center>";
 }
 $this->tabPane("confdata", $synopsis, array('title' => 'Synopsis'));
 $this->tabPane("confdata", $empty, array('title' => 'Schedule', 'contentUrl' => "/schedule/view?id=$this->id"));

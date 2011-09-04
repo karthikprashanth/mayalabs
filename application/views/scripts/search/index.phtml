@@ -26,9 +26,25 @@
     <div style="clear:both;height:5px;">&nbsp;</div>
 </div>
 <div style = "display:none" id = 'nature'><?php echo $this->nature;?></div>
+
 <?php if($this->nature == "toggle") : ?>
-<li><a id = "gtresults" href = '#'>GT Data</a></li><br>
-<li><a id = "forumresults" href = '#'>Forums</a></li>
+<!--<div id="tabs">
+<ul>
+<li><a id = "gtresults" href = '#tabs-1'>GT Data</a></li>
+<li><a id = "forumresults" href = '#tabs-2'>Forums</a></li>
+</ul>
+<div id="tabs-1"></div>
+<div id="tabs-2"></div>
+</div>-->
+<div style="clear:both;"></div>
+<div style="margin-left: 25px;">
+<?php
+$this->tabPane("searchresult", $gtdata, array('title' => 'GT Data'));
+$this->tabPane("searchresult", $forum, array('title' => 'Forums'));
+
+echo $this->tabContainer("searchresult", array());
+?>
+</div>
 <?php endif; ?>
 <div id = "results"></div>
 
@@ -158,5 +174,4 @@
 	        });
 	   });
 		});
-	
 </script>

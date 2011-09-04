@@ -17,13 +17,6 @@ if ($this->schCount == 0) {
 }
 
 echo "<h3>Conference held from " . $this->eventDet['first_day'] . " to " . $this->eventDet['last_day'] . "</h3>";
-$role = Zend_Registry::get('role');
-if($role == 'sa')
-{
-	echo "<a href = '/schedule/edit?id=" . $this->id . "'>Edit Schedule</a>";
-	echo "<a href = '/schedule/delete?id=" . $this->id . "'>Delete Schedule</a>";
-	echo "<a href = '/schedule/add-event-list?id=" . $this->id . "&n=1'>Add a new event</a>";
-}
 echo "<table id='tables2' class='tablesorter'>";
 echo "<thead><tr>";
 echo "<th>No.</th>";
@@ -42,4 +35,11 @@ foreach ($this->eventList as $eList) {
     $i++;
 }
 echo "</tbody></table>";
+$role = Zend_Registry::get('role');
+if($role == 'sa')
+{
+	echo "<a class='a-edit ui-corner-all' href = '/schedule/edit?id=" . $this->id . "'>&nbsp;Edit Schedule</a>";
+	echo "<a class='a-delete ui-corner-all' href = '/schedule/delete?id=" . $this->id . "'>&nbsp;Delete Schedule</a>";
+	echo "<a class='a-add ui-corner-all' href = '/schedule/add-event-list?id=" . $this->id . "&n=1'>&nbsp;Add a new event</a>";
+}
 ?>
