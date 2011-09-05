@@ -15,10 +15,10 @@
 			foreach($this->gt as $gt){
 				$id = $gt['GTId'];
 				$name = $gt['GTName'];
-				echo "<a href= '/gasturbine/view?id=$id' style='margin:0; padding:0; font-size:11px; font-weight:normal;'>$name</a>";
-				echo " <a href='/gasturbine/view?id=$id#ui-tabs-2' style='margin:0; padding:0; font-size:11px; color:#77b464;'>F</a>";
-				echo " <a href='/gasturbine/view?id=$id#ui-tabs-3' style='margin:0; padding:0; font-size:11px; color:#268fbb;'>U</a>";
-				echo " <a href='/gasturbine/view?id=$id#ui-tabs-4' style='margin:0; padding:0; font-size:11px; color:#e5a440;'>L</a><br/>";
+                                $links = " <a href='/gasturbine/view?id=$id#ui-tabs-2' style='margin:0; padding:0; font-size:11px; color:#4b6a25;'>Findings</a>";
+                                $links = $links. " <a href='/gasturbine/view?id=$id#ui-tabs-2' style='margin:0; padding:0; font-size:11px; color:#2e4e68;'>Upgrades</a>";
+                                $links = $links. " <a href='/gasturbine/view?id=$id#ui-tabs-4' style='margin:0; padding:0; font-size:11px; color:#e5a440;'>LTE</a>";
+				echo "<a class='colorTipContainer' href= '/gasturbine/view?id=$id' title=\"$links\" style='margin:0; padding:0; font-size:11px; font-weight:normal;'>$name</a>";
 			}
 		?>
         </p></span>

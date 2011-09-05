@@ -25,7 +25,7 @@
 <form action="<?php echo $this->url(array('action'=>'deleteacc')); ?>" method="post">
 <input type="hidden" name="id" value="<?php echo $this->escape($user['id']);?>" />
 <?php if($user['role'] == 'sa') : ?>
-<input type="submit" name="del" value="Delete"	/>
+<input class='gt-delete' type="submit" name="del" value="Delete"	/>
 <?php endif; ?>
 </form>
 
@@ -33,7 +33,7 @@
 <td>
 <form action="<?php echo $this->url(array('action'=>'resetpassword')); ?>" method="post">
 <input type="hidden" name="id" value="<?php echo $this->escape($user['id']);?>" />
-<input type="submit" name="resetpass" value="Reset Password" />
+<input class="reset-button" type="submit" name="resetpass" value="Reset Password" />
 </form>
 </td>
 
@@ -42,13 +42,13 @@
 	if($this->validcc==0){
 		
 		echo "<td><form action = '/administration/setcc?id=".$user['id']."' method='post'>";
-		echo "<input type='submit' name='setcc' value = 'Set Conference Chairman'>";
+		echo "<input class='gt-add' type='submit' name='setcc' value = 'Set Conference Chairman'>";
 		echo "</form></td>";
 	}
 	else{
 		if($this->validcc==$user['id']){
 			echo "<td><form action = '/administration/unsetcc?id=".$user['id']."' method='post'>";
-			echo "<input type='submit' name='setcc' value = 'Unset Conference Chairman'>";
+			echo "<input class='gt-delete' type='submit' name='setcc' value = 'Unset Conference Chairman'>";
 			echo "</form></td>";
 		}
 	}
