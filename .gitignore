@@ -4,3 +4,5 @@ library/
 public/forums/cache/
 public/random/
 search/
+public/pdfgen/reports/
+
