@@ -316,7 +316,9 @@ class AdministrationController extends Zend_Controller_Action {
             $mailbody = $mailbody . "<br/><i>".$list['data']."</i><br/><br/>";
         }
         $mailbody = $mailbody . "</div><div style='border-top: solid 1px #aaa; color:#aaa; padding: 5px;'><center>This is a generated mail, please do not Reply.</center></div></div>";
-
+	$config = array('ssl' => 'tls', 'port' => 587, 'auth' => 'login', 'username' => 'admin@hiveusers.com', 'password' => 'swordfish');
+	$tr = new Zend_Mail_Transport_Smtp('smtp.gmail.com',$config);
+	Zend_Mail::setDefaultTransport($tr);
         $mail = new Zend_Mail();
         $mail->setBodyHtml($mailbody);
         $mail->setFrom('admin@hiveusers.com', 'Hive Users');
