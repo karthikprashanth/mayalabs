@@ -16,7 +16,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         } else {
             Zend_Registry::set('role', 'guest');
         }
-
+		
+		$mailconfig = $this->getOption('mailconfig');
+		Zend_Registry::set('mailconfig',$mailconfig);
+		
         $this->_acl = new Model_HiveAcl();
         Zend_Registry::set('acl', $this->_acl);
 

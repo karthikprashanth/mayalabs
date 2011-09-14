@@ -180,10 +180,13 @@ class UserprofileController extends Zend_Controller_Action {
 					        $mailbody = $mailbody . "<span style='font-size: 26px; color: #83ac52; text-decoration:none;'><b>users.com</b></span></a><br/><br/>Password Changed Successfully</div>";
 					        $mailbody = $mailbody . "<div style='margin-bottom:10px;'><span style='color: #000;'><i>Hello " . $user['firstName'] . "</i>,<br/><br/>Your password has been changed successfully <br/><br/>Please click <a href = 'http://www.hiveusers.com/userprofile/view' style = 'text-decoration:none;'> <b>here<b> </a> to view your profile.</span>";	
 							$mailbody = $mailbody . "</div><div style='border-top: solid 1px #aaa; color:#aaa; padding: 5px;'><center>This is a generated mail, please do not Reply.</center></div></div>";
-							
+							$mcon = Zend_Registry::get('mailconfig');
+							$config = array('ssl' => $mcon['ssl'], 'port' => $mcon['port'], 'auth' => $mcon['auth'], 'username' => $mcon['username'], 'password' => $mcon['password']);
+							$tr = new Zend_Mail_Transport_Smtp($mcon['smtp'],$config);
+							Zend_Mail::setDefaultTransport($tr);
 					        $mail = new Zend_Mail();
 					        $mail->setBodyHtml($mailbody);
-					        $mail->setFrom('admin@hiveusers.com', 'Hive Users');
+					        $mail->setFrom($mcon['fromadd'], $mcon['fromname']);
 					        $mail->addTo($user['email'], $user['firstName']);
 					        $mail->setSubject('Password Changed Successfully');
 					        $mail->send();

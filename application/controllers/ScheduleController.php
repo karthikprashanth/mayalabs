@@ -228,9 +228,13 @@ class ScheduleController extends Zend_Controller_Action
 		            $mailbody = $mailbody . "<span style='font-size: 26px; color: #83ac52; text-decoration:none;'><b>users.com</b></span></a><br/><br/>Conference Notification</div>";
 		            $mailbody = $mailbody . "<div style='margin-bottom:10px;'><span style='color: #000;'><i>Hello</i>,<br/><br/>A new conference has been added<br/>The conference will be held in $place from $fromDate to $toDate</br></br>Please click <a href = 'http://www.hiveusers.com/conference/list?id=$cid'>here</a> to view more details about the conference</span></div>";
 		            $mailbody = $mailbody . "<div style='border-top: solid 1px #aaa; color:#aaa; padding: 5px;'><center>This is a generated mail, please do not Reply.</center></div></div>";
+		            $mcon = Zend_Registry::get('mailconfig');
+					$config = array('ssl' => $mcon['ssl'], 'port' => $mcon['port'], 'auth' => $mcon['auth'], 'username' => $mcon['username'], 'password' => $mcon['password']);
+					$tr = new Zend_Mail_Transport_Smtp($mcon['smtp'],$config);
+					Zend_Mail::setDefaultTransport($tr);
                    	$mail = new Zend_Mail();
 					$mail->setBodyHtml($mailbody);
-					$mail->setFrom('admin@hiveusers.com', 'Hive Users');
+					$mail->setFrom($mcon['fromadd'], $mcon['fromname']);
 					foreach($users as $user)
 					{
 						$mail->addTo($user['email'],$user['firstName']);

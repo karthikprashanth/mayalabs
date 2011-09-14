@@ -18,8 +18,8 @@ $i = 0;
 $gallery = $gallery . "<a href = '/conference/gallery?id=".$conf['cId']."'>Add a new photo</a><br><br>";
 $tag[] = array();
 foreach ($this->confGallery as $photos) {
-
-    $img = 'random/confgal' . $i;
+	$rn = rand(100,999999);
+    $img = 'random/confgal' . $rn;
     file_put_contents($img, $photos['data']);
     $tag[$i] = $photos['tag'];
     $gallery = $gallery . "<a href = '#' onClick = 'javascript:showPhoto($i)'><img src = '/$img' width = 160 height = 120 style = border:none; text-decoration=none;alt = " . $photos['tag'] . "></a>&nbsp;&nbsp;&nbsp;";

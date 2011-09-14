@@ -107,12 +107,13 @@ class Model_DbTable_User extends Zend_Db_Table_Abstract {
             $mailbody = $mailbody . "<div style='margin-bottom:10px;'><span style='color: #000;'><i>Hello</i>,<br/><br/>Your Password has been Reset to <b>" . $rpassword ."</b></span></div>";
             $mailbody = $mailbody . "<div style='border-top: solid 1px #aaa; color:#aaa; padding: 5px;'><center>This is a generated mail, please do not Reply.</center></div></div>";
 
-            $mail = new Zend_Mail();
-            $mail->setBodyHtml($mailbody);
-            $mail->setFrom('admin@hiveusers.com', 'Hive Users');
-            $mail->addTo($user['email'], $user['firstName']);
-            $mail->setSubject('Password Reset');
-            $mail->send();
+            $mcon = Zend_Registry::get('mailconfig');
+			$config = array('ssl' => $mcon['ssl'], 'port' => $mcon['port'], 'auth' => $mcon['auth'], 'username' => $mcon['username'], 'password' => $mcon['password']);
+			$tr = new Zend_Mail_Transport_Smtp($mcon['smtp'],$config);
+			Zend_Mail::setDefaultTransport($tr);
+	        $mail = new Zend_Mail();
+	        $mail->setBodyHtml($mailbody);
+	        $mail->setFrom($mcon['fromadd'], $mcon['fromname']);
 			
             $where = $this->getAdapter()->quoteInto('id = ?', $id);
             $rowaffected = $this->update(array('password' => md5($rpassword . "{" . $id . "}")), array($where));
