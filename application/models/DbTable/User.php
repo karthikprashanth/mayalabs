@@ -130,21 +130,22 @@ class Model_DbTable_User extends Zend_Db_Table_Abstract {
     }
 
     public function deleteAccount($id) {
+    	
         $this->delete('id =' . (int) $id);
         $userProfileModel = new Model_DbTable_Userprofile();
         $userProfileModel->delete('id=' . (int) $id);
         //delete user from forum also
-
+		
         global $phpbb_root_path, $phpEx, $user, $db, $config, $cache, $template;
         define('IN_PHPBB', true);
         define('PHPBB_INSTALLED', true);
+		
         $phpbb_root_path = dirname(__FILE__) . DIRECTORY_SEPARATOR;
         $phpbb_root_path = substr($phpbb_root_path, 0, strlen($phpbb_root_path) - 27);
         $phpbb_root_path = $phpbb_root_path . "public" . DIRECTORY_SEPARATOR . "forums" . DIRECTORY_SEPARATOR;
         include($phpbb_root_path . 'common.php');
         include($phpbb_root_path . '/includes/functions_user.php');
         user_delete("remove", $id);
-
         //-----//
     }
 

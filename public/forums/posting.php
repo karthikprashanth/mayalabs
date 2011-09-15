@@ -1584,12 +1584,10 @@ function handle_post_delete($forum_id, $topic_id, $post_id, &$post_data)
 
 			$next_post_id = delete_post($forum_id, $topic_id, $post_id, $data);
 			
-			require_once("/includes/hivedbinfo.php");
-			$con = mysql_connect($hivedbhost,$hivedbuname,$hivedbpwd);
 	        $sql = "DELETE FROM notification WHERE catid = " . $post_id . " AND category = 'forum_post'";
-	        $result = mysql_query($sql);
+	        $result = $db->sql_query($sql);
 			$sql = "DELETE FROM notification WHERE catid = " . $topic_id . " AND category = 'forum_topic'";
-	        $result = mysql_query($sql);
+	        $result = $db->sql_query($sql);
 			
 			
 			

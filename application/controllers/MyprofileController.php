@@ -16,13 +16,18 @@ class MyprofileController extends Zend_Controller_Action {
             $up = $up->getUser(Zend_Auth::getInstance()->getStorage()->read()->id);
             $name = $up['firstName'] . " " . $up['lastName'];
 			
-			$pid = $up['plantId'];
-			$gtmodel = new Model_DbTable_Gasturbine();
-			$gt = $gtmodel->getGTP($pid);
+			$role = Zend_Registry::get("role");
 			
-			$plantmodel = new Model_DbTable_Plant();
-			$plant = $plantmodel->getPlant($pid);
-			$plantname = $plant['plantName'];
+			if($role != 'sa')
+			{
+				$pid = $up['plantId'];
+				$gtmodel = new Model_DbTable_Gasturbine();
+				$gt = $gtmodel->getGTP($pid);
+				
+				$plantmodel = new Model_DbTable_Plant();
+				$plant = $plantmodel->getPlant($pid);
+				$plantname = $plant['plantName'];
+			}
 
             $this->view->name = $name;
 			$this->view->pid = $pid;

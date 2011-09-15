@@ -49,10 +49,13 @@ class Model_DbTable_Userprofile extends Zend_Db_Table_Abstract {
             
             $mailbody = $mailbody . "<div style='border-top: solid 1px #000; color:#aaa; padding: 5px;'><center>This is a generated mail, please do not Reply.</center></div></div>";
 
-            $mail = new Zend_Mail();
-            $mail->setBodyHtml($mailbody);
-            $mail->setFrom('admin@hiveusers.com', 'Hive Users');
-            $mail->addTo($content['email'], $content['firstName']);
+            $mcon = Zend_Registry::get('mailconfig');
+			$config = array('ssl' => $mcon['ssl'], 'port' => $mcon['port'], 'auth' => $mcon['auth'], 'username' => $mcon['username'], 'password' => $mcon['password']);
+			$tr = new Zend_Mail_Transport_Smtp($mcon['smtp'],$config);
+			Zend_Mail::setDefaultTransport($tr);
+	        $mail = new Zend_Mail();
+	        $mail->setBodyHtml($mailbody);
+	        $mail->setFrom($mcon['fromadd'], $mcon['fromname']);
             $mail->setSubject('Account Information');
             $mail->send();
         } catch (Exception $e) {

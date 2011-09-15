@@ -352,5 +352,76 @@ class AdministrationController extends Zend_Controller_Action {
 		$validcc = $umodel->ccinfo();
         $this->view->validcc = $validcc;
 	}
+	
+	public function dbinitAction()
+	{
+		//delete all users except admin
+		
+		$umodel = new Model_DbTable_User();
+		
+		$users = $umodel->fetchAll();
+		
+		foreach($users as $user)
+		{
+			if($user['id'] == 2)
+				continue;
+			$umodel->deleteAccount($user['id']);
+		}
+		
+		echo "All users except administrator have been deleted<br>";
+		
+		//delete all plants
+		
+		$pmodel = new Model_DbTable_Plant();
+		$pmodel->delete();
+		
+		//delete all gasturbines
+		
+		$gtmodel = new Model_DbTable_Gasturbine();
+		$gtmodel->delete();
+		
+		//delete all gtdata
+		
+		$gtdatamodel = new Model_DbTable_Gtdata();
+		$gtdatamodel->delete();
+		
+		//delete all bookmarks
+		
+		$bmmodel = new Model_DbTable_Bookmark();
+		$bmmodel->delete();
+		
+		//delete all presentations
+		
+		$presmodel = new Model_DbTable_Presentation();
+		$presmodel->delete();
+		
+		//delete all conference
+		
+		$confmodel = new Model_DbTable_Conference();
+		$confmodel->delete();
+		
+		//delete schedule
+		
+		$schedule = new Model_DbTable_Schedule();
+		$schedule->delete();
+		
+		//gallery
+		
+		$gal = new Model_DbTable_Gallery();
+		$gal->delete();
+		
+		//confpres
+		
+		$cpres = new Model_DbTable_ConfPresentation();
+		$cpres->delete();
+		
+		//schevent
+		
+		$schevent = new Model_DbTable_ScheduleEvent();
+		$schevent->delete();
+				
+		
+	}
+	
 
 }
