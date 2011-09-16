@@ -365,7 +365,7 @@ class AdministrationController extends Zend_Controller_Action {
 		{
 			if($user['id'] == 2)
 				continue;
-			$umodel->deleteAccount($user['id']);
+			//$umodel->deleteAccount($user['id']);
 		}
 		
 		echo "All users except administrator have been deleted<br>";
