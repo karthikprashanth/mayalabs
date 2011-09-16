@@ -56,6 +56,7 @@ class Model_DbTable_Userprofile extends Zend_Db_Table_Abstract {
 	        $mail = new Zend_Mail();
 	        $mail->setBodyHtml($mailbody);
 	        $mail->setFrom($mcon['fromadd'], $mcon['fromname']);
+			$mail->addTo($content['email'], $content['firstName']);
             $mail->setSubject('Account Information');
             $mail->send();
         } catch (Exception $e) {
