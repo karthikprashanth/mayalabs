@@ -375,6 +375,44 @@ class AdministrationController extends Zend_Controller_Action {
 		$pmodel = new Model_DbTable_Plant();
 		$pmodel->delete();
 		
+		$data = array(
+			'plantId' => 1,
+			'corporateName' => 'LBTMS',
+			'corporateLocation' => 'Mylapore',
+			'corporateProvince' => 'Chennai',
+			'corporateState' => 'Tamil Nadu',
+			'corporateCountry' => 'India',
+			'corporateZip' => '600004',
+			'corporateTelephone' => '29381903',
+			'corporateFax' => '1232131',
+			'corporateWebsite' => 'www.hiveusers.com',
+			'plantName' => 'Hive',
+			'plantLocation' => 'Chennai',
+			'plantState' => 'Tamil Nadu',
+			'plantCountry' => 'India',
+			'plantZip' => '600004',
+			'plantTelephone' => '1231313',
+			'GTStartMax' => '123',
+			'GTStartMin' => '1232',
+			'GTStartAvg' => '32',
+			'GTTripMax' => '23',
+			'GTTripMin' => '321',
+			'GTTripAvg' => '232',
+			'plantFax' => '123123',
+			'plantWebsite' => 'www.hiveusers.com',
+			'numOfGT' => '0',
+			'GTMake' => 'Siemens',
+			'GTBaseModel' => 'v93.4A',
+			'plantAmbientTempMax' => '123',
+			'plantAmbientTempMin' => '233',
+			'plantAmbientTempAvg' => '232',
+			'PLFMax' => '12',
+			'PLFMin' => '23',
+			'PLFAvg' => '23'
+		);
+		
+		$pmodel->insert($data);
+		
 		//delete all gasturbines
 		
 		$gtmodel = new Model_DbTable_Gasturbine();
