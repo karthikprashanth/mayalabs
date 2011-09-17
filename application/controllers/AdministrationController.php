@@ -138,7 +138,7 @@ class AdministrationController extends Zend_Controller_Action {
                 $user = new Model_DbTable_User();
                 $user->deleteAccount($id);
             }
-            $this->_redirect("/dashboard/index");
+            //$this->_redirect("/dashboard/index");
         }
     }
 
