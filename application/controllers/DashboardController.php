@@ -36,7 +36,6 @@ class DashboardController extends Zend_Controller_Action
 		$this->view->navigation($navContainer)->setAcl($acl)->setRole($role);
     }
 
-
 }
 
 
