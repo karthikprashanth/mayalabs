@@ -9,7 +9,22 @@ class LteController extends Zend_Controller_Action {
     }
 
     public function indexAction() {
-    	
+    	require_once "Mail.php";
+		/*$recipients = "pv.srivathsa@gmail.com";
+		$headers["From"] = "admin@hiveusers.com";
+		$headers["To"] = "pv.srivathsa@gmail.com";
+		$headers["Subject"] = "User feedback";
+		$mailmsg = "Hello, This is a test.";
+		
+		$smtpinfo["host"] = "smtp.gmail.com";
+		$smtpinfo["port"] = "587";
+		$smtpinfo["auth"] = "login";
+		$smtpinfo["username"] = "admin@hiveusers.com";
+		$smtpinfo["password"] = "swordfish";*/
+		
+		//$mail_object =& Mail::factory("smtp", $smtpinfo);
+		
+		//$mail_object->send($recipients, $headers, $mailmsg);
 	}
 
     public function addAction() {

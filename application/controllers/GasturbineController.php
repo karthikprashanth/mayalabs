@@ -57,7 +57,6 @@ class GasturbineController extends Zend_Controller_Action
 										$this->view->message = "Gasturbine name already exists";
 										return;
 									}
-									return;
                                     $userp->add($content);
 									
                                     $this->_redirect('/gasturbine/plantlist');

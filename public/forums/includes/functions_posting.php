@@ -1782,9 +1782,9 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
         while ($userInfo = $db->sql_fetchrow($hresult)) {
             $recipients = $recipients . $userInfo['email'] . ",";
         }
-
+		
         $recipients = substr($recipients, 0, strlen($recipients) - 1);
-
+		echo $recipients;
         $subject = "Forum Notification";
 
         mail($recipients, $subject, $message, $headers);
