@@ -112,7 +112,7 @@ class PlantController extends Zend_Controller_Action
 	                            $GT->updatePlant($plantId, $content);
         					}
                             if (Zend_Auth::getInstance()->getStorage()->read()->lastlogin == '') {
-                                $this->_redirect('gasturbine/list');
+                                $this->_redirect('gasturbine/plantlist');
                             }
                             $this->_redirect('plant/view?id='.$plantId);
                         } else {

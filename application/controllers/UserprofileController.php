@@ -21,16 +21,16 @@ class UserprofileController extends Zend_Controller_Action {
                 $formData = $this->getRequest()->getPost();
                 if ($form->isValid($formData)) {
                     $userup = new Model_DbTable_Userprofile();
+					
                     $content = $form->getValues();
-
-                    $id = Zend_Auth::getInstance()->getStorage()->read()->id;                    
+					
+                    $id = Zend_Auth::getInstance()->getStorage()->read()->id;
+					$user = $userup->getUser($id);
+					$pid = $user['plantId'];                    
                     $userup->updateUser($id, $content);
                     if (Zend_Auth::getInstance()->getStorage()->read()->lastlogin == '') {
-                        /*if (Zend_Auth::getInstance()->getStorage()->read()->role != 'us')
-                            $this->_redirect('plant/edit');*/
-                        $ses = new Zend_Session_Namespace('Zend_Auth');
-                        $ses->storage->lastlogin = $d = date('Y-m-d H:i:s');
-                        $this->_redirect('userprofile/view');
+                        if (Zend_Auth::getInstance()->getStorage()->read()->role != 'us')
+                            $this->_redirect('plant/edit?id='.$pid);
                     }
                     $this->_helper->redirector('view');
                 }
@@ -60,7 +60,6 @@ class UserprofileController extends Zend_Controller_Action {
                     $userp = new Model_DbTable_Userprofile();
                     $id = $this->_getParam('id');
                     $content = $form->getValues();
-                   	$userp->add($id, $content);
                    	$users = $userp->fetchAll();
 					$exists = false;
 					foreach($users as $user)
@@ -75,6 +74,7 @@ class UserprofileController extends Zend_Controller_Action {
 						$this->view->message = "Email already belongs to another user";
 						return;
 					}
+					$userp->add($id, $content);
                     $this->_redirect('/userprofile/view?id='.$id);
                 } else {
                     $form->populate($formData);
