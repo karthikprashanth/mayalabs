@@ -1,5 +1,6 @@
 <?php
 	echo "hey1";
+	echo $_SERVER['DOCUMENT_ROOT'];
 	require_once("/var/www/hive/library/Zend/Mail.php");
 	echo "hey2";
 	require_once("/var/www/hive/library/Zend/Mail/Transport/Smtp.php");
