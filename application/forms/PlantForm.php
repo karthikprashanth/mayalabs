@@ -1,9 +1,14 @@
 <?php
 class Form_PlantForm extends ZendX_JQuery_Form {
-
- 	public function  __construct($options = null) {
-		parent::__construct($options);
-
+	private $mode;
+	
+	public function setMode($m)
+	{
+		$this->mode = $m;
+	}
+	
+ 	public function showForm()
+	{
 
     $this->setName('Plant Profile');
     $this->addElementPrefixPath('Hive_Form_Decorators','Hive/Form/Decorators','decorator');
@@ -124,7 +129,21 @@ class Form_PlantForm extends ZendX_JQuery_Form {
     ->addValidator(Model_Validators::regex('/[^a-z0-9_.@]+/'))
     ->addFilter('StripTags')
     ->addFilter('StringTrim');
-
+	if($this->mode == 'edit')
+	{
+		$save1 = new Zend_Form_Element_Submit('submit1');
+	    $save1->setAttrib('id', 'save1')
+				->setLabel("Save")
+				->setAttrib('class','user-save');
+		
+		$mymode = new Zend_Form_Element_Hidden('modeselect');
+		$mymode->setAttrib('id','modeselect');
+				
+		$savec1 = new Zend_Form_Element_Submit('submit2');
+	    $savec1->setAttrib('id', 'savec1')
+				->setLabel("Save & Continue")
+				->setAttrib('class','user-save');
+	}
     $plantName = new Zend_Form_Element_Text('plantName');
     $plantName->setLabel('Plant Name')
     ->setRequired(true)
@@ -206,6 +225,18 @@ class Form_PlantForm extends ZendX_JQuery_Form {
     ->addValidator(Model_Validators::int())
     ->addFilter('StripTags')
     ->addFilter('StringTrim');
+	if($this->mode == 'edit')
+	{
+		$save2 = new Zend_Form_Element_Submit('submit3');
+	    $save2->setAttrib('id', 'save2')
+				->setLabel("Save")
+				->setAttrib('class','user-save');
+				
+		$savec2 = new Zend_Form_Element_Submit('submit4');
+	    $savec2->setAttrib('id', 'savec2')
+				->setLabel("Save & Continue")
+				->setAttrib('class','user-save');
+	}
 
     $GTMake = new Zend_Form_Element_Select('GTMake');
     $GTMake->setLabel('GT Make')
@@ -342,21 +373,30 @@ class Form_PlantForm extends ZendX_JQuery_Form {
     ->addFilter('StripTags')
     ->addFilter('StringTrim');
 
-
-    $submit = new Zend_Form_Element_Submit('submit');
-    $submit->addDecorator('Htmltag',array('tag' => 'p'));
-    $submit->setAttrib('id', 'submitbutton');
+	if($this->mode == 'edit')
+	{
+		$submit = new Zend_Form_Element_Submit('submit');
+	    $submit->addDecorator('Htmltag',array('tag' => 'p'));
+	    $submit->setAttrib('id', 'save3')
+				->setAttrib('class','gt-add');
+				
+		$savec3 = new Zend_Form_Element_Submit('submit5');
+	    $savec3->setAttrib('id', 'savec3')
+				->setLabel("Save & Continue")
+				->setAttrib('class','user-save');
+	}
+	    
     $partPlant1->addElements(array($corporateName,$corporateLocation,
 		$corporateProvince, $corporateState,$corporateCountry,$corporateZip,
-		$corporateTelephone,$corporateFax,$corporateWebsite));
+		$corporateTelephone,$corporateFax,$corporateWebsite,$save1,$savec1,$mymode));
 	$partPlant2->addElements(array($plantName,
 		$plantLocation,$plantState,$plantCountry,$plantZip,$plantTelephone,
-		$plantFax, $plantWebsite));
+		$plantFax, $plantWebsite,$save2,$savec2));
 	$partPlant3->addElements(array($GTMake, $GTBaseModel,$numOfGT,
 		$plantAmbientTempMax, $plantAmbientTempMin, $plantAmbientTempAvg,
 		$PLFMax, $PLFMin, $PLFAvg, $GTStartMax, $GTStartMin, $GTStartAvg,
-		$GTTripMax, $GTTripMin, $GTTripAvg,$submit));
-
+		$GTTripMax, $GTTripMin, $GTTripAvg,$submit,$save3,$savec3));
+	
 	$this->addSubForm($partPlant1, 'partPlant1');
 	$this->addSubForm($partPlant2, 'partPlant2');
 	$this->addSubForm($partPlant3, 'partPlant3');

@@ -77,6 +77,7 @@ class Model_DbTable_Gasturbine extends Zend_Db_Table_Abstract {
         return $row->toArray();
     	
    	}
+	
 
 }
 

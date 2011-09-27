@@ -88,13 +88,16 @@ class FindingsController extends Zend_Controller_Action {
 							$this->view->message = "Presentation title already exists";
 							return;
 						}
-						$p = $pmodel->insert($data);
-						if($temp == "")
+						if($content['prestitle'] != "" && $content['prestitle'] != NULL)
 						{
-							$temp = $p . ",";
-						}
-						else {
-							$temp = $temp . $p . ",";
+							$p = $pmodel->insert($data);
+							if($temp == "")
+							{
+								$temp = $p . ",";
+							}
+							else {
+								$temp = $temp . $p . ",";
+							}
 						}
 						$content['presentationId'] = $temp;
 						$inscontent = array(

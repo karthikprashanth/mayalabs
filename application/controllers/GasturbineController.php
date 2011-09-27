@@ -219,7 +219,7 @@ class GasturbineController extends Zend_Controller_Action
        	$up = new Model_DbTable_Userprofile();
         $up = $up->getUser(Zend_Auth::getInstance()->getStorage()->read()->id);
         $upid = $up['plantId'];
-        $gt = new Model_DbTable_Gasturbine();
+        $gt = new Model_DbTable_Gasturbine();		
         $gt = $gt->getGTP($upid);
 		
         $this->view->gt = $gt;    

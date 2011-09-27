@@ -4,6 +4,11 @@
  * and open the template in the editor.
  */
 
+if(count($this->pagesInRange) <= 1)
+{
+	return;
+}
+ 
 if(isset ($this->previous)){
     echo "<a href = '" . $this->url() . "?page=" . $this->first . "'> Beginning </a> | ";
 }
