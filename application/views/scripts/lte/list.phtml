@@ -60,7 +60,7 @@ $username = $user['firstName'] . " " . $user['lastName'] . " - " . $user['plantN
 <input class='gt-add' type="submit" name="add" value="Add New LTE" />
 </form>
 <?php endif; ?>
-
+<div style='clear:both; height:5px;'>&nbsp;</div>
 <?php if(count($this->ltes) != 0) :?>
 	<form action = '/reports/generate' method = 'post' style='float:right;'>
 		<input type = 'hidden' name = 'type' value = 'ldatalist'>
