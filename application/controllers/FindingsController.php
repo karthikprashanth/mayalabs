@@ -111,7 +111,7 @@ class FindingsController extends Zend_Controller_Action {
 							'subSysId' => $content['subSysId']
 						);
                         $userp->add($inscontent);
-                        $this->_redirect('/findings/view?id=' . $gtid['gtid'] . '#ui-tabs-2');
+                        $this->_redirect('/gasturbine/view?id=' . $gtid['gtid'] . '#ui-tabs-2');
                     } else {
                         $form->populate($formData);
                     }
