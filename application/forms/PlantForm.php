@@ -385,6 +385,14 @@ class Form_PlantForm extends ZendX_JQuery_Form {
 				->setLabel("Save & Continue")
 				->setAttrib('class','user-save');
 	}
+	
+	if($this->mode == 'add')
+	{
+		$submit = new Zend_Form_Element_Submit('submit');
+	    $submit->addDecorator('Htmltag',array('tag' => 'p'));
+	    $submit->setAttrib('id', 'save3')
+				->setAttrib('class','gt-add');
+	}
 	    
     $partPlant1->addElements(array($corporateName,$corporateLocation,
 		$corporateProvince, $corporateState,$corporateCountry,$corporateZip,
