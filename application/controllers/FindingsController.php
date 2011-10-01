@@ -88,13 +88,16 @@ class FindingsController extends Zend_Controller_Action {
 							$this->view->message = "Presentation title already exists";
 							return;
 						}
-						$p = $pmodel->insert($data);
-						if($temp == "")
+						if($content['prestitle'] != "" && $content['prestitle'] != NULL)
 						{
-							$temp = $p . ",";
-						}
-						else {
-							$temp = $temp . $p . ",";
+							$p = $pmodel->insert($data);
+							if($temp == "")
+							{
+								$temp = $p . ",";
+							}
+							else {
+								$temp = $temp . $p . ",";
+							}
 						}
 						$content['presentationId'] = $temp;
 						$inscontent = array(
@@ -108,7 +111,7 @@ class FindingsController extends Zend_Controller_Action {
 							'subSysId' => $content['subSysId']
 						);
                         $userp->add($inscontent);
-                        $this->_redirect('/findings/view?id=' . $gtid['gtid'] . '#ui-tabs-2');
+                        $this->_redirect('/gasturbine/view?id=' . $gtid['gtid'] . '#ui-tabs-2');
                     } else {
                         $form->populate($formData);
                     }

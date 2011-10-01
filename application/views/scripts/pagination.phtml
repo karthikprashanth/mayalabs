@@ -8,6 +8,11 @@ $params = ($_SERVER['REQUEST_URI']!=$this->baseUrl()) ? str_replace($this->baseU
   $params = explode("?",$params);
   if (empty($params[1])) $get = ""; 
     else $get = "?".$params[1];	 
+
+if(count($this->pagesInRange) <= 1)
+{
+	return;
+}
 	
 if(isset ($this->previous)){
     echo '<a href="'.$this->url(array('page'=>$this->first)).$get.'">Beginning</a> | ';
@@ -15,7 +20,6 @@ if(isset ($this->previous)){
 else{
     echo "Beginning | ";
 }
-
 foreach ($this->pagesInRange as $page){
     if($this->current!=$page){
         echo '<a href="'.$this->url(array('page'=>$page)).$get.'">'.$page.'</a> | ';

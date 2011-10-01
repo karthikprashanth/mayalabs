@@ -25,6 +25,8 @@ class PlantController extends Zend_Controller_Action
         try {
                     $this->view->headTitle('Add Plant', 'PREPEND');
                     $form = new Form_PlantForm();
+					$form->setMode("add");
+					$form->showForm();
                     $form->partPlant3->submit->setLabel('Add');
                     //JQuery Form Enable
                     ZendX_JQuery::enableForm($form);
@@ -59,7 +61,7 @@ class PlantController extends Zend_Controller_Action
                             $plantid = $userp->add($content);
                             $myuser = Zend_Auth::getInstance()->getStorage()->read()->id;
                             Zend_Registry::set('id', $myuser);
-                            $this->_redirect('dashboard/index');
+                            $this->_redirect('plant/view?id=$plantid');
                         } else {
                             $form->populate($formData);
                         }
@@ -90,20 +92,26 @@ class PlantController extends Zend_Controller_Action
     {
         $this->view->headTitle('Edit Plant', 'PREPEND');
                 try {
+                	
                     $form = new Form_PlantForm();
+					$form->setMode("edit");
+					$form->showForm();
                     //JQuery Form Enable
                     ZendX_JQuery::enableForm($form);
                     $form->partPlant3->submit->setLabel('Save');
+					$form->partPlant3->submit->setAttrib('class','user-save');
                     if (Zend_Auth::getInstance()->getStorage()->read()->lastlogin == '') {
                         $form->partPlant3->submit->setLabel('Save & Continue');
                     }
                     $this->view->form = $form;
+					$this->view->plantId = $this->_getParam('id',0);
                     if ($this->getRequest()->isPost()) {
                         $formData = $this->getRequest()->getPost();
                         if ($form->isValid($formData)) {
                             $GT = new Model_DbTable_Plant();
                             $plantDet = $GT->getPlant($this->_getParam('id',0));
 							$plantId = $this->_getParam('id',0);
+							$this->view->plantId = $plantId;
                             $content = array_merge($form->partPlant1->getValues(), $form->partPlant2->getValues(), $form->partPlant3->getValues());
         					if(count(array_diff($content,$plantDet)) > 0 )
         					{
@@ -114,7 +122,22 @@ class PlantController extends Zend_Controller_Action
                             if (Zend_Auth::getInstance()->getStorage()->read()->lastlogin == '') {
                                 $this->_redirect('gasturbine/plantlist');
                             }
-                            $this->_redirect('plant/view?id='.$plantId);
+							if($this->getRequest()->getPost("modeselect") == "redirect")
+							{
+								$this->_redirect('plant/view?id='.$plantId);
+							}
+							if($this->getRequest()->getPost("modeselect") == "stay1")
+							{
+								$this->_redirect('plant/edit?id='. $plantId.'#tabContainer-frag-1');
+							}
+							if($this->getRequest()->getPost("modeselect") == "stay2")
+							{
+								$this->_redirect('plant/edit?id='. $plantId.'#tabContainer-frag-2');
+							}
+							if($this->getRequest()->getPost("modeselect") == "stay3")
+							{
+								$this->_redirect('plant/edit?id='. $plantId.'#tabContainer-frag-3');
+							}
                         } else {
                             $form->populate($formData);
                         }
@@ -227,5 +250,7 @@ class PlantController extends Zend_Controller_Action
 		$this->view->ul = $ul;
 		
     }
+	
+	
 }
 

@@ -25,7 +25,6 @@ class Form_RegistrationForm extends Zend_Form
     ->addDecorator('Htmltag',array('tag' => 'br'))
     ->addValidator('NotEmpty');
 
-
     $submit = new Zend_Form_Element_Submit('submit');
     $submit->setAttrib('id', 'submitbutton')
             ->addDecorator('Htmltag',array('tag' => 'br'));

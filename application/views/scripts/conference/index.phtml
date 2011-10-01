@@ -21,9 +21,11 @@
 		}
 		$i++;
 	}
-	
 	$my_list = $my_list . "</ul>";
-	$my_list = $my_list . "<br><p align = 'right'><a id = 'olderlink' href = '#' onclick = 'javascript:showolder($i-1)'>Older &gt;&gt;</a></p>";
+	if($i > 5)
+	{
+		$my_list = $my_list . "<br><p align = 'right'><a id = 'olderlink' href = '#' onclick = 'javascript:showolder($i-1)'>Older &gt;&gt;</a></p>";
+	}
 	$this->tabPane("YrList",$my_list,array('title' => 'Year'));
 	echo $this->tabContainer("YrList",array());
 	

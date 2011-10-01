@@ -1,8 +1,12 @@
 <?php
 if (count($this->GTData) == 0) {$list =  "<center>No gasturbines added</center>";}
-$list = $list . "<table>";
+//$list = "<center>";
+$pmodel = new Model_DbTable_Plant();
+$gtdatamodel = new Model_DbTable_Gtdata();
 foreach ($this->GTData as $gasturbines) {
+	$list = $list . "<table>";
     $list = $list . "<tr>";
+	$list = $list . "<th>GT Name</th>";
     $list = $list . "<td><a href='/gasturbine/view?id=" . $this->escape($gasturbines['GTId']) . "'>" . $gasturbines['GTName'] . "</a></td>";
     $valid = false;
     foreach($this->gt as $temp)
@@ -12,12 +16,63 @@ foreach ($this->GTData as $gasturbines) {
     		$valid = true;
     	}
     }
-    if($valid){
-	    $list = $list . "<td><a href='" . $this->url(array('action' => 'edit')) . "?id=" . $this->escape($gasturbines['GTId']) . "'>Edit</a></td>";
+	$role = Zend_Registry::get('role');
+    if($valid || $role == 'sa'){
+	    $list = $list . "<td><div class = 'gt-edit'><a href='" . $this->url(array('action' => 'edit')) . "?id=" . $this->escape($gasturbines['GTId']) . "' style='color: #719b3e;'>Edit</a></div></td>";
 	    $list = $list . "</tr>";
 	}
+	$fcount = $gtdatamodel->getTypeCount("finding",$gasturbines['GTId']);
+	$ucount = $gtdatamodel->getTypeCount("upgrade",$gasturbines['GTId']);
+	$lcount = $gtdatamodel->getTypeCount("lte",$gasturbines['GTId']);
+	if($fcount == 0)
+	{
+		$fline = "no Findings";
+	}
+	else if($fcount == 1)
+	{
+		$finding = $gtdatamodel->fetchRow("type = 'finding' AND gtid = " . $gasturbines['GTId']);
+		$fid = $finding['id'];
+		$fline = "<a href = '/findings/view?id=$fid'>1 Finding</a>";
+	}
+	else {
+		$fline = "<a href = '/gasturbine/view?id=" . $gasturbines['GTId'] . "#ui-tabs-2'>" . $fcount . " Findings</a>";
+	}
+	if($ucount == 0)
+	{
+		$uline = "no Upgrades";
+	}
+	else if($ucount == 1)
+	{
+		$upgrade = $gtdatamodel->fetchRow("type = 'upgrade' AND gtid = " . $gasturbines['GTId']);
+		$uid = $upgrade['id'];
+		$uline = "<a href = '/upgrades/view?id=$uid'>1 Upgrade</a>";
+	}
+	else {
+		$uline = "<a href = '/gasturbine/view?id=" . $gasturbines['GTId'] . "#ui-tabs-3'>" . $ucount . " Upgrades</a>";
+	}
+	if($lcount == 0)
+	{
+		$lline = "no LTEs";
+	}
+	else if($lcount == 1)
+	{
+		$lte = $gtdatamodel->fetchRow("type = 'lte' AND gtid = " . $gasturbines['GTId']);
+		$lid = $lte['id'];
+		$lline = "<a href = '/upgrades/view?id=$lid'>1 LTE</a>";
+		
+	}
+	else {
+		$lline = $lcount . " LTEs";
+	}
+	$plant = $pmodel->getPlant($gasturbines['plantId']);
+	$pname = $plant['plantName'];
+	$pid = $gasturbines['plantId'];
+	$modelnum = Zend_Registry::get("gtgroupname");
+	$list = $list . "<tr><th>GT Model</th><td>$modelnum</td></tr>";
+	$list = $list . "<tr><th>GT Data</th><td>$fline , $uline and $lline</td></tr>";
+	$list = $list . "</table><br><br>";
 }
-$list = $list . "</table>";
+//$list = $list . "</center>";
 $this->tabPane("GTList", $list, array('title' => 'GT List'));
 echo $this->tabContainer("GTList", array());
 if(count($this->GTData) != 0){

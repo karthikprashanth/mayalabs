@@ -30,6 +30,7 @@ class Model_DbTable_Plant extends Zend_Db_Table_Abstract {
 
     public function updatePlant($plantId, $content) {
         $where = $this->getAdapter()->quoteInto('plantId = ?', $plantId);
+		unset($content['modeselect']);
         $this->update($content, $where);
     }
 
