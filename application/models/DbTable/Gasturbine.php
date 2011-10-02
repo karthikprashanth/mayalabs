@@ -34,9 +34,11 @@ class Model_DbTable_Gasturbine extends Zend_Db_Table_Abstract {
 		}
 
         $this->insert($content);
+		$newid = $this->getAdapter()->lastInsertId();
         
         $nf = new Model_DbTable_Notification();
         $nf->add($this->getAdapter()->lastInsertId(), 'gasturbine', 1);
+		return $newid;
     }
 
     public function updateGT($content) {

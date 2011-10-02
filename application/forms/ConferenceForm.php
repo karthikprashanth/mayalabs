@@ -44,7 +44,7 @@ class Form_ConferenceForm extends Zend_Form {
         ->addValidator('NotEmpty');
 		
 		$abstract = new Zend_Form_Element_Textarea('abstract');
-        $abstract->setLabel('Abstract')
+        $abstract->setLabel('Synopsis')
                 ->setRequired(true)
 				->setAttrib('COLS','16')
 		    	->setAttrib('ROWS','5')
@@ -55,7 +55,8 @@ class Form_ConferenceForm extends Zend_Form {
 		$submit = new Zend_Form_Element_Button('submit');
         $submit->addDecorator('Htmltag', array('tag' => 'p'));
         $submit->setAttrib('id', 'submitbutton')
-                ->setAttrib('type', 'submit');
+                ->setAttrib('type', 'submit')
+				->setAttrib('class','gt-add');
 		
 		$this->addElements(array($place,$year,$host,$abstract,$submit));
 		

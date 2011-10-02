@@ -32,43 +32,55 @@ $(document).ready(function() {
 <form action="<?php echo $this->url(array('action'=>'deleteacc')); ?>" method="post">
 <input type="hidden" name="id" value="<?php echo $this->escape($user['id']);?>" />
 <?php if($user['role'] == 'sa') : ?>
-<input type="submit" name="del" value="Delete"	/>
+<input type="submit" class = 'gt-delete' name="del" value="Delete"	/>
 <?php else: ?>
-<input type="submit"  name="del" value="Delete" />
+<input type="submit" class = 'gt-delete' name="del" value="Delete" />
 <?php endif; ?>
 </form>
 
 </td>
 <td>
-<form action="<?php echo $this->url(array('action'=>'resetpassword')); ?>" method="post">
+<form action= "/administration/resetpassword?source=list" method="post">
 <input type="hidden" name="id" value="<?php echo $this->escape($user['id']);?>" />
-<input type="submit" name="resetpass" value="Reset Password" />
+<input type="submit" class="reset-button" name="resetpass" value="Reset Password" />
 </form>
 </td>
 <td>
 <form action="<?php echo $this->url(array('action'=>'transform')); ?>" method="post">
 <input type="hidden" name="id" value="<?php echo $this->escape($user['id']);?>" />
-<input type="submit" name="transform" value="Transform" />
+<input type="submit" class="transform-button" name="transform" value="Transform" />
 </form>
 </td>
 
 <?php
 	if($this->validcc==0){
 		
-		echo "<td><form action = '/hive/public/administration/setcc?id=".$user['id']."' method='post'>";
-		echo "<input type='submit' name='setcc' value = 'Set Conference Chairman'>";
+		echo "<td><form action = '/administration/setcc?id=".$user['id']."' method='post'>";
+		echo "<input type='submit' class = 'gt-add' name='setcc' value = 'Set Conference Chairman'>";
 		echo "</form></td>";
 	}
 	else{
 		if($this->validcc==$user['id']){
-			echo "<td><form action = '/hive/public/administration/unsetcc?id=".$user['id']."' method='post'>";
-			echo "<input type='submit' name='setcc' value = 'Unset Conference Chairman'>";
+			echo "<td><form action = '/administration/unsetcc?id=".$user['id']."' method='post'>";
+			echo "<input type='submit' class = 'gt-delete' name='setcc' value = 'Unset Conference Chairman'>";
 			echo "</form></td>";
 		}
 	}
 			
 ?>
 </tr>
-<?php endforeach; ?>
+<?php endforeach; 
+
+?>
+
+
 </tbody>
 </table>
+<script type = "text/javascript">
+	$(".reset-button").click(function(){
+		alert("Password has been reset. Please check mail");
+	});
+</script>
+<?php
+	echo "<div class = 'gt-edit'><a href='/plant/edit"  . "?id=" . $this->plantid . "' style='color: #719b3e;'>Edit Plant Details</a></div>";
+?>

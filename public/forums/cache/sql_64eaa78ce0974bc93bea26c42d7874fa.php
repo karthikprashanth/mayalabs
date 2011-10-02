@@ -1,5 +1,5 @@
 <?php exit; ?>
-1317383054
+1317510667
 SELECT s.style_id, c.theme_id, c.theme_data, c.theme_path, c.theme_name, c.theme_mtime, i.*, t.template_path FROM forum_styles s, forum_styles_template t, forum_styles_theme c, forum_styles_imageset i WHERE s.style_id = 2 AND t.template_id = s.template_id AND c.theme_id = s.theme_id AND i.imageset_id = s.imageset_id
 72295
 a:1:{i:0;a:11:{s:8:"style_id";s:1:"2";s:8:"theme_id";s:1:"2";s:10:"theme_data";s:71903:"/*  phpBB 3.0 Style Sheet
@@ -3854,4 +3854,4 @@ input.search {
 
 input.disabled {
 	color: #666666;
-}";s:10:"theme_path";s:12:"we_clearblue";s:10:"theme_name";s:12:"we_clearblue";s:11:"theme_mtime";s:10:"1314650267";s:11:"imageset_id";s:1:"2";s:13:"imageset_name";s:12:"we_clearblue";s:18:"imageset_copyright";s:4:"weeb";s:13:"imageset_path";s:12:"we_clearblue";s:13:"template_path";s:12:"we_clearblue";}}
+}";s:10:"theme_path";s:12:"we_clearblue";s:10:"theme_name";s:12:"we_clearblue";s:11:"theme_mtime";s:10:"1317495343";s:11:"imageset_id";s:1:"2";s:13:"imageset_name";s:12:"we_clearblue";s:18:"imageset_copyright";s:4:"weeb";s:13:"imageset_path";s:12:"we_clearblue";s:13:"template_path";s:12:"we_clearblue";}}

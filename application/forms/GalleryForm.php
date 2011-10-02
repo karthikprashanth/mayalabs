@@ -30,6 +30,7 @@ class Form_GalleryForm extends Zend_Form{
                 $submit = new Zend_Form_Element_Button('submit');
                 $submit->addDecorator('Htmltag',array('tag' => 'p'));
                 $submit->setAttrib('id', 'submitbutton')
+						->setAttrib('class','gt-add')
                         ->setAttrib('type', 'submit');
                 
                 $this->addElements(array($Title,$content,$info,$submit));

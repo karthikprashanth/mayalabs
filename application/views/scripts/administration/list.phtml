@@ -31,9 +31,9 @@
 
 </td>
 <td>
-<form action="<?php echo $this->url(array('action'=>'resetpassword')); ?>" method="post">
+<form action= "/administration/resetpassword?source=adminlist" method="post">
 <input type="hidden" name="id" value="<?php echo $this->escape($user['id']);?>" />
-<input class="reset-button" type="submit" name="resetpass" value="Reset Password" />
+<input class="reset-button" type="submit"  name="resetpass" value="Reset Password" />
 </form>
 </td>
 
@@ -58,3 +58,9 @@
 <?php endforeach; ?>
 </tbody>
 </table>
+
+<script type = "text/javascript">
+	$(".reset-button").click(function(){
+		alert("Password has been reset. Please check mail");
+	});
+</script>

@@ -75,7 +75,9 @@ class Form_UserprofileForm extends Zend_Form {
 
 
     $submit = new Zend_Form_Element_Submit('submit');
-    $submit->setAttrib('id', 'submitbutton');
+    $submit->setAttrib('id', 'submitbutton')
+			->setAttrib('class','gt-add');
+	
     if(Zend_Registry::get('role')=='sa')
         $this->addElement($plant);
     $this->addElements(array($firstName, $lastName, $designation, $phone, $mobile, $email, $submit));

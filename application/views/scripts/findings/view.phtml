@@ -1,6 +1,35 @@
 <?php
+
 foreach($this->plist as $pvalue){
-     $list=$list."<a href='".$this->baseUrl()."/presentation/view/?id=".$this->escape(key($pvalue))."'>".current($pvalue)."</a><br/>";
+	$pres = $this->presmodel->getPresentation(key($pvalue));
+	$filetype = $pres['filetype'];
+	$h = 30;
+	$w = 30;
+	 if($filetype == 'doc' || $filetype == 'docx')
+	 {
+	 	$filename = "images/word.png";
+	 }
+	 else if($filetype == 'xls' || $filetype == 'xlsx')
+	{
+		$filename = "images/excel.png";
+	}
+	else if($filetype == 'ppt' || $filetype == 'pptx')
+	{
+		$filename = "images/ppt.png";
+	}
+	else if($filetype == 'pdf')
+	{
+		$filename = "images/pdf.png";
+	}
+	 else {
+	 	$h = 300;
+		 $w = 400;
+	 	$filename = "random/thnail";
+		$data = $pres['content'];
+		file_put_contents($filename,$data);
+	 }
+	 
+     $list=$list."<a href='".$this->baseUrl()."/presentation/view/?id=".$this->escape(key($pvalue))."'><img src = '../".$filename."' height = $h width = $w>".current($pvalue)."</a><br>";
 }
 $ssModel = $this->subSysModel;
 $ss = $ssModel->getSubSystem($this->finding['subSysId']);
@@ -14,8 +43,8 @@ $content = $content." <span style='color:#268FBB;'>".$this->gt['GTName']."</span
 $content = $content." <span style='color:#268FBB; font-size: 12px; font-style: normal; font-weight:bold;'>Updated On ".$this->finding['updatedate']."</span></div>";
 $content = $content."<div class='gtdata-data'>".$this->finding['data']."</div>";
 if($list == "")
-	$list="<span style='color:#d95e1c;'>No Presentations Added</span>";
-$content = $content."<div class='gtdata-presentations'><div style='font-size: 16px; padding-bottom: 5px;'>Presentations:</div>$list</div>";
+	$list="<span style='color:#d95e1c;'>No Attachments Added</span>";
+$content = $content."<div class='gtdata-presentations'><div style='font-size: 16px; padding-bottom: 5px;'>Attachments:</div>$list</div>";
 
 $content = $content .$editlink;
 

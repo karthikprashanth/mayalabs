@@ -48,7 +48,7 @@ class Plugin_Breadcrumbs extends Zend_Controller_Plugin_Abstract {
 			}
             if ($action == 'addpresentation') {
                 $page = array(
-                    'label' => 'Presentations',
+                    'label' => 'Attachments',
                     'uri' => '/conference/list?id=' . $cid . '#confdata-frag-3',
                     'codename' => 'confpres'
                 );
@@ -659,7 +659,7 @@ class Plugin_Breadcrumbs extends Zend_Controller_Plugin_Abstract {
                 $name = 'LTE';
             } else if ($controller == 'presentation') {
                 $lno = 5;
-                $name = 'Presentations';
+                $name = 'Attachments';
             }
             if ($action == 'add') {
             	
@@ -897,7 +897,7 @@ class Plugin_Breadcrumbs extends Zend_Controller_Plugin_Abstract {
                     }
                 }
             }
-        } else if ($controller == 'advertisement' && $action != 'list') {
+        } else if ($controller == 'advertisement' && $action != 'list' && $action != 'randomad' && $action != 'add') {
             if ($action == 'view') {
                 $id = $request->getParam('id');
             } else if ($action == 'edit') {

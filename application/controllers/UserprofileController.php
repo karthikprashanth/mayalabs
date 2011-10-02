@@ -40,7 +40,10 @@ class UserprofileController extends Zend_Controller_Action {
             } else {
                 $myUser = Zend_Auth::getInstance()->getStorage()->read()->id;
                 $user = new Model_DbTable_Userprofile();
+				$u = $user->getUser($myUser);
+				$pid = $u['plantId'];
                 $form->populate($user->getUser($myUser));
+				$form->plantid->setValue($pid);
             }
         } catch (Exception $e) {
             echo $e;

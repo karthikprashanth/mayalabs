@@ -61,7 +61,7 @@ class PlantController extends Zend_Controller_Action
                             $plantid = $userp->add($content);
                             $myuser = Zend_Auth::getInstance()->getStorage()->read()->id;
                             Zend_Registry::set('id', $myuser);
-                            $this->_redirect('plant/view?id=$plantid');
+                            $this->_redirect('plant/view?id='.$plantid);
                         } else {
                             $form->populate($formData);
                         }
@@ -79,7 +79,7 @@ class PlantController extends Zend_Controller_Action
                     $id = $this->_getParam('id');
                     $PView = new Model_DbTable_Plant();
                     $PData = $PView->getPlant($id);
-        
+        			$this->view->id = $id;
                     $this->view->headTitle("View Plant - " . $GTData['corporateName'], 'PREPEND');
         
                     $this->view->plantData = $PData;
@@ -105,6 +105,7 @@ class PlantController extends Zend_Controller_Action
                     }
                     $this->view->form = $form;
 					$this->view->plantId = $this->_getParam('id',0);
+					
                     if ($this->getRequest()->isPost()) {
                         $formData = $this->getRequest()->getPost();
                         if ($form->isValid($formData)) {

@@ -18,8 +18,7 @@ $i = 0;
 $gallery = $gallery . "<a href = '/conference/gallery?id=".$conf['cId']."'>Add a new photo</a><br><br>";
 $tag[] = array();
 foreach ($this->confGallery as $photos) {
-	$rn = rand(100,999999);
-    $img = 'random/confgal' . $rn;
+    $img = 'random/confgal' . $i;
     file_put_contents($img, $photos['data']);
     $tag[$i] = $photos['tag'];
     $gallery = $gallery . "<a href = '#' onClick = 'javascript:showPhoto($i)'><img src = '/$img' width = 160 height = 120 style = border:none; text-decoration=none;alt = " . $photos['tag'] . "></a>&nbsp;&nbsp;&nbsp;";
@@ -59,11 +58,11 @@ foreach ($this->presList as $presentation) {
     $i++;
 }
 $pres = $pres . "</tbody></table>";
-$pres = $pres . "<br><br><form action = '" . $this->baseUrl . "/conference/addpresentation?id=".$this->id."' method = 'post'><input type = 'submit' name = 'add' value = 'Add New Presentation'></form></center>";
+$pres = $pres . "<br><br><form action = '" . $this->baseUrl . "/conference/addpresentation?id=".$this->id."' method = 'post'><input type = 'submit' class = 'gt-add' name = 'add' value = 'Add New Attachment'></form></center>";
 if ($i == 0) {
     $pres = NULL;
     $pres = $pres . "<center>No presentations available";
-    $pres = $pres . "<br><br><form action = '" . $this->baseUrl . "/conference/addpresentation?id=".$this->id."' method = 'post'><input class='gt-add' type = 'submit' name = 'add' value = 'Add New Presentation'></form></center>";
+    $pres = $pres . "<br><br><form action = '" . $this->baseUrl . "/conference/addpresentation?id=".$this->id."' method = 'post'><input class='gt-add' type = 'submit' name = 'add' value = 'Add New Attachment'></form></center>";
 }
 $this->tabPane("confdata", $synopsis, array('title' => 'Synopsis'));
 $this->tabPane("confdata", $empty, array('title' => 'Schedule', 'contentUrl' => "/schedule/view?id=$this->id"));
@@ -81,7 +80,7 @@ echo $this->tabContainer("confdata", array());
                 if(max != $i){
                     closePhoto($i-1);
                     closePhoto($i+1);
-                    $("#image_view"+$i).dialog({width:630,
+                    $("#image_view"+$i).dialog({width:900,
                         height:700,
                         title:tag});
                 }
@@ -99,7 +98,7 @@ echo $this->tabContainer("confdata", array());
 <?php
 for ($j = 0; $j < $max; $j++) {
     echo "<div style = 'display:none' id = 'image_view" . $j . "'>";
-    echo "<img src = '/random/confgal" . $j . "' height=600 width=600>";
+    echo "<img src = '/random/confgal" . $j . "' height=600 width=800>";
     echo "<form><input type = 'hidden' value = '" . $tag[$j] . "' id = 'tag" . $j . "'>";
     echo "<form><input type = 'hidden' value = '" . $max . "' id = 'max" . $j . "'></form>";
     echo "<center><a href='#' style='text-decoration:none' onClick='javascript:showPhoto($j-1)'> &#60;&#60;Previous</a>";

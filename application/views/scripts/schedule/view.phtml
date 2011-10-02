@@ -11,7 +11,7 @@ if ($this->schCount == 0) {
     echo "<center>No schedule available</center>";
 
     if ($this->iscc) {
-        echo "<center><form method = 'post' action = '/schedule/add?id=$this->id'><input type = 'submit' value = 'Add Schedule'></form></center>";
+        echo "<center><form method = 'post' action = '/schedule/add?id=$this->id'><input type = 'submit' class = 'gt-add' value = 'Add Schedule'></form></center>";
     }
     exit;
 }
@@ -40,6 +40,6 @@ if($role == 'sa')
 {
 	echo "<a class='a-edit ui-corner-all' href = '/schedule/edit?id=" . $this->id . "'>&nbsp;Edit Schedule</a>";
 	echo "<a class='a-delete ui-corner-all' href = '/schedule/delete?id=" . $this->id . "'>&nbsp;Delete Schedule</a>";
-	echo "<a class='a-add ui-corner-all' href = '/schedule/add-event-list?id=" . $this->id . "&n=1'>&nbsp;Add a new event</a>";
+	echo "<a class='a-add ui-corner-all' href = '/schedule/add-event-list?id=" . $this->id . "&n=1&mode=nomail'>&nbsp;Add a new event</a>";
 }
 ?>

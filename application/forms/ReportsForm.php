@@ -119,6 +119,7 @@
 			
 			$submit = new Zend_Form_Element_Submit('Generate');
     		$submit->addDecorator('Htmltag',array('tag' => 'p'));
+			$submit->setAttrib('class','gt-report');
     		$submit->setAttrib('id', 'submitbutton');
 			
 			array_push($elements,$submit);
