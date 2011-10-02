@@ -39,13 +39,6 @@
                     <resource>plant</resource>
                     <privilege>add</privilege>
                 </add>
-                <list>
-                    <label>List</label>
-                    <controller>plant</controller>
-                    <action>list</action>
-                    <resource>plant</resource>
-                    <privilege>list</privilege>
-                </list>
 				<admin>
 					<label>Admin</label>
 					<controller>plant</controller>

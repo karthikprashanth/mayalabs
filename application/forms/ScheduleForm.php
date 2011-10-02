@@ -49,6 +49,7 @@ class Form_ScheduleForm extends Zend_Form{
 			    $submit = new Zend_Form_Element_Button('submit');
                 $submit->addDecorator('Htmltag',array('tag' => 'p'));
                 $submit->setAttrib('id', 'submitbutton')
+						->setAttrib('class','user-save')
                         ->setAttrib('type', 'submit');
 			    
 			    $this->addElements(array($days,$f_day,$l_day,$no_event,$submit));

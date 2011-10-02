@@ -126,6 +126,7 @@ class AdvertisementController extends Zend_Controller_Action {
             $img = 'random/abc';
             file_put_contents($img, $data['advertImage']);
             $this->view->randomAd = $img;
+			$this->view->desc = $data['description'];
             $this->view->adTitle = $data;
         } catch (Exception $e) {
             echo $e;

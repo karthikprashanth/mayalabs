@@ -57,6 +57,7 @@ class Form_ScheduleEventForm extends Zend_Form{
 		$submit = new Zend_Form_Element_Button('Add');
                 $submit->addDecorator('Htmltag',array('tag' => 'p'));
                 $submit->setAttrib('id', 'submitbutton')
+						->setAttrib('class','gt-add')
                         ->setAttrib('type', 'submit');
                                
 		$this->addElements(array($submit));

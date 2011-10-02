@@ -118,9 +118,8 @@ class LteController extends Zend_Controller_Action {
 							'sysId' => $content['sysId'],
 							'subSysId' => $content['subSysId']
 						);
-                        $userp->add($inscontent);
-                        $this->_redirect('/gasturbine/view?id='.$gtid['gtid'].'#ui-tabs-4');
-                        //$this->_redirect('index');
+                        $lid = $userp->add($inscontent);
+                        $this->_redirect('/lte/view?id='.$lid);
                     } else {
                         $form->populate($formData);
                     }
@@ -184,9 +183,12 @@ class LteController extends Zend_Controller_Action {
             if ($del == 'Delete') {
                 $id = $this->getRequest()->getPost('id');
                 $user = new Model_DbTable_LTE();
+				$gtdatamodel = new Model_DbTable_Gtdata();
+				$data = $gtdatamodel->getData($id);
+				$gtid = $data['gtid'];
                 $user->deleteLTE($id);
+				$this->_redirect("/gasturbine/view?id=" .$gtid . "#ui-tabs-4");
             }
-            $this->_helper->redirector('index');
         }
     }
 
@@ -218,6 +220,10 @@ class LteController extends Zend_Controller_Action {
                     foreach($content['presentationId'] as $presentations) {
                     	$presid = $presid . $presentations .",";
                     }
+					if ($presid == ',')
+					{
+						$presid = "";
+					}
                     $content['presentationId'] = $presid;
                     
                     $r = array_diff($content,$gtdata);
@@ -237,7 +243,7 @@ class LteController extends Zend_Controller_Action {
 							}
 						}
 						$p=0;
-						if($content['prestitle'] != "")
+						if($content['prestitle'] != "" && $content['prestitle'] != NULL)
 						{
 							$data = array(
 								'title' => $content['prestitle'],
@@ -262,24 +268,26 @@ class LteController extends Zend_Controller_Action {
 							}					
 							$p = $pmodel->insert($data);
 								
-						}	
-						if($p != 0 || $p != "") 
+						}
+						if($p != 0)
 						{
 							$p = $p . ",";
-						}
-						if($presid == "")
-						{
 							$temp = $p;
+							
+							
 						}
 						else {
+							$p = "";
+						}
+						
+						if($presid != "")
+						{
 							$temp = $presid . $p;
 						}
-						if($temp == "")
-						{
-							$gtdatamodel = new Model_DbTable_Gtdata();
-							$gtdata = $gtdatamodel->getData($id);
-							$temp = $gtdata['presentationId'];
-						}
+
+						$gtdatamodel = new Model_DbTable_Gtdata();
+						$gtdata = $gtdatamodel->getData($id);
+						$temp = $temp . $gtdata['presentationId'];
 						$content['presentationId'] = $temp;
 						$content = array(
 							'id'   => $id,

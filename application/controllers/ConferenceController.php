@@ -105,7 +105,7 @@ class ConferenceController extends Zend_Controller_Action
 							
 							);
 				        	$userp->insert($columns);
-							$this->_redirect('/conference/list?id='.$cid);
+							$this->_redirect('/conference/list?id='.$cid . "#confdata-frag-3");
 						}
 						else {
 							$this->view->message = "File Type Not Allowed";
@@ -142,8 +142,8 @@ class ConferenceController extends Zend_Controller_Action
 				$content['year'] = $formData['year'];
 				$content['place'] = $formData['place'];
 				$content['abstract'] = $formData['abstract'];
-				$conf->insert($content);
-				$this->_redirect("conference/index");
+				$newcid = $conf->insert($content);
+				$this->_redirect("conference/list?id=".$newcid);
 			}
 			else
 			{
@@ -199,6 +199,8 @@ class ConferenceController extends Zend_Controller_Action
 		$schid = $sch['sch_id'];
 		echo $schid;
 		$schmodel->delete('cId = ' . (int)$cid);
+		$nf = new Model_DbTable_Notification();
+		$nf->delete('catId = ' . (int)$cid);
 		$scheventmodel = new Model_DbTable_ScheduleEvent();
 		$scheventmodel->delete('sch_id = ' . (int)$schid);
 		$this->_redirect("/conference/index");

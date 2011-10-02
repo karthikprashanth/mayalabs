@@ -18,7 +18,7 @@ class ScheduleController extends Zend_Controller_Action
     	$this->view->headTitle('Add Schedule','PREPEND');
         $form = new Form_ScheduleForm();
    		$this->view->form = $form;
-   		$form->submit->setLabel('Continue >>');
+   		$form->submit->setLabel('Save & Continue');
    		$id = $this->_getParam('id',0);
    		$schModel = new Model_DbTable_Schedule();
 		$u = new Model_DbTable_User();
@@ -85,7 +85,7 @@ class ScheduleController extends Zend_Controller_Action
 				$content['last_day'] = $formdata['last_day'];
 				$content['events'] = $formdata['events'];
 				$schmodel->updateSch($cid,$content);
-				$this->_redirect("/conference/list?id=".$cid);
+				$this->_redirect("/conference/list?id=".$cid."#ui-tabs-1");
 			}
 		}
 		else
@@ -125,7 +125,7 @@ class ScheduleController extends Zend_Controller_Action
 		$cid = $sch['cId'];
 		$schmodel->delete("sch_id = " . $schid);
 		$scheventmodel->delete("sch_id = " . $schid);
-		$this->_redirect("/conference/list?id=".$cid);
+		$this->_redirect("/conference/list?id=".$cid."#ui-tabs-1");
 	}
 	
 	public function deleventAction()
@@ -212,36 +212,39 @@ class ScheduleController extends Zend_Controller_Action
             			$data = $schEve->put_data($data);
             			$i++;
             		}
-            		$confModel = new Model_DbTable_Conference();
-            		$schModel = new Model_DbTable_Schedule();
-            		$schedule = $schModel->getSchId($this->_getParam('id',0));
-            		$conf = $confModel->getConfDetail($this->_getParam('id',0));
-					$cid = $this->_getParam('id',0);
-            		$place = $conf['place'];
-            		$fromDate = $schedule['first_day'];
-            		$toDate = $schedule['last_day'];
-            		$uModel = new Model_DbTable_Userprofile();
-            		$users = $uModel->fetchAll();
-            		
-            		$mailbody = "<div style='width: 100%; '><div style='border-bottom: solid 1px #aaa; margin-bottom: 10px;'>";
-		            $mailbody = $mailbody . "<a href='http://www.hiveusers.com' style='text-decoration: none;'><span style='font-size: 34px; color: #2e4e68;'><b>hive</b></span>";
-		            $mailbody = $mailbody . "<span style='font-size: 26px; color: #83ac52; text-decoration:none;'><b>users.com</b></span></a><br/><br/>Conference Notification</div>";
-		            $mailbody = $mailbody . "<div style='margin-bottom:10px;'><span style='color: #000;'><i>Hello</i>,<br/><br/>A new conference has been added<br/>The conference will be held in $place from $fromDate to $toDate</br></br>Please click <a href = 'http://www.hiveusers.com/conference/list?id=$cid'>here</a> to view more details about the conference</span></div>";
-		            $mailbody = $mailbody . "<div style='border-top: solid 1px #aaa; color:#aaa; padding: 5px;'><center>This is a generated mail, please do not Reply.</center></div></div>";
-		            $mcon = Zend_Registry::get('mailconfig');
-					$config = array('ssl' => $mcon['ssl'], 'port' => $mcon['port'], 'auth' => $mcon['auth'], 'username' => $mcon['username'], 'password' => $mcon['password']);
-					$tr = new Zend_Mail_Transport_Smtp($mcon['smtp'],$config);
-					Zend_Mail::setDefaultTransport($tr);
-                   	$mail = new Zend_Mail();
-					$mail->setBodyHtml($mailbody);
-					$mail->setFrom($mcon['fromadd'], $mcon['fromname']);
-					foreach($users as $user)
+					if($this->_getParam('mode','') != 'nomail')
 					{
-						$mail->addTo($user['email'],$user['firstName']);
+	            		$confModel = new Model_DbTable_Conference();
+	            		$schModel = new Model_DbTable_Schedule();
+	            		$schedule = $schModel->getSchId($this->_getParam('id',0));
+	            		$conf = $confModel->getConfDetail($this->_getParam('id',0));
+						$cid = $this->_getParam('id',0);
+	            		$place = $conf['place'];
+	            		$fromDate = $schedule['first_day'];
+	            		$toDate = $schedule['last_day'];
+	            		$uModel = new Model_DbTable_Userprofile();
+	            		$users = $uModel->fetchAll();
+	            		
+	            		$mailbody = "<div style='width: 100%; '><div style='border-bottom: solid 1px #aaa; margin-bottom: 10px;'>";
+			            $mailbody = $mailbody . "<a href='http://www.hiveusers.com' style='text-decoration: none;'><span style='font-size: 34px; color: #2e4e68;'><b>hive</b></span>";
+			            $mailbody = $mailbody . "<span style='font-size: 26px; color: #83ac52; text-decoration:none;'><b>users.com</b></span></a><br/><br/>Conference Notification</div>";
+			            $mailbody = $mailbody . "<div style='margin-bottom:10px;'><span style='color: #000;'><i>Hello</i>,<br/><br/>A new conference has been added<br/>The conference will be held in $place from $fromDate to $toDate</br></br>Please click <a href = 'http://www.hiveusers.com/conference/list?id=$cid'>here</a> to view more details about the conference</span></div>";
+			            $mailbody = $mailbody . "<div style='border-top: solid 1px #aaa; color:#aaa; padding: 5px;'><center>This is a generated mail, please do not Reply.</center></div></div>";
+			            $mcon = Zend_Registry::get('mailconfig');
+						$config = array('ssl' => $mcon['ssl'], 'port' => $mcon['port'], 'auth' => $mcon['auth'], 'username' => $mcon['username'], 'password' => $mcon['password']);
+						$tr = new Zend_Mail_Transport_Smtp($mcon['smtp'],$config);
+						Zend_Mail::setDefaultTransport($tr);
+	                   	$mail = new Zend_Mail();
+						$mail->setBodyHtml($mailbody);
+						$mail->setFrom($mcon['fromadd'], $mcon['fromname']);
+						foreach($users as $user)
+						{
+							$mail->addTo($user['email'],$user['firstName']);
+						}
+						$mail->setSubject('Conference Notification');
+						$mail->send();
 					}
-					$mail->setSubject('Conference Notification');
-					$mail->send();
-				    $this->_redirect('/conference/list?id='.$this->_getParam('id',0));			
+				    $this->_redirect('/conference/list?id='.$this->_getParam('id',0)."#ui-tabs-1");			
             	}
             }
        	}  	

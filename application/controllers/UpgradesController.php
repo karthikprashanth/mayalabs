@@ -101,8 +101,8 @@ class UpgradesController extends Zend_Controller_Action {
 							'sysId' => $content['sysId'],
 							'subSysId' => $content['subSysId']
 						);
-                        $userp->add($inscontent);
-                        $this->_redirect('/gasturbine/view?id='.$gtid['gtid'].'#ui-tabs-3');
+                        $upid = $userp->add($inscontent);
+                        $this->_redirect('/upgrades/view?id='.$upid);
                     } else {
                         $form->populate($formData);
                     }
@@ -120,9 +120,12 @@ class UpgradesController extends Zend_Controller_Action {
                 if ($del == 'Delete') {
                     $id = $this->getRequest()->getPost('id');
                     $user = new Model_DbTable_Upgrade();
+                    $gtdatamodel = new Model_DbTable_Gtdata();
+					$data = $gtdatamodel->getData($id);
+					$gtid = $data['gtid'];
                     $user->deleteUpgrade($id);
+					$this->_redirect("/gasturbine/view?id=" .$gtid . "#ui-tabs-3");
                 }
-                $this->_helper->redirector('index');
             }
         } catch (Exception $e) {
             echo $e;
@@ -157,6 +160,10 @@ class UpgradesController extends Zend_Controller_Action {
                     foreach($content['presentationId'] as $presentations) {
                     	$presid = $presid . $presentations .",";
                     }
+					if ($presid == ',')
+					{
+						$presid = "";
+					}
                     $content['presentationId'] = $presid;
                     
                     $r = array_diff($content,$gtdata);
@@ -201,23 +208,25 @@ class UpgradesController extends Zend_Controller_Action {
 							}
 							$p = $pmodel->insert($data);	
 						}
-						if($p != 0 || $p != "") 
+						if($p != 0)
 						{
 							$p = $p . ",";
-						}
-						if($presid == "")
-						{
 							$temp = $p;
+							
+							
 						}
 						else {
+							$p = "";
+						}
+						
+						if($presid != "")
+						{
 							$temp = $presid . $p;
 						}
-						if($temp == "")
-						{
-							$gtdatamodel = new Model_DbTable_Gtdata();
-							$gtdata = $gtdatamodel->getData($id);
-							$temp = $gtdata['presentationId'];
-						}
+
+						$gtdatamodel = new Model_DbTable_Gtdata();
+						$gtdata = $gtdatamodel->getData($id);
+						$temp = $temp . $gtdata['presentationId'];
 						$content['presentationId'] = $temp;
 						$content = array(
 							'id'   => $id,

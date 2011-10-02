@@ -138,7 +138,7 @@ class AdministrationController extends Zend_Controller_Action {
                 $user = new Model_DbTable_User();
                 $user->deleteAccount($id);
             }
-            //$this->_redirect("/dashboard/index");
+            $this->_redirect("/plant/admin");
         }
     }
 
@@ -176,6 +176,11 @@ class AdministrationController extends Zend_Controller_Action {
                         $this->view->message = 'Check mail, Password was reset';
                     else
                         $this->view->message = 'Resetting Password Failed';
+					
+					if($this->_getParam("source") == "adminlist")
+						$this->_redirect("administration/list");
+					else
+						$this->_redirect("plant/admin");
                 }
             }
         } catch (Exception $e) {
@@ -260,14 +265,14 @@ class AdministrationController extends Zend_Controller_Action {
         $id = $this->_getParam('id', 0);
         $uModel = new Model_DbTable_User();
         $setcc = $uModel->setcc($id);
-        $this->_redirect('/plant/list');
+        $this->_redirect('/plant/admin');
     }
 
     public function unsetccAction() {
         $id = $this->_getParam('id', 0);
         $uModel = new Model_DbTable_User();
         $setcc = $uModel->unsetcc($id);
-        $this->_redirect('/plant/list');
+        $this->_redirect('/plant/admin');
     }
 
     public function showmenuAction() {
@@ -339,6 +344,7 @@ class AdministrationController extends Zend_Controller_Action {
 		
 		$this->_helper->getHelper('layout')->disableLayout();
 		$pid = $this->getRequest()->getPost('plantid');
+		$this->view->plantid = $pid;
 		$umodel = new Model_DbTable_User();
 		$users = $umodel->getUsersList($pid);
 		if(count($users) == 0)
@@ -357,7 +363,7 @@ class AdministrationController extends Zend_Controller_Action {
 	{
 		//delete all users except admin
 		
-		$umodel = new Model_DbTable_User();
+		/*$umodel = new Model_DbTable_User();
 		
 		$users = $umodel->fetchAll();
 		
@@ -456,7 +462,7 @@ class AdministrationController extends Zend_Controller_Action {
 		//schevent
 		
 		$schevent = new Model_DbTable_ScheduleEvent();
-		$schevent->delete();
+		$schevent->delete();*/
 				
 		
 	}

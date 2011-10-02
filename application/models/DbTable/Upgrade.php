@@ -25,6 +25,7 @@ class Model_DbTable_Upgrade extends Zend_Db_Table_Abstract {
 		
         $nf = new Model_DbTable_Notification();
         $nf->add($newId, 'upgrade', 1);
+		return $newId;
     }
 
     public function updateUpgrade($content) {

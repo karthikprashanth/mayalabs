@@ -25,6 +25,7 @@ class Model_DbTable_Finding extends Zend_Db_Table_Abstract {
 		
         $nf = new Model_DbTable_Notification();
         $nf->add($newId, 'finding', 1);
+		return $newId;
     }
 
     public function updateFinding($content) {

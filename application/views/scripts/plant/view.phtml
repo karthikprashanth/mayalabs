@@ -1,7 +1,24 @@
 <link href="/js/tablecloth/tablecloth.css" rel="stylesheet" type="text/css"/>
 <script type='text/javascript' src='/js/tablecloth/tablecloth.js'></script>
 <?php
-
+$role = Zend_Registry::get('role');
+$uid = Zend_Auth::getInstance()->getStorage()->read()->id;
+$usermodel = new Model_DbTable_Userprofile();
+$user = $usermodel->getUser($uid);
+$upid = $user['plantId'];
+$gtmodel = new Model_DbTable_Gasturbine();
+$gt = $gtmodel->getGT($this->id);
+$gtpid = $gt['plantId'];
+$valid = false;
+if($gtpid == $upid || $role == 'sa')
+{
+	if($role != 'us')
+	{
+		$valid = true;
+		$editlink = "<div class = 'gt-edit'><a href='/plant/edit"  . "?id=" . $this->id . "' style='color: #719b3e;'>Edit</a></div>";
+	}
+		
+}
 $corporate = "<table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
 
             <tr>
@@ -45,6 +62,9 @@ $corporate = "<table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'
             </tr>
 </table>";
 
+if($valid)
+	$corporate = $corporate .  $editlink;
+
 $plant = "<table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
 
             <tr>
@@ -82,6 +102,9 @@ $plant = "<table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
                 <td>" . $this->plantData['plantWebsite'] . "</td>
             </tr>
        </table>";
+     
+if($valid)
+	$plant = $plant .  $editlink;
 
 $gt = "<table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
 
@@ -162,7 +185,9 @@ $gt = "<table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
                 <td>" . $this->plantData['GTTripAvg'] . "</td>
             </tr>
        </table>";
-
+if($valid)
+	$gt = $gt .  $editlink;
+	
 $this->tabPane("plantdata", $corporate, array('title' => 'Corporate Info'));
 $this->tabPane("plantdata", $plant, array('title' => 'Plant Info'));
 $this->tabPane("plantdata", $gt, array('title' => 'GT Info'));

@@ -811,3 +811,9 @@ Administration
     color: #fff;
     border: solid 1px #273c0e;
 }
+
+.transform-button{
+    background: #477396 url('../images/reset.png') left no-repeat;
+    color: #fff;
+    border: solid 1px #273c0e;
+}

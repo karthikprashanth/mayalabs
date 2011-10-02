@@ -56,7 +56,7 @@ class Form_GTDataForm extends Zend_Form {
 	       	$appath = substr(APPLICATION_PATH,0,strlen(APPLICATION_PATH)-12);
 			
 			$prestitle = new Zend_Form_Element_Text('prestitle');
-	        $prestitle->setLabel('Presentation Title')
+	        $prestitle->setLabel('Attachment Title')
 			->addDecorator('Htmltag', array('tag' => 'br'))
 	        ->addValidator('NotEmpty')
 	        ->addFilter('StripTags')
@@ -64,7 +64,7 @@ class Form_GTDataForm extends Zend_Form {
 	        ->addValidator(Model_Validators::alnum());
 			
 	        $content=new Zend_Form_Element_File('content');
-	        $content->setLabel('Upload the Presentation')
+	        $content->setLabel('Upload the File')
 	                ->setDestination($appath . '/public/uploads')
 	                ->addDecorator('Htmltag',array('tag' => 'br'));
 			

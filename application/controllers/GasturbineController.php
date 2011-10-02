@@ -28,6 +28,7 @@ class GasturbineController extends Zend_Controller_Action
                             //JQuery Form Enable
                             ZendX_JQuery::enableForm($form);
                             $form->submit->setLabel('Add');
+							$form->submit->setAttrib('class','gt-add');
                             $this->view->form = $form;
                             if ($this->getRequest()->isPost()) {
                                 $formData = $this->getRequest()->getPost();
@@ -57,9 +58,9 @@ class GasturbineController extends Zend_Controller_Action
 										$this->view->message = "Gasturbine name already exists";
 										return;
 									}
-                                    $userp->add($content);
+                                    $newgt = $userp->add($content);
 									
-                                    $this->_redirect('/gasturbine/plantlist');
+                                    $this->_redirect('/gasturbine/view?id='.$newgt);
                                 } else {
                                     $form->populate($formData);
                                 }
@@ -75,6 +76,7 @@ class GasturbineController extends Zend_Controller_Action
                         try {
                             $form = new Form_GasturbineForm();
                             $form->submit->setLabel('Save');
+							$form->submit->setAttrib('class','user-save');
                             $this->view->form = $form;
                 			
                             if ($this->getRequest()->isPost()) {
@@ -101,7 +103,10 @@ class GasturbineController extends Zend_Controller_Action
                             } else {
                                 $id = $this->_getParam('id', 0);
                                 $GTVal = new Model_DbTable_Gasturbine();
-                                $form->populate($GTVal->getGT($id));
+								$gtdet = $GTVal->getGT($id);
+                                $form->populate($gtdet);
+								$form->plantid->setValue($gtdet['plantId']);
+								
                             }
                         } catch (exception $e) {
                             echo $e;

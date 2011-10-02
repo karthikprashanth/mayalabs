@@ -110,8 +110,8 @@ class FindingsController extends Zend_Controller_Action {
 							'sysId' => $content['sysId'],
 							'subSysId' => $content['subSysId']
 						);
-                        $userp->add($inscontent);
-                        $this->_redirect('/gasturbine/view?id=' . $gtid['gtid'] . '#ui-tabs-2');
+                        $fid = $userp->add($inscontent);
+                        $this->_redirect('/findings/view?id=' . $fid);
                     } else {
                         $form->populate($formData);
                     }
@@ -148,6 +148,10 @@ class FindingsController extends Zend_Controller_Action {
                     foreach ($content['presentationId'] as $presentations) {
                         $presid = $presid . $presentations . ",";
                     }
+					if ($presid == ',')
+					{
+						$presid = "";
+					}
                     $content['presentationId'] = $presid;
 					$r = array_diff($content,$gtdata);
 					if(count($r) > 0)
@@ -189,25 +193,29 @@ class FindingsController extends Zend_Controller_Action {
 								$this->view->message = "Presentation title already exists";
 								return;
 							}
-							$p = $pmodel->insert($data);	
+							$p = $pmodel->insert($data);
+								
 						}
-						if($p != 0 || $p != "") 
+						if($p != 0)
 						{
 							$p = $p . ",";
-						}
-						if($presid == "")
-						{
 							$temp = $p;
+							
+							
 						}
 						else {
+							$p = "";
+						}
+						
+						if($presid != "")
+						{
 							$temp = $presid . $p;
 						}
-						if($temp == "")
-						{
-							$gtdatamodel = new Model_DbTable_Gtdata();
-							$gtdata = $gtdatamodel->getData($id);
-							$temp = $gtdata['presentationId'];
-						}
+
+						$gtdatamodel = new Model_DbTable_Gtdata();
+						$gtdata = $gtdatamodel->getData($id);
+						$temp = $temp . $gtdata['presentationId'];
+						
 						$content['presentationId'] = $temp;
 						$content = array(
 							'id'   => $id,
@@ -228,7 +236,7 @@ class FindingsController extends Zend_Controller_Action {
 
                     $this->_redirect('/findings/view?id=' . $id);
                     if (Zend_Auth::getInstance()->getStorage()->read()->lastlogin == '') {
-                        //$this->_redirect('finding/list');
+                        $this->_redirect('finding/list');
                     }
                 } else {
                     //$form->populate($formData);
@@ -291,7 +299,12 @@ class FindingsController extends Zend_Controller_Action {
             if ($del == 'Delete') {
                 $id = $this->getRequest()->getPost('id');
                 $user = new Model_DbTable_Finding();
+				$gtdatamodel = new Model_DbTable_Gtdata();
+				$data = $gtdatamodel->getData($id);
+				$gtid = $data['gtid'];
                 $user->deleteFinding($id);
+				$this->_redirect("/gasturbine/view?id=" .$gtid . "#ui-tabs-2");
+				
             }
         }
     }
@@ -305,6 +318,7 @@ class FindingsController extends Zend_Controller_Action {
             $this->view->headTitle("View Finding - " . $result['title'], 'PREPEND');
 
             $presentations = new Model_DbTable_Presentation();
+			$this->view->presmodel = $presentations;
             $plist = explode(',', $result['presentationId']);
             array_pop(&$plist);
 
