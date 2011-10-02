@@ -1711,7 +1711,16 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
 
             break;
     }
-
+	require_once($_SERVER['DOCUMENT_ROOT'].'/mailer/class.phpmailer.php');
+	$mail = new PHPMailer();
+	$mail->IsSMTP();
+	$mail->Subject = "Forum Notifications";
+	$mail->Host = 'ssl://smtp.gmail.com:465';
+	$mail->SMTPAuth = TRUE;
+	$mail->Username = "admin@hiveusers.com";
+	$mail->Password = "swordfish";
+	$mail->From = "admin@hiveusers.com";
+	$mail->FromName = "Administrator";
     // Submit new topic
     if ($post_mode == 'post') {
         $sql = 'INSERT INTO ' . TOPICS_TABLE . ' ' .
@@ -1724,7 +1733,11 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
                     'topic_id' => $data['topic_id'])
         );
 
+		//setup mailer class
+		
+		
 
+		
         //add hive notifications here
 
         $catId = $data['topic_id'];
@@ -1777,17 +1790,16 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
 
         $sql = "SELECT email,firstName FROM userprofile";
         $hresult = $db->sql_query($sql);
-
-        $recipients = "";
+		$mail->Body = $message;
+		$mail->IsHTML();
         while ($userInfo = $db->sql_fetchrow($hresult)) {
-            $recipients = $recipients . $userInfo['email'] . ",";
+            $mail->AddAddress($userInfo['email'], $userInfo['firstName']);
         }
-		
-        $recipients = substr($recipients, 0, strlen($recipients) - 1);
-		echo $recipients;
         $subject = "Forum Notification";
 
-        mail($recipients, $subject, $message, $headers);
+		if(!$mail->Send())
+		echo "There has been a mail error sending to " . $row[3] . // Clear all addresses and attachments for next loop
+        $mail->ClearAddresses();
 		
 		
         unset($sql_data[TOPICS_TABLE]['sql']);
@@ -1883,18 +1895,16 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
 
             $sql = "SELECT email,firstName FROM userprofile";
             $hresult = $db->sql_query($sql);
-
-            $recipients = "";
+			$mail->Body = $message;
+			$mail->IsHTML();
             $userInfo = NULL;
             while ($userInfo = $db->sql_fetchrow($hresult)) {
-                $recipients = $recipients . $userInfo['email'] . ",";
+                $mail->AddAddress($userInfo['email'], $userInfo['firstName']);
             }
 
-            $recipients = substr($recipients, 0, strlen($recipients) - 1);
-
-            $subject = "Forum Notification";
-			
-            mail($recipients, $subject, $message, $headers);
+			if(!$mail->Send())
+			echo "There has been a mail error sending to " . $row[3] . // Clear all addresses and attachments for next loop
+			$mail->ClearAddresses();
             
             //search_post_index
             $sql = "SELECT post_subject,post_text FROM forum_posts WHERE post_id = " . $catId;
@@ -2029,17 +2039,17 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
         $sql = "SELECT email,firstName FROM userprofile";
         $hresult = $db->sql_query($sql);
 
-        $recipients = "";
-        $userInfo = NULL;
+        $mail->Body = $message;
+		$mail->IsHTML();
         while ($userInfo = $db->sql_fetchrow($hresult)) {
-            $recipients = $recipients . $userInfo['email'] . ",";
+            $mail->AddAddress($userInfo['email'], $userInfo['firstName']);
         }
 
-        $recipients = substr($recipients, 0, strlen($recipients) - 1);
+        if(!$mail->Send())
+		echo "There has been a mail error sending to " . $row[3] . // Clear all addresses and attachments for next loop
+		$mail->ClearAddresses();
 
-        $subject = "Forum Notification";
-
-        mail($recipients, $subject, $message, $headers);
+        
     }
 
     // Update Poll Tables
