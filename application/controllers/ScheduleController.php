@@ -228,7 +228,7 @@ class ScheduleController extends Zend_Controller_Action
 	            		$mailbody = "<div style='width: 100%; '><div style='border-bottom: solid 1px #aaa; margin-bottom: 10px;'>";
 			            $mailbody = $mailbody . "<a href='http://www.hiveusers.com' style='text-decoration: none;'><span style='font-size: 34px; color: #2e4e68;'><b>hive</b></span>";
 			            $mailbody = $mailbody . "<span style='font-size: 26px; color: #83ac52; text-decoration:none;'><b>users.com</b></span></a><br/><br/>Conference Notification</div>";
-			            $mailbody = $mailbody . "<div style='margin-bottom:10px;'><span style='color: #000;'><i>Hello</i>,<br/><br/>A new conference has been added<br/>The conference will be held in $place from $fromDate to $toDate</br></br>Please click <a href = 'http://www.hiveusers.com/conference/list?id=$cid'>here</a> to view more details about the conference</span></div>";
+			            $mailbody = $mailbody . "<div style='margin-bottom:10px;'><span style='color: #000;'><i>Hello</i>,<br/><br/>A new conference has been added<br/>The conference will be held in $place from $fromDate to $toDate. Please click <a href = 'http://www.hiveusers.com/conference/list?id=$cid'>here</a> to view more details about the conference</span></div>";
 			            $mailbody = $mailbody . "<div style='border-top: solid 1px #aaa; color:#aaa; padding: 5px;'><center>This is a generated mail, please do not Reply.</center></div></div>";
 			            $mcon = Zend_Registry::get('mailconfig');
 						$config = array('ssl' => $mcon['ssl'], 'port' => $mcon['port'], 'auth' => $mcon['auth'], 'username' => $mcon['username'], 'password' => $mcon['password']);

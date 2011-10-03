@@ -6,11 +6,9 @@ $uid = Zend_Auth::getInstance()->getStorage()->read()->id;
 $usermodel = new Model_DbTable_Userprofile();
 $user = $usermodel->getUser($uid);
 $upid = $user['plantId'];
-$gtmodel = new Model_DbTable_Gasturbine();
-$gt = $gtmodel->getGT($this->id);
-$gtpid = $gt['plantId'];
+
 $valid = false;
-if($gtpid == $upid || $role == 'sa')
+if($this->id == $upid || $role == 'sa')
 {
 	if($role != 'us')
 	{

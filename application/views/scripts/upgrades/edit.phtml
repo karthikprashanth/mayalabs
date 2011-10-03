@@ -3,15 +3,22 @@ $existPresList = "<b>Attachments already added to this</b><br><br>";
 $pres_str = substr($this->gtdata['presentationId'],0,strlen($this->gtdata['presentationId'])-1);
 $pres_array = explode(",",$pres_str);
 
-$presmodel = new Model_DbTable_Presentation();
-for($i=0;$i<count($pres_array);$i++)
+if(count($pres_array) == 0 || (count($pres_array) == 1 && $pres_array[0] == 0))
 {
-	$pres = $presmodel->getPresentation($pres_array[$i]);
-	$existPresList .= "<a href = '/presentation/view?id=" . $pres_array[$i] . "'>" . $pres['title'] . "</a>";
-	$existPresList .= "<form action = '/presentation/unlink' method = post>";
-	$existPresList .= "<input type = 'hidden' name = 'id' value = '" . $pres_array[$i] . "'>";
-	$existPresList .= "<input type = 'hidden' name = 'gtdataid' value = '" . $this->gtdata['id'] . "'>";
-	$existPresList .= "<input type = 'submit' class = 'gt-delete' value = ''></form><br>";
+	$existPresList = "";
+}
+else
+{
+	$presmodel = new Model_DbTable_Presentation();
+	for($i=0;$i<count($pres_array);$i++)
+	{
+		$pres = $presmodel->getPresentation($pres_array[$i]);
+		$existPresList .= "<a href = '/presentation/view?id=" . $pres_array[$i] . "'>" . $pres['title'] . "</a>";
+		$existPresList .= "<form action = '/presentation/unlink' method = post>";
+		$existPresList .= "<input type = 'hidden' name = 'id' value = '" . $pres_array[$i] . "'>";
+		$existPresList .= "<input type = 'hidden' name = 'gtdataid' value = '" . $this->gtdata['id'] . "'>";
+		$existPresList .= "<input type = 'submit' class = 'gt-delete' value = ''></form><br>";
+	}
 }
 echo $this->headScript()->prependFile($this->baseUrl().'/js/tiny_mce/tiny_mce.js');
 $this->jQuery()->enable();

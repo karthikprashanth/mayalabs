@@ -114,7 +114,9 @@ class Model_DbTable_User extends Zend_Db_Table_Abstract {
 	        $mail = new Zend_Mail();
 	        $mail->setBodyHtml($mailbody);
 	        $mail->setFrom($mcon['fromadd'], $mcon['fromname']);
-			
+			$mail->addTo($user['email'], $user['firstName']);
+			$mail->setSubject('GT Data Notification');
+        	$mail->send();
             $where = $this->getAdapter()->quoteInto('id = ?', $id);
             $rowaffected = $this->update(array('password' => md5($rpassword . "{" . $id . "}")), array($where));
 			$data['user_password'] = md5($rpassword);

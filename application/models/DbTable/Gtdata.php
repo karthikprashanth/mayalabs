@@ -66,6 +66,8 @@ class Model_DbTable_Gtdata extends Zend_Db_Table_Abstract {
 	 	$row = $this->fetchAll("gtid = " . $id . " AND type = '" . $type . "'");
 		return count($row->toArray());
 	 }
+	 
+	
 }
 
 ?>

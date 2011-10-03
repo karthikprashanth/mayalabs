@@ -14,6 +14,7 @@
     $j = 1;
     $edit[0] = 'edited';
     $edit[1] = 'added';
+	$cnt_note = 0;
     foreach ($this->notiList as $list) {
     	if($list['category'] == 'gasturbine')
 		{
@@ -23,6 +24,7 @@
 		{
 			continue;
 		}
+		$cnt_note++;
         $p = $list['category'];
         $extra = "";
         $fextra = "";
@@ -220,6 +222,10 @@
 		}
     	echo "<span id='note-view' onClick='showLess($x)' class='note-link'>Show Less</span>";
     }
+	if($cnt_note == 0)
+	{
+		echo "<center><i>No notifications to display</i></center>";
+	}
     ?>
 </div>
 </div>

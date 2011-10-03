@@ -24,7 +24,7 @@ $(document).ready(function() {
 <?php foreach($this->users as $user) : ?>
 
 <tr>
-<td><?php echo $this->escape($user['username']);?></td>
+<td><?php echo "<a href = '/userprofile/view?id=" . $user['id'] ."'>" .$this->escape($user['username']) . "</a>";?></td>
 <td><?php echo $this->escape($user['firstName']).', '.$this->escape($user['lastName']); ?></td>
 <td><?php echo $this->escape($user['role']);?></td>
 <td>
@@ -82,5 +82,6 @@ $(document).ready(function() {
 	});
 </script>
 <?php
+	echo "<div><a href='/plant/view"  . "?id=" . $this->plantid . "' style='color: #719b3e;'>View Plant Details</a></div>";
 	echo "<div class = 'gt-edit'><a href='/plant/edit"  . "?id=" . $this->plantid . "' style='color: #719b3e;'>Edit Plant Details</a></div>";
 ?>

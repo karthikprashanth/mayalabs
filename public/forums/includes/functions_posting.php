@@ -1720,7 +1720,7 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
 	$mail->Username = "admin@hiveusers.com";
 	$mail->Password = "swordfish";
 	$mail->From = "admin@hiveusers.com";
-	$mail->FromName = "Administrator";
+	$mail->FromName = "Hive Users";
     // Submit new topic
     if ($post_mode == 'post') {
         $sql = 'INSERT INTO ' . TOPICS_TABLE . ' ' .

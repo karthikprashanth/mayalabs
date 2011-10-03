@@ -197,7 +197,7 @@ class UserprofileController extends Zend_Controller_Action {
 					        $mail->setFrom($mcon['fromadd'], $mcon['fromname']);
 					        $mail->addTo($user['email'], $user['firstName']);
 					        $mail->setSubject('Password Changed Successfully');
-					        //$mail->send();
+					        $mail->send();
 							$this->_redirect("userprofile/index");
 							
 							//----//

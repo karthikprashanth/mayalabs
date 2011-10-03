@@ -161,8 +161,28 @@ class PresentationController extends Zend_Controller_Action
 	{
 		if($this->getRequest()->isPost())
 		{
-			
 			$id = $this->getRequest()->getPost('id');
+			echo $id."<br>";
+			$gtdatamodel = new Model_DbTable_Gtdata();
+			$gtdata = $gtdatamodel->fetchAll("presentationId like '%" . $id . "%'");
+			foreach($gtdata as $d)
+			{
+				$presid = substr($d['presentationId'],0,strlen($d['presentationId'])-1);
+				$pres_arr = explode(",",$presid);
+				for($i=0;$i<count($pres_arr);$i++)
+				{
+					if($pres_arr[$i] == $id)
+					{
+						unset($pres_arr[$i]);
+						break;
+					}
+				}
+				$data = array();
+				$data['presentationId'] = implode(",",$pres_arr) . ",";
+				$where = array();
+				$where['id = ?'] = $d['id'];
+				$gtdatamodel->update($data,$where);
+			}
 			$presmodel = new Model_DbTable_Presentation();
 			$pres = $presmodel->getPresentation($id);
 			$gtid = $pres['GTId'];
