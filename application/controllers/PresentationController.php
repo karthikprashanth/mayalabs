@@ -31,7 +31,12 @@ class PresentationController extends Zend_Controller_Action
 				}
 			}
 			$presid = implode(",",$presarray);
+			
 			$data['presentationId'] = $presid . ",";
+			if($data['presentationId'] == ",")
+			{
+				$data['presentationId'] = "";
+			}
 			$where['id = ?'] = $gtdataid;
 			$gtdatamodel->update($data,$where);
 			if($gtdata['type'] == "finding")

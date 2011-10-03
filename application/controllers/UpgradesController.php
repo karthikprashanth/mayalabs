@@ -140,7 +140,7 @@ class UpgradesController extends Zend_Controller_Action {
 			$gtdata = $gtdatamodel->getData($id);
 			$gtid = $gtdata['gtid'];
             $form = new Form_GTDataForm();
-			$form->showForm($gtid);
+			$form->showForm($gtid,$id);
             $form->submit->setLabel('Save');
             if (Zend_Auth::getInstance()->getStorage()->read()->lastlogin == '') {
                 $form->submit->setLabel('Save & Continue');

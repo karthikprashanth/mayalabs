@@ -378,6 +378,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
 		$submit = new Zend_Form_Element_Submit('submit');
 	    $submit->addDecorator('Htmltag',array('tag' => 'p'));
 	    $submit->setAttrib('id', 'save3')
+				
 				->setAttrib('class','gt-add');
 				
 		$savec3 = new Zend_Form_Element_Submit('submit5');

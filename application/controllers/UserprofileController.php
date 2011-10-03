@@ -12,6 +12,7 @@ class UserprofileController extends Zend_Controller_Action {
         $this->view->headTitle('Edit User', 'PREPEND');
         try {
             $form = new Form_UserprofileForm();
+			
             $form->submit->setLabel('Save');
             if (Zend_Auth::getInstance()->getStorage()->read()->lastlogin == '') {
                 $form->submit->setLabel('Save & Continue');
@@ -38,12 +39,15 @@ class UserprofileController extends Zend_Controller_Action {
                     $form->populate($formData);
                 }
             } else {
+            	
                 $myUser = Zend_Auth::getInstance()->getStorage()->read()->id;
                 $user = new Model_DbTable_Userprofile();
 				$u = $user->getUser($myUser);
 				$pid = $u['plantId'];
                 $form->populate($user->getUser($myUser));
-				$form->plantid->setValue($pid);
+				$role = Zend_Registry::get("role");
+				if($role == 'sa')
+					$form->plantid->setValue($pid);
             }
         } catch (Exception $e) {
             echo $e;
@@ -141,6 +145,7 @@ class UserprofileController extends Zend_Controller_Action {
 			$pmodel = new Model_DbTable_Plant();
 			$plant = $pmodel->getPlant($profileData['plantId']);
 			$this->view->uPlantName = $plant['plantName'];
+			$this->view->uPlantId = $profileData['plantId'];
             $this->view->headTitle('View User - ' . $profileData['firstName'] . ' ' . $profileData['lastName'], 'PREPEND');
 
             $this->view->profileData = $profileData;
@@ -192,7 +197,7 @@ class UserprofileController extends Zend_Controller_Action {
 					        $mail->setFrom($mcon['fromadd'], $mcon['fromname']);
 					        $mail->addTo($user['email'], $user['firstName']);
 					        $mail->setSubject('Password Changed Successfully');
-					        $mail->send();
+					        //$mail->send();
 							$this->_redirect("userprofile/index");
 							
 							//----//

@@ -34,7 +34,13 @@ $data="<table  cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
     </tr>
     
 </table>";
-
+$lastlogin = Zend_Auth::getInstance()->getStorage()->read()->lastlogin;
+$pid = $this->uPlantId;
+if($lastlogin == NULL)
+{
+	$data .= "<center><a href = '/userprofile/index'>&lt;&lt; Back</a>&nbsp;&nbsp;";
+	$data .= "<a href = '/plant/edit?id=$pid'>Continue &gt;&gt;</a></center>";
+}
 
 $this->tabPane("userdata",$data,array('title' => 'User Info'));
 echo $this->tabContainer("userdata",array()); 

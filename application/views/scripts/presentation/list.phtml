@@ -45,7 +45,7 @@
                 <td><?php
                 $user = $umodel->getUser($presentation['userupdate']);
 				$uname = $user['firstName'] . " " . $user['lastName'] . " - " . $user['plantName'];
-            echo "<a href='" . $this->url(array('action' => 'view')) . "?id=" . $this->escape($presentation['presentationId']) . "'>" . $presentation['title'] . "</a><br/>";
+            echo "<a href='/presentation/view?id=" . $this->escape($presentation['presentationId']) . "'>" . $presentation['title'] . "</a><br/>";
         ?></td>
         	<td><?php echo $prestype[$presentation['filetype']]; ?></td>
             <td><?php echo $uname; ?></td>

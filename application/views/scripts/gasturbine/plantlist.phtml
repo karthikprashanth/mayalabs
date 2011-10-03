@@ -72,6 +72,12 @@ foreach ($this->GTData as $gasturbines) {
 	$list = $list . "<tr><th>GT Data</th><td>$fline , $uline and $lline</td></tr>";
 	$list = $list . "</table><br><br>";
 }
+$lastlogin = Zend_Auth::getInstance()->getStorage()->read()->lastlogin;
+if($lastlogin == NULL)
+{
+	$list .= "<center><a href = '/userprofile/view'>&lt;&lt; Back &nbsp;&nbsp;</a>";
+	$list .= "<a href = '/dashboard/index'>Continue &gt;&gt;</a></center>";
+}
 //$list = $list . "</center>";
 $this->tabPane("GTList", $list, array('title' => 'GT List'));
 echo $this->tabContainer("GTList", array());

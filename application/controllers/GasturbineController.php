@@ -105,7 +105,9 @@ class GasturbineController extends Zend_Controller_Action
                                 $GTVal = new Model_DbTable_Gasturbine();
 								$gtdet = $GTVal->getGT($id);
                                 $form->populate($gtdet);
-								$form->plantid->setValue($gtdet['plantId']);
+								$role = Zend_Registry::get("role");
+								if($role == "sa")
+									$form->plantid->setValue($gtdet['plantId']);
 								
                             }
                         } catch (exception $e) {

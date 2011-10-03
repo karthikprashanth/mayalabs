@@ -100,9 +100,7 @@ class PlantController extends Zend_Controller_Action
                     ZendX_JQuery::enableForm($form);
                     $form->partPlant3->submit->setLabel('Save');
 					$form->partPlant3->submit->setAttrib('class','user-save');
-                    if (Zend_Auth::getInstance()->getStorage()->read()->lastlogin == '') {
-                        $form->partPlant3->submit->setLabel('Save & Continue');
-                    }
+                    
                     $this->view->form = $form;
 					$this->view->plantId = $this->_getParam('id',0);
 					

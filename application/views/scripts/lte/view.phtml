@@ -28,7 +28,7 @@
 			file_put_contents($filename,$data);
 		 }
 		 
-	     $list=$list."<a href='".$this->baseUrl()."/presentation/view/?id=".$this->escape(key($pvalue))."'><img src = '/".$filename."' height = $h width = $w>".current($pvalue)."</a><br>";
+	     $list=$list."<a href='/presentation/view/?id=".$this->escape(key($pvalue))."'><img src = '/".$filename."' height = $h width = $w>".current($pvalue)."</a><br>";
 	}
 $ssModel = $this->subSysModel;
 $ss = $ssModel->getSubSystem($this->lte['subSysId']);

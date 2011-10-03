@@ -47,7 +47,7 @@ $prestype['pptx'] = "Powerpoint Presentation";
 $pres = "<table id='tables1' class='tablesorter'><thead><tr><th>Title</th><th>File Type</th><th>Plant Name</th><th>Upload Date and Time</th></tr></thead><tbody>";
 foreach ($this->presList as $presentation) {
     $pres = $pres . "<tr><td>";
-    $pres = $pres . "<a href='" . $this->url(array('action' => 'view')) . "?id=" . $presentation['presentationId'] . "'>" . $presentation['title'] . "</a>";
+    $pres = $pres . "<a href='/conference/view?id=" . $presentation['presentationId'] . "'>" . $presentation['title'] . "</a>";
     $pres = $pres . "</td><td>";
 	$pres = $pres . $prestype[$presentation['filetype']];
     $pres = $pres . "</td><td>";

@@ -7,18 +7,41 @@
 
 class Form_GTDataForm extends Zend_Form {
 
-		public function showform($gturbineid)    
+		public function showform($gturbineid,$gtdataid)    
 		{
 	        $this->setName('GTData');
-	
+			
 	        $pObj = new Model_DbTable_Presentation();
 	        $presentationValue = $pObj->fetchAll("GTId = " . $gturbineid);
 	
 	        $data = array();
 	        $data[''] = 'Select an Option';
-	        foreach ($presentationValue as $pl) {
-	            $data[$pl->presentationId] = $pl->title;
-	        }
+			if($gtdataid == 0)
+			{
+		        foreach ($presentationValue as $pl) {
+		            $data[$pl->presentationId] = $pl->title;
+		        }
+			}
+			else {
+				$gtdatamodel = new Model_DbTable_Gtdata();
+				$gtdata = $gtdatamodel->getData($gtdataid);
+				$presid = explode(",",substr($gtdata['presentationId'],0,strlen($gtdata['presentationId'])-1));
+				foreach($presentationValue as $pl)
+				{
+					$add = true;
+					for($i=0;$i<count($presid);$i++)
+					{
+						if($presid[$i] == $pl['presentationId'])
+						{
+							$add = false;
+						}
+					}
+					if($add)
+					{
+						$data[$pl->presentationId] = $pl->title;
+					}
+				}
+			}
 			
 			$sysModel = new Model_DbTable_Gtsystems();
 			$system = $sysModel->fetchAll();
