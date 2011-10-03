@@ -18,7 +18,7 @@ class Plugin_Breadcrumbs extends Zend_Controller_Plugin_Abstract {
         $breadcontainer = new Zend_Navigation($breadcrumb);
         if ($controller == 'conference' && $action != 'index' 
         && $action != 'view' && $action != 'add' 
-        && $action != 'delete') {       	
+        && $action != 'delete' && $action != 'delpres' && $action != 'delphoto') {       	
             if ($action == 'list' || $action == 'edit' || $action == 'gallery') {
                 $cid = $request->getParam('id');
             } else if ($action == 'addpresentation') {
@@ -200,7 +200,7 @@ class Plugin_Breadcrumbs extends Zend_Controller_Plugin_Abstract {
                 $page = array(
                     'label' => 'Plants',
                     'controller' => 'plant',
-                    'action' => 'list',
+                    'action' => 'clist',
                     'codename' => 'plantlist'
                 );
                 $breadcontainer->findOneBy('label', 'Home')->addPage($page);
@@ -215,17 +215,12 @@ class Plugin_Breadcrumbs extends Zend_Controller_Plugin_Abstract {
                 $page = array(
                     'label' => 'Plants',
                     'controller' => 'plant',
-                    'action' => 'list',
+                    'action' => 'clist',
                     'codename' => 'plantlist'
                 );
                 $breadcontainer->findOneBy('label', 'Home')->addPage($page);
 
-                $page = array(
-                    'label' => 'Company Listing',
-                    'controller' => 'plant',
-                    'action' => 'clist'
-                );
-                $breadcontainer->findOneBy('codename', 'plantlist')->addPage($page);
+           
             } else if ($action == 'view') {
                 $pid = $request->getParam('id');
                 $pmodel = new Model_DbTable_Plant();
@@ -252,7 +247,7 @@ class Plugin_Breadcrumbs extends Zend_Controller_Plugin_Abstract {
                     $page = array(
                         'label' => 'Plants',
                         'controller' => 'plant',
-                        'action' => 'list',
+                        'action' => 'clist',
                         'codename' => 'plantlist'
                     );
 
@@ -302,7 +297,7 @@ class Plugin_Breadcrumbs extends Zend_Controller_Plugin_Abstract {
                     $page = array(
                         'label' => 'Plants',
                         'controller' => 'plant',
-                        'action' => 'list',
+                        'action' => 'clist',
                         'codename' => 'plantlist'
                     );
 
@@ -365,7 +360,7 @@ class Plugin_Breadcrumbs extends Zend_Controller_Plugin_Abstract {
                     $page = array(
                         'label' => 'Plants',
                         'controller' => 'plant',
-                        'action' => 'list',
+                        'action' => 'clist',
                         'codename' => 'plantlist'
                     );
 
@@ -446,7 +441,7 @@ class Plugin_Breadcrumbs extends Zend_Controller_Plugin_Abstract {
                     $page = array(
                         'label' => 'Plants',
                         'controller' => 'plant',
-                        'action' => 'list',
+                        'action' => 'clist',
                         'codename' => 'plantlist'
                     );
                     $breadcontainer->findOneBy('label', 'Home')->addPage($page);
@@ -613,7 +608,7 @@ class Plugin_Breadcrumbs extends Zend_Controller_Plugin_Abstract {
                     $page = array(
                         'label' => 'Plants',
                         'controller' => 'plant',
-                        'action' => 'list',
+                        'action' => 'clist',
                         'codename' => 'plantlist'
                     );
                     $breadcontainer->findOneBy('label', 'Home')->addPage($page);
@@ -725,7 +720,7 @@ class Plugin_Breadcrumbs extends Zend_Controller_Plugin_Abstract {
                     $page = array(
                         'label' => 'Plants',
                         'controller' => 'plant',
-                        'action' => 'list',
+                        'action' => 'clist',
                         'codename' => 'plantlist'
                     );
                     $breadcontainer->findOneBy('label', 'Home')->addPage($page);
@@ -842,7 +837,7 @@ class Plugin_Breadcrumbs extends Zend_Controller_Plugin_Abstract {
                     $page = array(
                         'label' => 'Plants',
                         'controller' => 'plant',
-                        'action' => 'list',
+                        'action' => 'clist',
                         'codename' => 'plantlist'
                     );
                     $breadcontainer->findOneBy('label', 'Home')->addPage($page);
@@ -1059,7 +1054,7 @@ class Plugin_Breadcrumbs extends Zend_Controller_Plugin_Abstract {
 						$page = array(
 	                        'label' => 'Plants',
 	                        'controller' => 'plant',
-	                        'action' => 'list',
+	                        'action' => 'clist',
 	                        'codename' => 'plantlist'
 	                    );
 	                    $breadcontainer->findOneBy('label', 'Home')->addPage($page);
@@ -1192,7 +1187,7 @@ class Plugin_Breadcrumbs extends Zend_Controller_Plugin_Abstract {
 						$page = array(
 	                        'label' => 'Plants',
 	                        'controller' => 'plant',
-	                        'action' => 'list',
+	                        'action' => 'clist',
 	                        'codename' => 'plantlist'
 	                    );
 	                    $breadcontainer->findOneBy('label', 'Home')->addPage($page);
@@ -1311,7 +1306,7 @@ class Plugin_Breadcrumbs extends Zend_Controller_Plugin_Abstract {
 						$page = array(
 	                        'label' => 'Plants',
 	                        'controller' => 'plant',
-	                        'action' => 'list',
+	                        'action' => 'clist',
 	                        'codename' => 'plantlist'
 	                    );
 	                    $breadcontainer->findOneBy('label', 'Home')->addPage($page);

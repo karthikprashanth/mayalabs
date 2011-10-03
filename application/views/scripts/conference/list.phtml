@@ -17,6 +17,7 @@ $synopsis = "<center>" . $conf['abstract'] . "</center>";
 $i = 0;
 $gallery = $gallery . "<a href = '/conference/gallery?id=".$conf['cId']."'>Add a new photo</a><br><br>";
 $tag[] = array();
+$role = Zend_Registry::get("role");
 foreach ($this->confGallery as $photos) {
     $img = 'random/confgal' . $i;
     file_put_contents($img, $photos['data']);
@@ -25,6 +26,11 @@ foreach ($this->confGallery as $photos) {
     if ($i % 3 == 0 && $i != 0) {
         $gallery = $gallery . "<br><br>";
     }
+	if($role == "sa")
+	{
+		$gallery .= "<a href = '/conference/delphoto?id=".$photos['photoId'] ."' class = 'gt-delete' method = 'post'>   &nbsp;&nbsp;&nbsp;</a>";
+		 
+	}
     $i++;
 }
 $max = $i;
@@ -45,6 +51,7 @@ $prestype['ppt'] = "Powerpoint Presentation";
 $prestype['pptx'] = "Powerpoint Presentation";
 
 $pres = "<table id='tables1' class='tablesorter'><thead><tr><th>Title</th><th>File Type</th><th>Plant Name</th><th>Upload Date and Time</th></tr></thead><tbody>";
+$role = Zend_Registry::get('role');
 foreach ($this->presList as $presentation) {
     $pres = $pres . "<tr><td>";
     $pres = $pres . "<a href='/conference/view?id=" . $presentation['presentationId'] . "'>" . $presentation['title'] . "</a>";
@@ -54,7 +61,12 @@ foreach ($this->presList as $presentation) {
     $pres = $pres . $this->plantDet->getPlantName($presentation['plantId']);
     $pres = $pres . "</td><td>";
     $pres = $pres . $this->escape($presentation['uploadTime']);
-    $pres = $pres . "</td></tr>";
+    $pres = $pres . "</td>";
+    if($role == 'sa')
+    {
+    	$pres = $pres . "<td><form action = '/conference/delpres' method = 'post'><input type = 'hidden' name = 'presid' value = '" . $presentation['presentationId'] . "'><input type = 'submit' value = '' class = 'gt-delete'></form></td>";
+    }
+    $pres = $pres . "</tr>";
     $i++;
 }
 $pres = $pres . "</tbody></table>";

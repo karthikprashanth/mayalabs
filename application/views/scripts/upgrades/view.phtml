@@ -33,7 +33,20 @@
 }
 $dataid = $this->upgrade['id'];
 
-$editlink = "<div style='float:left;' class='gt-edit'><a href = '/upgrades/edit?id=$dataid' style='color: #719b3e;'>Edit</a></div>";
+$role = Zend_Registry::get("role");
+$uid = Zend_Auth::getInstance()->getStorage()->read()->id;
+$umodel = new Model_DbTable_Userprofile();
+$user = $umodel->getUser($uid);
+$upid = $user['plantId'];
+$gtid = $this->finding['gtid'];
+$gtmodel = new Model_DbTable_Gasturbine();
+$gt = $gtmodel->getGT($gtid);
+$gtpid = $gt['plantId'];
+$valid = false;
+if($upid == $gtpid || $role == 'sa')
+{
+	$editlink = "<div style='float:left;' class='gt-edit'><a href = '/findings/edit?id=$dataid' style='color: #719b3e;'>Edit</a></div>";
+}
 
 $ssModel = $this->subSysModel;
 $ss = $ssModel->getSubSystem($this->upgrade['subSysId']);

@@ -119,7 +119,36 @@ class ConferenceController extends Zend_Controller_Action
             echo $e;
         }
 	}	
-
+	
+	public function delpresAction()
+	{
+		if($this->getRequest()->isPost())
+		{
+			$id = $this->getRequest()->getPost("presid");
+			$presmodel = new Model_DbTable_ConfPresentation();
+			$pres = $presmodel->getPres($id);
+			$cid = $pres['cId'];
+			$presmodel->delete("presentationId = " . (int)$id);
+			$this->_redirect("/conference/list?id=" . $cid . "#confdata-frag-3");
+			
+		}
+	}
+	
+	public function delphotoAction()
+	{
+		$role = Zend_Registry::get("role");
+		if($role != 'sa')
+		{
+			return;
+		}
+		$id = $this->_getParam('id',0);
+		$confgal = new Model_DbTable_Gallery();
+		$gal = $confgal->getPhoto($id);
+		$cid = $gal['cId'];
+		$confgal->delete("photoId = " . $id);
+		$this->_redirect("/conference/list?id=" . $cid . "#confdata-frag-4");
+		
+	}
     public function addAction()
     {
     	$role = Zend_Registry::get('role');

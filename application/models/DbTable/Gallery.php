@@ -7,4 +7,10 @@
 			return $row->toArray();
 		}
 		
+		public function getPhoto($id)
+		{
+			$row = $this->fetchRow("photoId = " . (int)$id);
+			return $row->toArray();
+		}
+		
 	}

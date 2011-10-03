@@ -153,6 +153,8 @@ class PlantController extends Zend_Controller_Action
     public function listAction()
     {
         try {
+        			$role = Zend_Registry::get('role');
+					
                     $this->view->headTitle('List Plants', 'PREPEND');
                     $resultSet = new Model_DbTable_Plant();
                     $resultSet = $resultSet->listPlants();

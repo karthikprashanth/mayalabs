@@ -179,6 +179,10 @@ class PresentationController extends Zend_Controller_Action
 				}
 				$data = array();
 				$data['presentationId'] = implode(",",$pres_arr) . ",";
+				if($data['presentationId'] == ",")
+				{
+					$data['presentationId'] = "";
+				}
 				$where = array();
 				$where['id = ?'] = $d['id'];
 				$gtdatamodel->update($data,$where);
