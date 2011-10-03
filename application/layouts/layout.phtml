@@ -54,8 +54,48 @@
                         if ($role != 'sa') {
                             $pid = $user['plantId'];
                             $navContainer->findOneBy('codename', 'userplantview')->setParams(array('id' => $pid));
-							$navContainer->findOneBy('codename', 'userplantedit')->setParams(array('id' => $pid));
-                        }
+						}	
+						
+						$confmodel = new Model_DbTable_Conference();
+						$conflist = $confmodel->getConfList();
+						$i=1;
+						foreach($conflist as $list)
+						{
+							$page = array(
+								'label' => $list['year'] . " (" . $list['place'] . ")",
+								'controller' => 'conference',
+								'action' => 'list',
+								'params' => array('id' => $list['cId'])
+							);
+							
+							$navContainer->findOneBy('codename','conf')->addPage($page);
+							if($i==2)
+							{
+								break;
+							}
+							$i++;
+						}
+						
+						$page = array(
+							'label' => "Others",
+							'controller' => 'conference',
+							'action' => 'index',
+							
+						);
+						
+						$navContainer->findOneBy('codename','conf')->addPage($page);
+						
+						if($role == 'sa')
+						{
+							$page = array(
+								'label' => "Add Conference",
+								'controller' => 'conference',
+								'action' => 'add',
+								
+							);
+							$navContainer->findOneBy('codename','conf')->addPage($page);	
+						}
+                        
                         echo $this->navigation()->menu()->renderMenu();
                         ?>
                     </div>

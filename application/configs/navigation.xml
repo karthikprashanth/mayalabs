@@ -47,7 +47,7 @@
 					<privilege>admin</privilege>
 				</admin>
 				<clist>
-					<label>Company Listing</label>
+					<label>Plant Listing</label>
 					<controller>plant</controller>
 					<action>clist</action>
 					<resource>plant</resource>
@@ -78,20 +78,7 @@
 		<conference>
 			<label>Conference</label>
 			<uri>#</uri>
-			<pages>
-				<add>
-					<label>Add</label>
-					<controller>conference</controller>
-					<action>add</action>
-					<resource>conference</resource>
-					<privilege>add</privilege>
-				</add>
-				<list>
-					<label>List</label>
-					<controller>conference</controller>
-					<action>index</action>
-				</list>
-			</pages>
+			<codename>conf</codename>
 		</conference>
 		<forum>
 			<label>Forums</label>
@@ -137,16 +124,8 @@
 		                    <privilege>view</privilege>
 							<codename>userplantview</codename>	
                     	</view>
-						<edit>
-							<label>Edit</label>
-							<controller>plant</controller>
-							<action>edit</action>
-							<resource>plant</resource>
-							<privilege>edit</privilege>
-							<codename>userplantedit</codename>
-						</edit>
 						<clist>
-							<label>Company Listing</label>
+							<label>Plant Listing</label>
 							<controller>plant</controller>
 							<action>clist</action>
 							<resource>plant</resource>
@@ -156,19 +135,18 @@
                 </plant>
             </pages>
         </profile>
-        <gasturbine>
-            <label>Gasturbines</label>
-            <controller>gasturbine</controller>
-            <action>plantlist</action>
+        <gasturbines>
+			<label>Gasturbines</label>
 			<codename>gtplantlist</codename>
-            <resource>gasturbine</resource>
-            <privilege>view</privilege>
-        </gasturbine>
+			<controller>gasturbine</controller>
+			<action>plantlist</action>
+		</gasturbines>
 		<conference>
 			<label>Conference</label>
 			<controller>conference</controller>
 			<action>index</action>
 			<resource>conference</resource>
+			<codename>conf</codename>
 		</conference>
 		<forum>
 			<label>Forums</label>
@@ -210,14 +188,9 @@
 							<action>view</action>
 							<codename>userplantview</codename>
 						</plantview>
-						<edit>
-							<label>Edit</label>
-							<controller>plant</controller>
-							<action>edit</action>
-							<codename>userplantedit</codename>
-						</edit>
+						
 						<clist>
-							<label>Company Listing</label>
+							<label>Plant Listing</label>
 							<controller>plant</controller>
 							<action>clist</action>
 							<resource>plant</resource>
@@ -234,26 +207,16 @@
         </profile>
         <gasturbines>
 			<label>Gasturbines</label>
-			<uri>#</uri>
-			<pages>
-				<gtplantlist>
-					<label>View</label>
-					<controller>gasturbine</controller>
-					<action>plantlist</action>
-					<codename>gtplantlist</codename>
-				</gtplantlist>
-				<add>
-					<label>Add</label>
-					<controller>gasturbine</controller>
-					<action>add</action>
-				</add>
-			</pages>
+			<codename>gtplantlist</codename>
+			<controller>gasturbine</controller>
+			<action>plantlist</action>
 		</gasturbines>
 		<conference>
 			<label>Conference</label>
 			<controller>conference</controller>
 			<action>index</action>
 			<resource>conference</resource>
+			<codename>conf</codename>
 		</conference>
 		<forum>
 			<label>Forums</label>

@@ -59,10 +59,9 @@ foreach ($this->GTData as $gasturbines) {
 		$lte = $gtdatamodel->fetchRow("type = 'lte' AND gtid = " . $gasturbines['GTId']);
 		$lid = $lte['id'];
 		$lline = "<a href = '/upgrades/view?id=$lid'>1 LTE</a>";
-		
 	}
 	else {
-		$lline = $lcount . " LTEs";
+		$lline = "<a href = '/upgrades/view?id=$lid'>" . $lcount . " LTEs</a>";
 	}
 	$plant = $pmodel->getPlant($gasturbines['plantId']);
 	$pname = $plant['plantName'];
