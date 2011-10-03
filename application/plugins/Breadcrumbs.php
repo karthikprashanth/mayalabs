@@ -644,7 +644,7 @@ class Plugin_Breadcrumbs extends Zend_Controller_Plugin_Abstract {
                     $breadcontainer->findOneBy('codename', 'gtlist')->addPage($page);
                 }
             }
-        } else if ($controller == 'findings' || $controller == 'upgrades' || $controller == 'lte'  || $controller == 'presentation' && $action != 'list') {
+        } else if ($controller == 'findings' || $controller == 'upgrades' || $controller == 'lte'  || ($controller == 'presentation' && $action != 'view') && $action != 'list') {
             if ($action == 'list') {
                 return;
             }
