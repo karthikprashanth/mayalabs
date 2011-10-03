@@ -120,11 +120,13 @@ class AdvertisementController extends Zend_Controller_Action {
         try {
             if (!$this->_request->isXmlHttpRequest())
                 $this->_helper->viewRenderer->setResponseSegment('advert');
-
+			
             $advert = new Model_DbTable_Advertisement();
             $data = $advert->randomAd();
-            $img = 'random/abc';
+			
+            $img = 'random/abc' . rand(0,999999);
             file_put_contents($img, $data['advertImage']);
+			
             $this->view->randomAd = $img;
 			$this->view->desc = $data['description'];
             $this->view->adTitle = $data;

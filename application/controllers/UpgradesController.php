@@ -255,6 +255,7 @@ class UpgradesController extends Zend_Controller_Action {
                 $id = $this->_getParam('id', 0);
                 $fin = new Model_DbTable_Upgrade();
                 $form->populate($fin->getUpgrade($id));
+				$this->view->gtdata = $fin->getUpgrade($id);
             }
         } catch (exception $e) {
             echo $e;
@@ -317,6 +318,7 @@ class UpgradesController extends Zend_Controller_Action {
             $this->view->headTitle('View Upgrade - ' . $result['title'], 'PREPEND');
 
             $presentations = new Model_DbTable_Presentation();
+			$this->view->presmodel = $presentations;
             $plist = explode(',', $result['presentationId']);
             array_pop(&$plist);
 

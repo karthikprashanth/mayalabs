@@ -316,6 +316,7 @@ class LteController extends Zend_Controller_Action {
                 $id = $this->_getParam('id', 0);
                 $fin = new Model_DbTable_LTE();
                 $form->populate($fin->getLTE($id));
+				$this->view->gtdata = $fin->getLTE($id);
             }
         } catch (exception $e) {
             echo $e;
@@ -331,6 +332,7 @@ class LteController extends Zend_Controller_Action {
             $this->view->headTitle("View LTE - " . $result['title'], 'PREPEND');
 
             $presentations = new Model_DbTable_Presentation();
+			$this->view->presmodel = $presentations;
             $plist = explode(',', $result['presentationId']);
             array_pop(&$plist);
 

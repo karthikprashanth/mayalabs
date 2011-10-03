@@ -12,7 +12,44 @@ class PresentationController extends Zend_Controller_Action
     {
         // action body
     }
-
+	public function unlinkAction()
+	{
+		if($this->getRequest()->isPost())
+		{
+			$id = $this->getRequest()->getPost('id');
+			$gtdataid = $this->getRequest()->getPost('gtdataid');
+			$gtdatamodel = new Model_DbTable_Gtdata();
+			$gtdata = $gtdatamodel->getData($gtdataid);
+			$presid = substr($gtdata['presentationId'],0,strlen($gtdata['presentationId'])-1);
+			$presarray = explode(",",$presid);
+			for($i=0;$i<count($presarray);$i++)
+			{
+				if($presarray[$i] == $id)
+				{
+					unset($presarray[$i]);
+					break;
+				}
+			}
+			$presid = implode(",",$presarray);
+			$data['presentationId'] = $presid . ",";
+			$where['id = ?'] = $gtdataid;
+			$gtdatamodel->update($data,$where);
+			if($gtdata['type'] == "finding")
+			{
+				$type = "findings";
+			}
+			else if($gtdata['type'] == "upgrade")
+			{
+				$type = "upgrades";
+			}
+			else if($gtdata['type'] == "lte")
+			{
+				$type = "lte";
+			}
+			$this->_redirect("/" . $type . "/edit?id=".$gtdataid);
+			
+		}
+	}
     public function addAction()
     {
         try{	

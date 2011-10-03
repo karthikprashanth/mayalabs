@@ -245,6 +245,7 @@ class FindingsController extends Zend_Controller_Action {
                 $id = $this->_getParam('id', 0);
                 $fin = new Model_DbTable_Finding();
                 $form->populate($fin->getFinding($id));
+				$this->view->gtdata = $fin->getFinding($id);
             }
         } catch (exception $e) {
             echo $e;
