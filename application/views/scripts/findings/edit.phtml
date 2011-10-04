@@ -29,6 +29,21 @@ echo $this->tabContainer("findingEdit",array());
 <div id = "spinnerimage" style = "display:none">Uploading ... <img src = "/images/spinner.gif"></div>
 <script type = "text/javascript">
 	$(document).ready(function(){
+	var sid = document.getElementById("sysId").value;
+	if(sid != "" && sid != 0)
+	{
+		/*$.ajax({
+            type: "POST",
+            data: "id=" + sid,
+            url: "/findings/index",
+            success: function(msg){
+                if (msg != ''){
+                    $("#subSysId").html(msg).show();
+                }
+            }
+       });
+       document.getElementById("subSysId").value = 15;*/
+	}
 	$("#submitbutton").click(function() {
 		var file = document.getElementById("content").value;
 		if (file != "")

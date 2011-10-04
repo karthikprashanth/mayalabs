@@ -49,6 +49,7 @@ class Form_GTDataForm extends Zend_Form {
 			$subsystem = $sysSubModel->fetchAll();
 			$sysNames = array();
 			$sysNames[''] = 'Select an Option';
+			$sysSubNames[''] = 'Select an Option';
 			foreach($system as $list)
 			{
 				$sysNames[$list['sysId']] = $list['sysName']; 
@@ -71,7 +72,6 @@ class Form_GTDataForm extends Zend_Form {
 			$subsys->setLabel('Sub System Name')
 				->addMultiOptions($sysSubNames)
 				->addDecorator('Htmltag', array('tag' => 'br'))
-	            ->setRequired(true)
 	            ->addFilter('StripTags')
 	            ->addFilter('StringTrim')
 	            ->addValidator('NotEmpty');
@@ -114,8 +114,7 @@ class Form_GTDataForm extends Zend_Form {
 	                ->addDecorator('Htmltag', array('tag' => 'br'))
 	                ->addValidator('NotEmpty')
 	                ->addFilter('StripTags')
-	                ->addFilter('StringTrim')
-	                ->addValidator(Model_Validators::alnum());
+	                ->addFilter('StringTrim');
 	
 	
 	        $Data = new Zend_Form_Element_Textarea('data');

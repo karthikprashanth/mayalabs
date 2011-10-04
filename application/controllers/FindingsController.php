@@ -239,12 +239,15 @@ class FindingsController extends Zend_Controller_Action {
                         $this->_redirect('finding/list');
                     }
                 } else {
-                    //$form->populate($formData);
+                    $form->populate($formData);
                 }
             } else {
                 $id = $this->_getParam('id', 0);
                 $fin = new Model_DbTable_Finding();
-                $form->populate($fin->getFinding($id));
+				$fdata = $fin->getFinding($id);
+				echo $fdata['subSysId'];
+               	$form->populate($fin->getFinding($id));
+				$form->subSysId->setValue($fdata['subSysId']);
 				$this->view->gtdata = $fin->getFinding($id);
             }
         } catch (exception $e) {

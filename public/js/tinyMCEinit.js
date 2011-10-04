@@ -17,13 +17,13 @@ tinyMCE.init({
 		theme_advanced_resizing : false,
 
 		// Example content CSS (should be your site CSS)
-		content_css : "/hive/public/css/content.css",
+		content_css : "/css/content.css",
 
 		// Drop lists for link/image/media/template dialogs
-		template_external_list_url : "/hive/public/lists/template_list.js",
-		external_link_list_url : "/hive/public/lists/link_list.js",
-		external_image_list_url : "/hive/public/lists/image_list.js",
-		media_external_list_url : "/hive/public/lists/media_list.js",
+		template_external_list_url : "/lists/template_list.js",
+		external_link_list_url : "/lists/link_list.js",
+		external_image_list_url : "/lists/image_list.js",
+		media_external_list_url : "/lists/media_list.js",
 
 		// Style formats
 		style_formats : [
