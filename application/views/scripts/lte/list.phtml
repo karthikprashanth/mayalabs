@@ -9,6 +9,8 @@
 <tr>
 <th>Title</th>
 <th>System/Subsystem</th>
+<th>EOH</th>
+<th>Type of Inspection</th>
 <th>User</th>
 <th>Date</th>
 <th>&nbsp;</th>
@@ -27,9 +29,24 @@ $username = $user['firstName'] . " " . $user['lastName'] . " - " . $user['plantN
 	$ss = $ssModel->getSubSystem($lte['subSysId']);
 	$system = $this->sysModel->getSystem($ss['sysId']);
 ?>
-<td><?php echo $system['sysName']; ?> / <?php echo $ss['subSysName']; ?></td>
-<td><?php echo $username; ?>
-<td><?php echo $this->escape($lte['updatedate']);?></td>
+<?php if($ss['subSysName'] == '-') : ?>
+	<td><?php echo $system['sysName']; ?></td>
+<?php else : ?>
+	<td><?php echo $system['sysName']; ?> / <?php echo $ss['subSysName']; ?></td>
+<?php endif; ?>
+
+<?php if($lte['EOH'] != "") : ?>
+	<td><?php echo $lte['EOH']; ?></td>
+<?php else : ?>
+	<td> </td>
+<?php endif; ?>
+<?php if($lte['TOI'] != "") : ?>
+	<td><?php echo $lte['TOI']; ?></td>
+<?php else : ?>
+	<td> </td>
+<?php endif; ?>
+<td><?php echo $username;?></td>
+<td><?php echo $this->escape($lte['updatedate']); ?></td>
 <?php
     $valid = false;
     foreach ($this->gt as $temp) {

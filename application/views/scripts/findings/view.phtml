@@ -34,7 +34,7 @@ foreach($this->plist as $pvalue){
 }
 $ssModel = $this->subSysModel;
 $ss = $ssModel->getSubSystem($this->finding['subSysId']);
-$system = $this->sysModel->getSystem($ss['sysId']);
+$system = $this->sysModel->getSystem($this->finding['sysId']);
 $dataid = $this->finding['id'];
 
 $role = Zend_Registry::get("role");
@@ -54,8 +54,21 @@ if($upid == $gtpid || $role == 'sa')
 
 
 $content = $content . "<div class='gtdata-title'>".$this->finding['title'];
-$content = $content." <span style='color:#77B464;'>".$system['sysName'] . "/" . $ss['subSysName'] ."</span>";
+if($ss['subSysName'] == "-")
+{
+	$content = $content." <span style='color:#77B464;'>".$system['sysName'] ."</span>";
+}
+else
+{
+	$content = $content." <span style='color:#77B464;'>".$system['sysName'] . "/" . $ss['subSysName'] ."</span>";
+}
 $content = $content." <span style='color:#268FBB;'>".$this->gt['GTName']."</span><br/>";
+if($this->finding['EOH'] != 0 && $this->finding['EOH'] != "")
+	$content = $content." <span style='color:#268FBB;'><b>EOH at Occurence</b>: ". $this->finding['EOH']."</span>";
+if($this->finding['DOF'] != "")
+	$content = $content." <span style='color:#268FBB;'><b>Date of Finding</b>: ".$this->finding['DOF']."</span>";
+if($this->finding['TOI'] != "")
+	$content = $content." <span style='color:#268FBB;'><b>Type of Inspection</b>: ".$this->finding['TOI']."</span><br>";
 $content = $content." <span style='color:#268FBB; font-size: 12px; font-style: normal; font-weight:bold;'>Updated On ".$this->finding['updatedate']."</span></div>";
 $content = $content."<div class='gtdata-data'>".$this->finding['data']."</div>";
 if($list == "")

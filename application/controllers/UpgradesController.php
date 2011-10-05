@@ -15,7 +15,7 @@ class UpgradesController extends Zend_Controller_Action {
             $gtid['gtid'] = $this->getRequest()->getPost('gtid');
             $this->view->headTitle('Add New Upgrade', 'PREPEND');
             $form = new Form_GTDataForm();
-			$form->showform($gtid['gtid']);
+			$form->showform($gtid['gtid'],0,"upgrade");
             $form->submit->setLabel('Add');
             $this->view->form = $form;
             $form->populate($gtid);
@@ -91,6 +91,10 @@ class UpgradesController extends Zend_Controller_Action {
 							}
 						}
 						$content['presentationId'] = $temp;
+						if($content['subSysId'] == 0 || $content['subSysId'] == "")
+						{
+							$content['subSysId'] = 34;
+						}
 						$inscontent = array(
 							'gtid' => $gtid['gtid'],
 							'type' => 'upgrade',
@@ -99,7 +103,10 @@ class UpgradesController extends Zend_Controller_Action {
 							'title' => $content['title'],
 							'presentationId' => $temp,
 							'sysId' => $content['sysId'],
-							'subSysId' => $content['subSysId']
+							'subSysId' => $content['subSysId'],
+							'EOH' => $content['EOH'],
+							'DOF' => $content['DOF'],
+							'TOI' => $content['TOI']
 						);
                         $upid = $userp->add($inscontent);
                         $this->_redirect('/upgrades/view?id='.$upid);
@@ -140,7 +147,7 @@ class UpgradesController extends Zend_Controller_Action {
 			$gtdata = $gtdatamodel->getData($id);
 			$gtid = $gtdata['gtid'];
             $form = new Form_GTDataForm();
-			$form->showForm($gtid,$id);
+			$form->showForm($gtid,$id,"upgrade");
             $form->submit->setLabel('Save');
             if (Zend_Auth::getInstance()->getStorage()->read()->lastlogin == '') {
                 $form->submit->setLabel('Save & Continue');
@@ -228,6 +235,10 @@ class UpgradesController extends Zend_Controller_Action {
 						$gtdata = $gtdatamodel->getData($id);
 						$temp = $temp . $gtdata['presentationId'];
 						$content['presentationId'] = $temp;
+						if($content['subSysId'] == 0 || $content['subSysId'] == "")
+						{
+							$content['subSysId'] = 34;
+						}
 						$content = array(
 							'id'   => $id,
 							'gtid' => $gtdata['gtid'],
@@ -237,7 +248,10 @@ class UpgradesController extends Zend_Controller_Action {
 							'title' => $content['title'],
 							'presentationId' => $temp,
 							'sysId' => $content['sysId'],
-							'subSysId' => $content['subSysId']
+							'subSysId' => $content['subSysId'],
+							'EOH' => $content['EOH'],
+							'DOF' => $content['DOF'],
+							'TOI' => $content['TOI']
 						);
                     	$upgrade->updateUpgrade($content);
                     	$nf = new Model_DbTable_Notification();
@@ -255,6 +269,8 @@ class UpgradesController extends Zend_Controller_Action {
                 $id = $this->_getParam('id', 0);
                 $fin = new Model_DbTable_Upgrade();
                 $form->populate($fin->getUpgrade($id));
+				$this->view->gtdata = $fin->getUpgrade($id);
+				$form->subSysId->setValue($fdata['subSysId']);
 				$this->view->gtdata = $fin->getUpgrade($id);
             }
         } catch (exception $e) {

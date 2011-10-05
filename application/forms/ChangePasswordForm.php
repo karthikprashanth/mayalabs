@@ -35,7 +35,8 @@ class Form_ChangePasswordForm extends Zend_Form
 	->addValidator(Model_Validators::password());
     //submit
     $submit = new Zend_Form_Element_Submit('submit');
-    $submit->setAttrib('id', 'submitbutton');
+    $submit->setAttrib('id', 'submitbutton')
+			->setAttrib('class','user-save');
     $this->addElements(array($oldPassword,$newPassword,$reNewPassword, $submit));
     $this->setMethod('post');
  }

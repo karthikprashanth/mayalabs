@@ -24,17 +24,19 @@ echo $this->headScript()->prependFile($this->baseUrl().'/js/tiny_mce/tiny_mce.js
 $this->jQuery()->enable();
 $this->tabPane("findingEdit",$existPresList . $this->form . "<br>" . $this->message ,array('title' => 'Finding Edit'));
 echo $this->tabContainer("findingEdit",array());
+echo "<div id = 'ssid' style = 'display:none'>" . $this->gtdata['subSysId'] . "</div>";
 ?>
 <script type="text/javascript" src='/js/tinyMCEinit.js'></script>
 <div id = "spinnerimage" style = "display:none">Uploading ... <img src = "/images/spinner.gif"></div>
 <script type = "text/javascript">
 	$(document).ready(function(){
 	var sid = document.getElementById("sysId").value;
+	var ssid = document.getElementById("ssid").innerHTML;
 	if(sid != "" && sid != 0)
 	{
-		/*$.ajax({
+       $.ajax({
             type: "POST",
-            data: "id=" + sid,
+            data: "id=" + sid + "&ssid=" + ssid,
             url: "/findings/index",
             success: function(msg){
                 if (msg != ''){
@@ -42,7 +44,6 @@ echo $this->tabContainer("findingEdit",array());
                 }
             }
        });
-       document.getElementById("subSysId").value = 15;*/
 	}
 	$("#submitbutton").click(function() {
 		var file = document.getElementById("content").value;

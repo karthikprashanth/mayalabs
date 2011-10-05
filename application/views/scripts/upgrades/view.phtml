@@ -50,12 +50,25 @@ if($upid == $gtpid || $role == 'sa')
 
 $ssModel = $this->subSysModel;
 $ss = $ssModel->getSubSystem($this->upgrade['subSysId']);
-$system = $this->sysModel->getSystem($ss['sysId']);
+$system = $this->sysModel->getSystem($this->upgrade['sysId']);
 
 $content = $content . "<div class='gtdata-title'>".$this->upgrade['title'];
-$content = $content." <span style='color:#77B464;'>".$system['sysName'] . "/" . $ss['subSysName'] ."</span>";
+if($ss['subSysName'] == "-")
+{
+	$content = $content." <span style='color:#77B464;'>".$system['sysName'] ."</span>";
+}
+else
+{
+	$content = $content." <span style='color:#77B464;'>".$system['sysName'] . "/" . $ss['subSysName'] ."</span>";
+}
 $content = $content." <span style='color:#268FBB;'>".$this->gt['GTName']."</span><br/>";
-$content = $content." <span style='color:#268FBB; font-size: 12px; font-style: normal; font-weight:bold;'>Updated On ".$this->upgrade['updatedate']."</span></div>";
+if($this->upgrade['EOH'] != 0 && $this->upgrade['EOH'] != "")
+	$content = $content." <span style='color:#268FBB;'><b>EOH at Occurence</b>: ". $this->upgrade['EOH']."</span>";
+if($this->upgrade['DOF'] != "")
+	$content = $content." <span style='color:#268FBB;'><b>Date of Finding</b>: ".$this->upgrade['DOF']."</span>";
+if($this->upgrade['TOI'] != "")
+	$content = $content." <span style='color:#268FBB;'><b>Type of Inspection</b>: ".$this->upgrade['TOI']."</span>";
+$content = $content."<br> <span style='color:#268FBB; font-size: 12px; font-style: normal; font-weight:bold;'>Updated On ".$this->upgrade['updatedate']."</span></div>";
 $content = $content."<div class='gtdata-data'>".$this->upgrade['data']."</div>";
 if($list == "")
 	$list="<span style='color:#d95e1c;'>No Presentations Added</span>";

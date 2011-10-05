@@ -7,7 +7,7 @@
 
 class Form_GTDataForm extends Zend_Form {
 
-		public function showform($gturbineid,$gtdataid)    
+		public function showform($gturbineid,$gtdataid,$gtdatatype)    
 		{
 	        $this->setName('GTData');
 			
@@ -16,6 +16,14 @@ class Form_GTDataForm extends Zend_Form {
 	
 	        $data = array();
 	        $data[''] = 'Select an Option';
+			if($gtdatatype == 'finding')
+			{
+				$doflabel = "Finding";
+			}
+			else
+			{
+				$doflabel = "Implementation";
+			}
 			if($gtdataid == 0)
 			{
 		        foreach ($presentationValue as $pl) {
@@ -25,6 +33,7 @@ class Form_GTDataForm extends Zend_Form {
 			else {
 				$gtdatamodel = new Model_DbTable_Gtdata();
 				$gtdata = $gtdatamodel->getData($gtdataid);
+				
 				$presid = explode(",",substr($gtdata['presentationId'],0,strlen($gtdata['presentationId'])-1));
 				foreach($presentationValue as $pl)
 				{
@@ -78,6 +87,30 @@ class Form_GTDataForm extends Zend_Form {
 	       
 	       	$appath = substr(APPLICATION_PATH,0,strlen(APPLICATION_PATH)-12);
 			
+			$eoh = new Zend_Form_Element_Text('EOH');
+	        $eoh->setLabel('EOH at Occurence')
+			->addDecorator('Htmltag', array('tag' => 'br'))
+	        ->addFilter('StripTags')
+	        ->addFilter('StringTrim')
+	        ->addValidator(Model_Validators::int());
+			$dof = new ZendX_JQuery_Form_Element_DatePicker('DOF',
+			array('jQueryParams' => array('dateFormat'=>'yy-mm-dd','defaultDate' => '0','changeYear' =>'true')));
+			$dof->setLabel('Date of ' . $doflabel)
+		    ->addDecorator('Htmltag',array('tag' => 'br'))
+		    ->addValidator(Model_Validators::dateval())
+		    ->addFilter('StripTags')
+		    ->addFilter('StringTrim');
+			
+			$insp = array('' => 'Select an Option','Minor' => 'Minor','HGPI' => 'HGPI' , 'EHGPI' => 'EHGPI' , 'Major' => 'Major' , 'Unscheduled' => 'Unscheduled','Others' => 'Others');
+			
+			$toi = new Zend_Form_Element_Select('TOI');
+			$toi->setLabel('Type of Inspection')
+				->addMultiOptions($insp)
+				->addDecorator('Htmltag', array('tag' => 'br'))
+	            ->addFilter('StripTags')
+	            ->addFilter('StringTrim')
+	            ->addValidator('NotEmpty');
+			
 			$prestitle = new Zend_Form_Element_Text('prestitle');
 	        $prestitle->setLabel('Attachment Title')
 			->addDecorator('Htmltag', array('tag' => 'br'))
@@ -130,7 +163,7 @@ class Form_GTDataForm extends Zend_Form {
 					->setAttrib('class','gt-add')
 	                ->setAttrib('type', 'submit');
 	        
-	        $this->addElements(array($id,$gtid,$sys,$subsys,$prestitle,$content,$info,$pid, $Title, $Data, $submit));
+	        $this->addElements(array($id,$gtid,$sys,$subsys,$eoh,$dof,$toi,$prestitle,$content,$info,$pid, $Title, $Data, $submit));
 	        
     }
 

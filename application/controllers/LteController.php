@@ -17,7 +17,7 @@ class LteController extends Zend_Controller_Action {
             $this->view->headTitle("Add New LTE", 'PREPEND');
             $gtid['gtid'] = $this->getRequest()->getPost('gtid');
             $form = new Form_GTDataForm();
-			$form->showform($gtid['gtid']);
+			$form->showform($gtid['gtid'],0,"lte");
             $form->submit->setLabel('Add');
             $this->view->form = $form;
             $form->populate($gtid);
@@ -93,6 +93,10 @@ class LteController extends Zend_Controller_Action {
 							}
 						}
 						$content['presentationId'] = $temp;
+						if($content['subSysId'] == 0 || $content['subSysId'] == "")
+						{
+							$content['subSysId'] = 34;
+						}
 						$inscontent = array(
 							'gtid' => $gtid['gtid'],
 							'type' => 'lte',
@@ -101,7 +105,10 @@ class LteController extends Zend_Controller_Action {
 							'title' => $content['title'],
 							'presentationId' => $temp,
 							'sysId' => $content['sysId'],
-							'subSysId' => $content['subSysId']
+							'subSysId' => $content['subSysId'],
+							'EOH' => $content['EOH'],
+							'DOF' => $content['DOF'],
+							'TOI' => $content['TOI']
 						);
                         $lid = $userp->add($inscontent);
                         $this->_redirect('/lte/view?id='.$lid);
@@ -185,7 +192,7 @@ class LteController extends Zend_Controller_Action {
 			$gtdata = $gtdatamodel->getData($id);
 			$gtid = $gtdata['gtid'];
             $form = new Form_GTDataForm();
-			$form->showForm($gtid,$id);
+			$form->showForm($gtid,$id,"lte");
             $form->submit->setLabel('Save');
             if (Zend_Auth::getInstance()->getStorage()->read()->lastlogin == '') {
                 $form->submit->setLabel('Save & Continue');
@@ -274,6 +281,10 @@ class LteController extends Zend_Controller_Action {
 						$gtdata = $gtdatamodel->getData($id);
 						$temp = $temp . $gtdata['presentationId'];
 						$content['presentationId'] = $temp;
+						if($content['subSysId'] == 0 || $content['subSysId'] == "")
+						{
+							$content['subSysId'] = 34;
+						}
 						$content = array(
 							'id'   => $id,
 							'gtid' => $gtdata['gtid'],
@@ -283,7 +294,10 @@ class LteController extends Zend_Controller_Action {
 							'title' => $content['title'],
 							'presentationId' => $temp,
 							'sysId' => $content['sysId'],
-							'subSysId' => $content['subSysId']
+							'subSysId' => $content['subSysId'],
+							'EOH' => $content['EOH'],
+							'DOF' => $content['DOF'],
+							'TOI' => $content['TOI']
 						);
                     	$lte->updateLTE($content);
                     	$nf = new Model_DbTable_Notification();
@@ -301,6 +315,8 @@ class LteController extends Zend_Controller_Action {
                 $id = $this->_getParam('id', 0);
                 $fin = new Model_DbTable_LTE();
                 $form->populate($fin->getLTE($id));
+				$this->view->gtdata = $fin->getLTE($id);
+				$form->subSysId->setValue($fdata['subSysId']);
 				$this->view->gtdata = $fin->getLTE($id);
             }
         } catch (exception $e) {

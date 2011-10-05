@@ -8,6 +8,8 @@
 <tr>
 <th>Title</th>
 <th>System/Subsystem</th>
+<th>EOH</th>
+<th>Type of Inspection</th>
 <th>User</th>
 <th>Date</th>
 <th>&nbsp;</th>
@@ -29,9 +31,25 @@ $username = $user['firstName'] . " " . $user['lastName'] . " - " . $user['plantN
 	$system = $this->sysModel->getSystem($ss['sysId']);
 	
 ?>
-<td><?php echo $system['sysName']; ?> / <?php echo $ss['subSysName']; ?></td>
-<td><?php echo $username;  ?>
-<td><?php echo $this->escape($upgrade['updatedate']);?></td>
+<?php if($ss['subSysName'] == '-') : ?>
+	<td><?php echo $system['sysName']; ?></td>
+<?php else : ?>
+	<td><?php echo $system['sysName']; ?> / <?php echo $ss['subSysName']; ?></td>
+<?php endif; ?>
+
+<?php if($upgrade['EOH'] != "") : ?>
+	<td><?php echo $upgrade['EOH']; ?></td>
+<?php else : ?>
+	<td> </td>
+<?php endif; ?>
+<?php if($upgrade['TOI'] != "") : ?>
+	<td><?php echo $upgrade['TOI']; ?></td>
+<?php else : ?>
+	<td> </td>
+<?php endif; ?>
+<td><?php echo $username;?></td>
+<td><?php echo $this->escape($upgrade['updatedate']); ?></td>
+
 <td><a href="/upgrades/edit?id=<?php echo $upgrade['id']; ?>">Edit</a>
 </td>
 <?php

@@ -12,6 +12,7 @@ class FindingsController extends Zend_Controller_Action {
     {
     	$this->_helper->getHelper('Layout')->disableLayout();
     	$sid = $this->_getParam('id',0);
+		$this->view->ssid = $this->_getParam('ssid',0);
     	$subSysModel = new Model_DbTable_Gtsubsystems();
     	$subSysList = $subSysModel->groupSubSystem($sid);
     	$this->view->sslist = $subSysList;
@@ -22,7 +23,7 @@ class FindingsController extends Zend_Controller_Action {
             $gtid['gtid'] = $this->getRequest()->getPost('gtid');
             $this->view->headTitle('Add New Finding', 'PREPEND');
             $form = new Form_GTDataForm();
-			$form->showform($gtid['gtid']);
+			$form->showform($gtid['gtid'],0,"finding");
             $form->submit->setLabel('Add');           	
             $this->view->form = $form;
             $sysModel = new Model_DbTable_Gtsystems();
@@ -100,6 +101,10 @@ class FindingsController extends Zend_Controller_Action {
 							}
 						}
 						$content['presentationId'] = $temp;
+						if($content['subSysId'] == 0 || $content['subSysId'] == "")
+						{
+							$content['subSysId'] = 34;
+						}
 						$inscontent = array(
 							'gtid' => $gtid['gtid'],
 							'type' => 'finding',
@@ -108,7 +113,11 @@ class FindingsController extends Zend_Controller_Action {
 							'title' => $content['title'],
 							'presentationId' => $temp,
 							'sysId' => $content['sysId'],
-							'subSysId' => $content['subSysId']
+							'subSysId' => $content['subSysId'],
+							'EOH' => $content['EOH'],
+							'DOF' => $content['DOF'],
+							'TOI' => $content['TOI']
+							
 						);
                         $fid = $userp->add($inscontent);
                         $this->_redirect('/findings/view?id=' . $fid);
@@ -131,7 +140,7 @@ class FindingsController extends Zend_Controller_Action {
 			$gtdata = $gtdatamodel->getData($id);
 			$gtid = $gtdata['gtid'];
             $form = new Form_GTDataForm();
-			$form->showForm($gtid,$id);
+			$form->showForm($gtid,$id,"finding");
             $form->submit->setLabel('Save');
 			
             if (Zend_Auth::getInstance()->getStorage()->read()->lastlogin == '') {
@@ -217,6 +226,10 @@ class FindingsController extends Zend_Controller_Action {
 						$temp = $temp . $gtdata['presentationId'];
 						
 						$content['presentationId'] = $temp;
+						if($content['subSysId'] == 0 || $content['subSysId'] == "")
+						{
+							$content['subSysId'] = 34;
+						}
 						$content = array(
 							'id'   => $id,
 							'gtid' => $gtdata['gtid'],
@@ -226,7 +239,10 @@ class FindingsController extends Zend_Controller_Action {
 							'title' => $content['title'],
 							'presentationId' => $temp,
 							'sysId' => $content['sysId'],
-							'subSysId' => $content['subSysId']
+							'subSysId' => $content['subSysId'],
+							'EOH' => $content['EOH'],
+							'DOF' => $content['DOF'],
+							'TOI' => $content['TOI']
 						);
                     	$finding->updateFinding($content);
                     	$nf = new Model_DbTable_Notification();
@@ -245,7 +261,6 @@ class FindingsController extends Zend_Controller_Action {
                 $id = $this->_getParam('id', 0);
                 $fin = new Model_DbTable_Finding();
 				$fdata = $fin->getFinding($id);
-				echo $fdata['subSysId'];
                	$form->populate($fin->getFinding($id));
 				$form->subSysId->setValue($fdata['subSysId']);
 				$this->view->gtdata = $fin->getFinding($id);

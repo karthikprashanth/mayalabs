@@ -60,10 +60,25 @@
             $systemName = $sys['sysName'];
 			$subsystemname = $ss['subSysName'];
             if ($list['edit'] == 1) {
-                $gtdataextra = " to " . $systemName . "/" . $subsystemname;
+            	if($subsystemname == "-")
+				{
+					$gtdataextra = " to " . $systemName;
+				}
+				else
+				{
+					$gtdataextra = " to " . $systemName . "/" . $subsystemname;
+				}
             } else {
-                $gtdataextra = " of " . $systemName . "/" . $subsystemname;
+            	if($subsystemname == "-")
+				{
+					$gtdataextra = " of " . $systemName;
+				}
+                else
+				{
+					$gtdataextra = " of " . $systemName . "/" . $subsystemname;
+				}
             }
+			
             $catdet = $this->fdet->getFinding($list['catid']);
 			$datagtid = $catdet['gtid'];
 			$gtmodel = new Model_DbTable_Gasturbine();
@@ -81,9 +96,23 @@
             $systemName = $sys['sysName'];
 			$subsystemname = $ss['subSysName'];
             if ($list['edit'] == 1) {
-                $gtdataextra = " to " . $systemName . "/" . $subsystemname;
+            	if($subsystemname == "-")
+				{
+					$gtdataextra = " to " . $systemName;
+				}
+				else
+				{
+					$gtdataextra = " to " . $systemName . "/" . $subsystemname;
+				}
             } else {
-                $gtdataextra = " of " . $systemName . "/" . $subsystemname;
+            	if($subsystemname == "-")
+				{
+					$gtdataextra = " of " . $systemName;
+				}
+                else
+				{
+					$gtdataextra = " of " . $systemName . "/" . $subsystemname;
+				}
             }
             $catdet = $this->udet->getUpgrade($list['catid']);
 			$datagtid = $catdet['gtid'];
@@ -102,9 +131,23 @@
             $systemName = $sys['sysName'];
             $subsystemname = $ss['subSysName'];
             if ($list['edit'] == 1) {
-                $gtdataextra = " to " . $systemName . "/" . $subsystemname;
+            	if($subsystemname == "-")
+				{
+					$gtdataextra = " to " . $systemName;
+				}
+				else
+				{
+					$gtdataextra = " to " . $systemName . "/" . $subsystemname;
+				}
             } else {
-                $gtdataextra = " of " . $systemName . "/" . $subsystemname;
+            	if($subsystemname == "-")
+				{
+					$gtdataextra = " of " . $systemName;
+				}
+                else
+				{
+					$gtdataextra = " of " . $systemName . "/" . $subsystemname;
+				}
             }			
             $catdet = $this->ldet->getLTE($list['catid']);
 			$datagtid = $catdet['gtid'];

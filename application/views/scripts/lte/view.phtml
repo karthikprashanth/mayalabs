@@ -1,38 +1,39 @@
 <?php
 	foreach($this->plist as $pvalue){
-		$pres = $this->presmodel->getPresentation(key($pvalue));
-		$filetype = $pres['filetype'];
-		$h = 30;
-		$w = 30;
-		 if($filetype == 'doc' || $filetype == 'docx')
-		 {
-		 	$filename = "images/word.png";
-		 }
-		 else if($filetype == 'xls' || $filetype == 'xlsx')
-		{
-			$filename = "images/excel.png";
-		}
-		else if($filetype == 'ppt' || $filetype == 'pptx')
-		{
-			$filename = "images/ppt.png";
-		}
-		else if($filetype == 'pdf')
-		{
-			$filename = "images/pdf.png";
-		}
-		 else {
-		 	$h = 300;
-			 $w = 400;
-		 	$filename = "random/thnail";
-			$data = $pres['content'];
-			file_put_contents($filename,$data);
-		 }
-		 
-	     $list=$list."<a href='/presentation/view/?id=".$this->escape(key($pvalue))."'><img src = '/".$filename."' height = $h width = $w>".current($pvalue)."</a><br>";
+	$pres = $this->presmodel->getPresentation(key($pvalue));
+	$filetype = $pres['filetype'];
+	$h = 30;
+	$w = 30;
+	 if($filetype == 'doc' || $filetype == 'docx')
+	 {
+	 	$filename = "images/word.png";
+	 }
+	 else if($filetype == 'xls' || $filetype == 'xlsx')
+	{
+		$filename = "images/excel.png";
 	}
+	else if($filetype == 'ppt' || $filetype == 'pptx')
+	{
+		$filename = "images/ppt.png";
+	}
+	else if($filetype == 'pdf')
+	{
+		$filename = "images/pdf.png";
+	}
+	 else {
+	 	
+	 	$h = 300;
+		 $w = 400;
+	 	$filename = "random/thnail";
+		$data = $pres['content'];
+		file_put_contents($filename,$data);
+	 }
+	 
+     $list=$list."<a href='/presentation/view/?id=".$this->escape(key($pvalue))."'><img src = '/".$filename."' height = $h width = $w>".current($pvalue)."</a><br>";
+}
 $ssModel = $this->subSysModel;
 $ss = $ssModel->getSubSystem($this->lte['subSysId']);
-$system = $this->sysModel->getSystem($ss['sysId']);
+$system = $this->sysModel->getSystem($this->lte['sysId']);
 $dataid = $this->lte['id'];
 
 $role = Zend_Registry::get("role");
@@ -51,8 +52,21 @@ if($upid == $gtpid || $role == 'sa')
 }
 
 $content = "<div class='gtdata-title'>".$this->lte['title'];
-$content = $content." <span style='color:#77B464;'>".$system['sysName'] . "/" . $ss['subSysName'] ."</span>";
+if($ss['subSysName'] == "-")
+{
+	$content = $content." <span style='color:#77B464;'>".$system['sysName'] ."</span>";
+}
+else
+{
+	$content = $content." <span style='color:#77B464;'>".$system['sysName'] . "/" . $ss['subSysName'] ."</span>";
+}
 $content = $content." <span style='color:#268FBB;'>".$this->gt['GTName']."</span><br/>";
+if($this->lte['EOH'] != 0 && $this->lte['EOH'] != "")
+	$content = $content." <span style='color:#268FBB;'><b>EOH at Occurence</b>: ". $this->lte['EOH']."</span>";
+if($this->lte['DOF'] != "")
+	$content = $content." <span style='color:#268FBB;'><b>Date of Finding</b>: ".$this->lte['DOF']."</span>";
+if($this->lte['TOI'] != "")
+	$content = $content." <span style='color:#268FBB;'><b>Type of Inspection</b>: ".$this->lte['TOI']."</span><br>";
 $content = $content." <span style='color:#268FBB; font-size: 12px; font-style: normal; font-weight:bold;'>Updated On ".$this->lte['updatedate']."</span></div>";
 $content = $content."<div class='gtdata-data'>".$this->lte['data']."</div>";
 

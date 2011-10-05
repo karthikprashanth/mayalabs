@@ -75,6 +75,7 @@ class SearchController extends Zend_Controller_Action
 			
 			if($cat == "gt")
 			{
+			
 				
 				$gtdatamodel = new Model_DbTable_Gtdata();
 				$plantmodel  = new Model_DbTable_Plant();
@@ -119,6 +120,9 @@ class SearchController extends Zend_Controller_Action
 					$data[$count]['userplantname'] = $uplantname;
 					$data[$count]['sysname'] = $sysname;
 					$data[$count]['subsysname'] = $subsysname;
+					$data[$count]['eoh'] = $gtdata['EOH'];
+					$data[$count]['toi'] = $gtdata['TOI'];
+					$data[$count]['dof'] = $gtdata['DOF'];
 					$data[$count]['title'] = $gtdata['title'];
 					$data[$count]['score'] = $result->score;	
 					$count++;
@@ -230,8 +234,15 @@ class SearchController extends Zend_Controller_Action
 			$sysname = $sysmodel->getSystem($list['sysId']);
 			$sysname = $sysname['sysName'];
 			
-			$subsysname = $subsysmodel->getSubSystem($list['subSysId']);
-			$subsysname = $subsysname['subSysName'];
+			$eoh = $list['EOH'];
+			$toi = $list['TOI'];
+			
+			if($list['subSysId'] != 34 && $list['subSysId'] != 0)
+			{
+				$subsysname = $subsysmodel->getSubSystem($list['subSysId']);
+				$subsysname = $subsysname['subSysName'];
+			}
+			
 			$doc = new Zend_Search_Lucene_Document();
 			$doc->addField(Zend_Search_Lucene_Field::UnIndexed('dataid',$list['id']));
 			
@@ -241,10 +252,12 @@ class SearchController extends Zend_Controller_Action
 			
 			$doc->addField(Zend_Search_Lucene_Field::UnStored('sysname',$sysname));  
 			$doc->addField(Zend_Search_Lucene_Field::UnStored('subsysname',$subsysname));
+			$doc->addField(Zend_Search_Lucene_Field::UnStored('eoh',$eoh));
+			$doc->addField(Zend_Search_Lucene_Field::UnStored('toi',$toi));
 			$doc->addField(Zend_Search_Lucene_Field::UnStored('userplantname',$uplantname));
 			
 			$index->addDocument($doc);
-		}		
+		}
 		$index->commit();  
 		$index->optimize();
 		
