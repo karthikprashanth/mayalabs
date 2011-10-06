@@ -1,5 +1,4 @@
 <?php
-
 class AttachmentsController extends Zend_Controller_Action
 {
 
@@ -12,12 +11,12 @@ class AttachmentsController extends Zend_Controller_Action
     {
     	
     }
-	
+
 	public function addAction()
 	{
 		$this->_helper->getHelper('Layout')->disableLayout();
 	}
-	
+
 	public function uploadAction()
 	{
 		include("C:/xampp/htdocs/common.php");
@@ -25,6 +24,3 @@ class AttachmentsController extends Zend_Controller_Action
 	}
 
 }
-
-
-

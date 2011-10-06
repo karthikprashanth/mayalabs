@@ -106,33 +106,105 @@ class Form_GTDataForm extends Zend_Form {
 			$toi = new Zend_Form_Element_Select('TOI');
 			$toi->setLabel('Type of Inspection')
 				->addMultiOptions($insp)
-				->addDecorator('Htmltag', array('tag' => 'br'))
+				->addDecorator('Htmltag', array('tag' => 'p'))
 	            ->addFilter('StripTags')
 	            ->addFilter('StringTrim')
 	            ->addValidator('NotEmpty');
 			
-			$addattach = new Zend_Form_Element_Button('addattach');
-	        $addattach->addDecorator('Htmltag', array('tag' => 'p'));
-	        $addattach->setAttrib('id', 'addattach')
-					->setLabel("Add Attachments")
-					->setAttrib('class','gt-add');
-			
-			
-			/*$prestitle = new Zend_Form_Element_Text('prestitle');
-	        $prestitle->setLabel('Attachment Title')
+			$prestitle1 = new Zend_Form_Element_Text('prestitle1');
+	        $prestitle1->setLabel('Attachment Title')
 			->addDecorator('Htmltag', array('tag' => 'br'))
 	        ->addValidator('NotEmpty')
 	        ->addFilter('StripTags')
 	        ->addFilter('StringTrim')
 	        ->addValidator(Model_Validators::alnum());
 			
-	        $content=new Zend_Form_Element_File('content');
-	        $content->setLabel('Upload the File')
-	                ->setDestination($appath . '/public/uploads')
-	                ->addDecorator('Htmltag',array('tag' => 'br'));
+	        $content1=new Zend_Form_Element_File('content1');
+	        $content1->setLabel('Upload the File')
+	                ->setDestination($appath . '/public/uploads');
+			
+			$addmore = new Zend_Form_Element_Button('addmore');
+	        $addmore->setAttrib('id', 'addmore')
+					->setLabel("...")
+					->setAttrib("class","gt-add");
+			
+			
+					
+			$prestitle2 = new Zend_Form_Element_Text('prestitle2');
+	        $prestitle2->setLabel('Attachment Title')
+	        ->addValidator('NotEmpty')
+	        ->addFilter('StripTags')
+	        ->addFilter('StringTrim')
+	        ->addValidator(Model_Validators::alnum());
+			
+	        $content2=new Zend_Form_Element_File('content2');
+	        $content2->setLabel('Upload the File')
+	                ->setDestination($appath . '/public/uploads');
+			
+					
+			$del2 = new Zend_Form_Element_Button('del2');
+	        $del2->setAttrib('id', 'del2')
+					->setLabel("...")
+					->setAttrib("class","gt-delete");
+					
+			$prestitle3 = new Zend_Form_Element_Text('prestitle3');
+	        $prestitle3->setLabel('Attachment Title')
+	        ->addValidator('NotEmpty')
+	        ->addFilter('StripTags')
+	        ->addFilter('StringTrim')
+	        ->addValidator(Model_Validators::alnum());
+			
+	        $content3=new Zend_Form_Element_File('content3');
+	        $content3->setLabel('Upload the File')
+	                ->setDestination($appath . '/public/uploads');
+			
+					
+			$del3 = new Zend_Form_Element_Button('del3');
+	        $del3->setAttrib('id', 'del3')
+					->setLabel("...")
+					->setAttrib("class","gt-delete");
+			
+			$prestitle4 = new Zend_Form_Element_Text('prestitle4');
+	        $prestitle4->setLabel('Attachment Title')
+	        ->addValidator('NotEmpty')
+	        ->addFilter('StripTags')
+	        ->addFilter('StringTrim')
+	        ->addValidator(Model_Validators::alnum());
+			
+	        $content4=new Zend_Form_Element_File('content4');
+	        $content4->setLabel('Upload the File')
+	                ->setDestination($appath . '/public/uploads');
+			
+					
+			$del4 = new Zend_Form_Element_Button('del4');
+	        $del4->setAttrib('id', 'del4')
+					->setLabel("...")
+					->setAttrib("class","gt-delete");
+					
+			$prestitle5 = new Zend_Form_Element_Text('prestitle5');
+	        $prestitle5->setLabel('Attachment Title')
+	        ->addValidator('NotEmpty')
+	        ->addFilter('StripTags')
+	        ->addFilter('StringTrim')
+	        ->addValidator(Model_Validators::alnum());
+			
+	        $content5=new Zend_Form_Element_File('content5');
+	        $content5->setLabel('Upload the File')
+	                ->setDestination($appath . '/public/uploads');
+			
+			$del5 = new Zend_Form_Element_Button('del5');
+	        $del5->setAttrib('id', 'del5')
+					->setLabel("...")
+					->setAttrib("class","gt-delete");
+			
+			
+			$info2= new Zend_Form_Element_Hidden('info2');
+    		$info2->setLabel("Attach Files")
+			->addDecorator('Htmltag', array('tag' => 'b'));
 			
 			$info= new Zend_Form_Element_Hidden('info');
-    		$info->setLabel("(allowed formats - pdf,ppt,pptx,xls,xlsx,doc,docx,jpg,jpeg,png,gif)");*/
+    		$info->setLabel("(allowed formats - pdf,ppt,pptx,xls,xlsx,doc,docx,jpg,jpeg,png,gif)")
+			->addDecorator('Htmltag', array('tag' => 'b'));
 			
 	        $pid = new Zend_Form_Element_Multiselect('presentationId');
 	        $pid->setLabel('Or Choose an Existing Presentation')
@@ -170,7 +242,10 @@ class Form_GTDataForm extends Zend_Form {
 					->setAttrib('class','gt-add')
 	                ->setAttrib('type', 'submit');
 	        
-	        $this->addElements(array($id,$gtid,$sys,$subsys,$eoh,$dof,$toi,$addattach,$pid, $Title, $Data, $submit));
+	        $this->addElements(array($id,$gtid,$sys,$subsys,$eoh,$dof,$toi,
+	        $info2,$info,$prestitle1,$content1,$prestitle2,
+	        $content2,$del2,$prestitle3,$content3,$del3,$prestitle4,
+	        $content4,$del4,$prestitle5,$content5,$del5,$addmore,$pid, $Title, $Data, $submit));
 	        
     }
 

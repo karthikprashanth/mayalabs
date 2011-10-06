@@ -25,7 +25,8 @@ foreach($this->plist as $pvalue){
 	 	
 	 	$h = 300;
 		 $w = 400;
-	 	$filename = "random/thnail";
+		 $rn = rand(0,999999);
+	 	$filename = "random/thnail" . $rn;
 		$data = $pres['content'];
 		file_put_contents($filename,$data);
 	 }
