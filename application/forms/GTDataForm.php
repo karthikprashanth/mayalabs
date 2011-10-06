@@ -111,7 +111,14 @@ class Form_GTDataForm extends Zend_Form {
 	            ->addFilter('StringTrim')
 	            ->addValidator('NotEmpty');
 			
-			$prestitle = new Zend_Form_Element_Text('prestitle');
+			$addattach = new Zend_Form_Element_Button('addattach');
+	        $addattach->addDecorator('Htmltag', array('tag' => 'p'));
+	        $addattach->setAttrib('id', 'addattach')
+					->setLabel("Add Attachments")
+					->setAttrib('class','gt-add');
+			
+			
+			/*$prestitle = new Zend_Form_Element_Text('prestitle');
 	        $prestitle->setLabel('Attachment Title')
 			->addDecorator('Htmltag', array('tag' => 'br'))
 	        ->addValidator('NotEmpty')
@@ -125,14 +132,14 @@ class Form_GTDataForm extends Zend_Form {
 	                ->addDecorator('Htmltag',array('tag' => 'br'));
 			
 			$info= new Zend_Form_Element_Hidden('info');
-    		$info->setLabel("(allowed formats - pdf,ppt,pptx,xls,xlsx,doc,docx,jpg,jpeg,png,gif)");
+    		$info->setLabel("(allowed formats - pdf,ppt,pptx,xls,xlsx,doc,docx,jpg,jpeg,png,gif)");*/
 			
 	        $pid = new Zend_Form_Element_Multiselect('presentationId');
 	        $pid->setLabel('Or Choose an Existing Presentation')
 	                ->addMultiOptions($data)
 	                ->addDecorator('Htmltag', array('tag' => 'br'))
 	                ->addFilter('StripTags')
-	                ->addFilter('StringTrim');                
+	                ->addFilter('StringTrim');      
 				
 	
 	        $gtid = new Zend_Form_Element_Hidden('gtid');
@@ -163,7 +170,7 @@ class Form_GTDataForm extends Zend_Form {
 					->setAttrib('class','gt-add')
 	                ->setAttrib('type', 'submit');
 	        
-	        $this->addElements(array($id,$gtid,$sys,$subsys,$eoh,$dof,$toi,$prestitle,$content,$info,$pid, $Title, $Data, $submit));
+	        $this->addElements(array($id,$gtid,$sys,$subsys,$eoh,$dof,$toi,$addattach,$pid, $Title, $Data, $submit));
 	        
     }
 

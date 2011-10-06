@@ -76,6 +76,7 @@ class ConferenceController extends Zend_Controller_Action
 					    $pdata=file_get_contents($form->content->getFileName());
 						$funcs = new Model_Functions();
 						$filename = $form->content->getFileName();
+						echo $filename;
 						$fileext = $funcs->getFileExt($filename);
 						$gtpreslist = $userp->getPresDetail($cid);
 						$exists = false;
@@ -105,7 +106,7 @@ class ConferenceController extends Zend_Controller_Action
 							
 							);
 				        	$userp->insert($columns);
-							$this->_redirect('/conference/list?id='.$cid . "#confdata-frag-3");
+							//$this->_redirect('/conference/list?id='.$cid . "#confdata-frag-3");
 						}
 						else {
 							$this->view->message = "File Type Not Allowed";

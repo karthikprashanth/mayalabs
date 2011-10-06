@@ -107,8 +107,8 @@ if($valid)
 $gt = "<table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
 
             <tr>
-                <th>Number:</th>
-                <th style='min-width:50%;'>" . $this->plantData['numOfGT'] . "</th>
+                <th>Number of Gasturbines:</th>
+                <th style='min-width:50%;'>" . $this->plantData['numOfGT'] . " <a href = '/gasturbine/plantlist?id=".$this->plantData['plantId'] . "'> (View) </a></th>
             </tr>
 
             <tr>
@@ -188,7 +188,7 @@ if($valid)
 	
 $this->tabPane("plantdata", $corporate, array('title' => 'Corporate Info'));
 $this->tabPane("plantdata", $plant, array('title' => 'Plant Info'));
-$this->tabPane("plantdata", $gt, array('title' => 'GT Info'));
+$this->tabPane("plantdata", $gt, array('title' => 'GT Statistics'));
 
 echo $this->tabContainer("plantdata", array());
 ?>

@@ -9,7 +9,7 @@ function addBookmark(category,id)
     data['bmName'] = name;
     
     //var RegularExpression = /d/
-	var RegularExpression  =  new RegExp(/^[a-z0-9]+$/i);
+	var RegularExpression  =  new RegExp(/^[ \ta-zA-Z0-9]+/i);
 	var b = RegularExpression.test(name);
 	if(!b)
 	{

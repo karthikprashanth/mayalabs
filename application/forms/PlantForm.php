@@ -45,7 +45,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
 					array('tag' => 'dl')),
 					array('TabPane',
 					array('jQueryParams' => array('containerId' => 'plantForm',
-                                        'title' => 'Statistics')))
+                                        'title' => 'GT Statistics')))
 			));
 
 

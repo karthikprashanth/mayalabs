@@ -16,6 +16,7 @@ class Model_HiveAcl extends Zend_Acl {
 		$this->add(new Zend_Acl_Resource('dashboard:showmenu'), 'dashboard');
 		
 		$this->add(new Zend_Acl_Resource('reports'));
+		$this->add(new Zend_Acl_Resource('attachments'));
 		
 		$this->add(new Zend_Acl_Resource('gasturbine'));
 		$this->add(new Zend_Acl_Resource('gasturbine:add'), 'gasturbine');
@@ -125,6 +126,7 @@ class Model_HiveAcl extends Zend_Acl {
         $this->allow('us','conference');
         $this->allow('us','schedule');
         $this->allow('us','notification');
+		$this->allow('us','attachments');
         $this->allow('us','search');
 		$this->deny('us','search','searchindex');
 		

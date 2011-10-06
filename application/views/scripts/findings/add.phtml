@@ -7,12 +7,26 @@
 	echo $this->tabContainer("findingAdd",array());
 	
 ?>
+<div id = "attachmentform"></div>
 
 <script type="text/javascript" src='/js/tinyMCEinit.js'></script>
 
 <script type="text/javascript">
 
-$(document).ready(function(){                
+$(document).ready(function(){ 
+	$("#addattach").click(function(){
+		$.ajax({
+            type: "POST",
+            url: "/attachments/add",
+            success: function(msg){
+                if (msg != ''){
+                    $("#attachmentform").html(msg).show();   
+                }
+            }
+        });
+        $("#attachmentform").dialog({title: "Attachments Upload",height : 300,width: 300});
+	});
+	              
 	$("#submitbutton").click(function() {
 		var file = document.getElementById("content").value;
 		if (file != "")

@@ -123,8 +123,17 @@
 							<div id="advert"><?php echo $this->layout()->advert; ?></div>
                             <div id="bookmark"><?php echo $this->layout()->bookmark; ?></div><br><br>
                             <div id = "demovideo" style = "margin-left: 10px"><iframe width="190" height="150" src="http://www.youtube.com/embed/iXixiKCPNrM" frameborder="0" allowfullscreen></iframe></div>
+                            <br><div id = "adminbuttons" style = "margin-left:10px">
+                            	<form action = "/search/searchindex">
+                            		<input class = "reset-button" type = "submit" value = "Search Index">
+                            	</form>
+                            	<br><form action = "/administration/mailnotify">
+                            		<input class = "reset-button" type = "submit" value = "Fortnight Mail">
+                            	</form>
+                            </div>
 						<?php } ?>
                         </div>
+  
                         <div id="breadcrumbs">
                         <?php
                             $breadcontainer = Zend_Registry::get('breadcontainer');

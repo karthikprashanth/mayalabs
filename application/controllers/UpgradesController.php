@@ -35,7 +35,7 @@ class UpgradesController extends Zend_Controller_Action {
 								return;
 							}
 						}
-						if($content['presentationId'] != "")
+						/*if($content['presentationId'] != "")
 						{
 	                        $temp = '';
 	                        foreach ($content['presentationId'] as $pId) {
@@ -90,7 +90,7 @@ class UpgradesController extends Zend_Controller_Action {
 								$temp = $temp . $p . ",";
 							}
 						}
-						$content['presentationId'] = $temp;
+						$content['presentationId'] = $temp;*/
 						if($content['subSysId'] == 0 || $content['subSysId'] == "")
 						{
 							$content['subSysId'] = 34;
@@ -101,7 +101,7 @@ class UpgradesController extends Zend_Controller_Action {
 							'data' => $content['data'],
 							'userupdate' => Zend_Auth::getInstance()->getStorage()->read()->id,
 							'title' => $content['title'],
-							'presentationId' => $temp,
+							//'presentationId' => $temp,
 							'sysId' => $content['sysId'],
 							'subSysId' => $content['subSysId'],
 							'EOH' => $content['EOH'],
@@ -164,19 +164,19 @@ class UpgradesController extends Zend_Controller_Action {
                     $gtdata = $gtdatamodel->getData($id);
                     $content = $form->getValues();
                     
-                    foreach($content['presentationId'] as $presentations) {
+                    /*foreach($content['presentationId'] as $presentations) {
                     	$presid = $presid . $presentations .",";
                     }
 					if ($presid == ',')
 					{
 						$presid = "";
 					}
-                    $content['presentationId'] = $presid;
+                    $content['presentationId'] = $presid;*/
                     
                     $r = array_diff($content,$gtdata);
 					if(count($r) > 0)
 					{
-						$pmodel = new Model_DbTable_Presentation();
+						/*$pmodel = new Model_DbTable_Presentation();
 						$pres=file_get_contents($form->content->getFileName());
 						$funcs = new Model_Functions();
 						$filename = $form->content->getFileName();
@@ -234,7 +234,7 @@ class UpgradesController extends Zend_Controller_Action {
 						$gtdatamodel = new Model_DbTable_Gtdata();
 						$gtdata = $gtdatamodel->getData($id);
 						$temp = $temp . $gtdata['presentationId'];
-						$content['presentationId'] = $temp;
+						$content['presentationId'] = $temp;*/
 						if($content['subSysId'] == 0 || $content['subSysId'] == "")
 						{
 							$content['subSysId'] = 34;
@@ -246,7 +246,7 @@ class UpgradesController extends Zend_Controller_Action {
 							'data' => $content['data'],
 							'userupdate' => Zend_Auth::getInstance()->getStorage()->read()->id,
 							'title' => $content['title'],
-							'presentationId' => $temp,
+							//'presentationId' => $temp,
 							'sysId' => $content['sysId'],
 							'subSysId' => $content['subSysId'],
 							'EOH' => $content['EOH'],
