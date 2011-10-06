@@ -20,7 +20,6 @@ class FindingsController extends Zend_Controller_Action {
 
     public function addAction() {
         try {
-        	var_dump($this->getRequest()->getPost());
             $gtid['gtid'] = $this->getRequest()->getPost('gtid');
             $this->view->headTitle('Add New Finding', 'PREPEND');
             $form = new Form_GTDataForm();

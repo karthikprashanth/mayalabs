@@ -75,6 +75,7 @@ $username = $user['firstName'] . " " . $user['lastName'] . " - " . $user['plantN
 <?php if($this->ubool) : ?>
 <form action="<?php echo $this->url(array('action'=>'add')); ?>" method="post" style='float:left;'>
 <input type="hidden" name="gtid" value="<?php echo $this->escape($this->id);?>" />
+
 <input class='gt-add' type="submit" name="add" value="Add New Finding" />
 </form>
 <?php endif; ?>

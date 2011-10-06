@@ -22,14 +22,15 @@ class Form_AttachmentsForm extends Zend_Form{
                         ->setDestination($appath . '/public/uploads');
 						
 				$gtid = new Zend_Form_Element_Hidden('gtid');
-	        	$gtid->setAttrib('value', '1');
+	        	$gtid->setAttrib('value', '1')
+					->setAttrib('name','gtid');
 
-                $submit = new Zend_Form_Element_Submit('submit');
+                $submit = new Zend_Form_Element_Button('submit');
                 $submit->setAttrib('id', 'upload')
 						->setAttrib('class','gt-add')
 						->setLabel("Upload");
 
-                $this->addElements(array($Title,$content,$submit));
+                $this->addElements(array($Title,$gtid,$content,$submit));
     }
 }
 
