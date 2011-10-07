@@ -24,7 +24,7 @@
 		 else {
 		 	$h = 300;
 			 $w = 400;
-		 	$filename = "random/thnail";
+		 	$filename = "random/thnail" . rand(0,999999);
 			$data = $pres['content'];
 			file_put_contents($filename,$data);
 		 }
@@ -64,7 +64,7 @@ else
 $content = $content." <span style='color:#268FBB;'>".$this->gt['GTName']."</span><br/>";
 if($this->upgrade['EOH'] != 0 && $this->upgrade['EOH'] != "")
 	$content = $content." <span style='color:#268FBB;'><b>EOH at Occurence</b>: ". $this->upgrade['EOH']."</span>";
-if($this->upgrade['DOF'] != "")
+if($this->upgrade['DOF'] != "" && $this->upgrade['DOF'] != "0000-00-00")
 	$content = $content." <span style='color:#268FBB;'><b>Date of Finding</b>: ".$this->upgrade['DOF']."</span>";
 if($this->upgrade['TOI'] != "")
 	$content = $content." <span style='color:#268FBB;'><b>Type of Inspection</b>: ".$this->upgrade['TOI']."</span>";

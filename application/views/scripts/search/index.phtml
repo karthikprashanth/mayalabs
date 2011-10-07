@@ -12,6 +12,7 @@
 		echo "<div style = 'display:none' id = 'subsys" . $list['id'] . "'>" . $list['subSysName'] . "</div>";
 	}
 	echo "<div style = 'display:none' id = 'query'>" . $this->query . "</div>";
+	echo "<div style = 'display:none' id = 'eoh'>" . $this->eoh . "</div>";
 ?>
 <div class="hm-search ui-corner-all" style="margin-bottom: 20px;">
     <div style="padding: 10px; font-family:arial,helvetica,verdana,sans-serif; font-size: 20px; color: #2e4e68; background: url(../images/bulb.png) left no-repeat; padding-left: 40px;">Query the <span style="color: #3f6413">hive</span> knowledge base</div>
@@ -53,6 +54,7 @@ echo $this->tabContainer("searchresult", array());
 		{
 			var text = document.getElementById("keyword").value;
 			var query = document.getElementById("query").value;
+			var eoh = document.getElementById("eoh");
 			if(text != "Type Keywords to Search...")
 			{
 				sendData();
@@ -101,8 +103,14 @@ echo $this->tabContainer("searchresult", array());
 	        	subsysname = document.getElementById("subsys"+subsysid).innerHTML;
 	        	
 	        }
+	        
+	        var eohfrom = document.getElementById("eohfrom").value;
+	        var eohto = document.getElementById("eohto").value;
+	        var eoh = eohfrom + "-" + eohto;
+	        toi = document.getElementById("TOI").value;
+	        
 	  		window.location = "/search/index?keyword=" + query + "&plantname=" + plantname
-	  		+"&type=" + type + "&sysname=" + sysname + "&subsysname=" + subsysname + "&nature=toggle";
+	  		+"&type=" + type + "&sysname=" + sysname + "&subsysname=" + subsysname + "&toi=" + toi + "&eoh=" + eoh + "&nature=toggle";
 		}
 		$("#searchform").submit( function() {
 			return false;
@@ -110,8 +118,10 @@ echo $this->tabContainer("searchresult", array());
 		$("#gtresults").click( function(event) {
 			var query;
 			query = document.getElementById("query").innerHTML;
+			var eoh;
+        	eoh = document.getElementById("eoh").innerHTML;
 	        $.ajax({
-	            data: "keyword=" + query + "&ll=1" + "&ul=10" + "&cat=gt",
+	            data: "keyword=" + query + "&eoh" + eoh + "&ll=1" + "&ul=10" + "&cat=gt",
 	            url: "/search/view",
 	            success: function(msg){
 	                if (msg != ''){
@@ -124,9 +134,10 @@ echo $this->tabContainer("searchresult", array());
 		$("#forumresults").click( function(event) {
 			var query;
 			query = document.getElementById("query").innerHTML;
-	    	
+	    	var eoh;
+        	eoh = document.getElementById("eoh").innerHTML;
 	        $.ajax({
-	            data: "keyword=" + query + "&ll=1" + "&ul=10" + "&cat=forum",
+	            data: "keyword=" + query + "&eoh=" + eoh + "&ll=1" + "&ul=10" + "&cat=forum",
 	            url: "/search/view",
 	            success: function(msg){
 	                if (msg != ''){
@@ -140,10 +151,12 @@ echo $this->tabContainer("searchresult", array());
         	
         	var query;
         	query = document.getElementById("query").innerHTML;
+        	var eoh;
+        	eoh = document.getElementById("eoh").innerHTML;
         	if(query != "")
         	{
         		$.ajax({
-		            data: "keyword=" + query + "&ll=1&ul=10&cat=gt",
+		            data: "keyword=" + query + "&eoh=" + eoh + "&ll=1&ul=10&cat=gt",
 		            url: "/search/view",
 		            success: function(msg){
 		                if (msg != ''){
@@ -173,5 +186,5 @@ echo $this->tabContainer("searchresult", array());
 	            }
 	        });
 	   });
-		});
+	});
 </script>

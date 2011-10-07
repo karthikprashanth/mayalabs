@@ -73,7 +73,7 @@ class FindingsController extends Zend_Controller_Action {
 							4 => $content['prestitle4'],
 							5 => $content['prestitle5']
 						);
-						
+						$checked = array(1 => false,2 => false,3 => false,4 => false,5 => false);
 						/*-----
 						checks for allowed file extensions
 						*/
@@ -112,7 +112,7 @@ class FindingsController extends Zend_Controller_Action {
 									$exists = true;
 								}
 							}
-							if($exists)
+							if($exists && !$checked[$i])
 							{
 								$this->view->message = "Presentation title already exists";
 								return;
@@ -121,6 +121,7 @@ class FindingsController extends Zend_Controller_Action {
 							if($prestitles[$i] != "" && $prestitles[$i] != NULL)
 							{
 								$p = $pmodel->insert($data);
+								$checked[$i] = true;
 								if($temp == "")
 								{
 									$temp = $p . ",";
@@ -206,7 +207,6 @@ class FindingsController extends Zend_Controller_Action {
 							4 => $form->content4->getFileName(),
 							5 => $form->content5->getFileName()
 						);
-						
 						$prestitles = array(
 							1 => $content['prestitle1'],
 							2 => $content['prestitle2'],
@@ -214,7 +214,7 @@ class FindingsController extends Zend_Controller_Action {
 							4 => $content['prestitle4'],
 							5 => $content['prestitle5']
 						);
-						
+						$checked = array(1 => false,2 => false,3 => false,4 => false,5 => false);
 						$pmodel = new Model_DbTable_Presentation();
 						$funcs = new Model_Functions();
 						$i=1;
@@ -234,7 +234,7 @@ class FindingsController extends Zend_Controller_Action {
 							}
 							
 							$p=0;
-							if($filenames[$i] != "")
+							if($prestitles[$i] != "")
 							{
 								$data = array(
 									'title' => $prestitles[$i],
@@ -247,38 +247,36 @@ class FindingsController extends Zend_Controller_Action {
 								$exists = false;
 								foreach($gtpres as $gtp)
 								{
-									if($gtp['title'] == $filenames[$i])
+									if($gtp['title'] == $prestitles[$i])
 									{
 										$exists = true;
 									}
 								}
-								if($exists)
+								if($exists && !$checked[$i])
 								{
 									$this->view->message = "Presentation title already exists";
 									return;
 								}
 								$p = $pmodel->insert($data);
+								$checked[$i] = true;
 									
 							}
 							if($p != 0)
 							{
-								$p = $p . ",";
-								$temp = $p;
-							}
-							else {
-								$p = "";
+								$temp_p .= $p . ",";
 							}
 							
-							if($presid != "")
-							{
-								$temp = $presid . $p;
-							}
 						}
-						echo $temp . "<br>";
+						if($presid != "")
+						{
+							$temp = $presid . $temp_p;
+						}
+						else {
+							$temp = $temp_p;
+						}
 						$gtdatamodel = new Model_DbTable_Gtdata();
 						$gtdata = $gtdatamodel->getData($id);
 						$temp = $temp . $gtdata['presentationId'];
-						
 						$content['presentationId'] = $temp;
 						if($content['subSysId'] == 0 || $content['subSysId'] == "")
 						{
@@ -304,18 +302,34 @@ class FindingsController extends Zend_Controller_Action {
                         $nf->add($formD, 'finding', 0);
                     }
 
-                    //$this->_redirect('/findings/view?id=' . $id);
+                    $this->_redirect('/findings/view?id=' . $id);
                     if (Zend_Auth::getInstance()->getStorage()->read()->lastlogin == '') {
                         $this->_redirect('finding/list');
                     }
                 } else {
+                	if($formData['DOF'] == "0000-00-00")
+					{
+						$formData['DOF'] = "";
+					}
+					if($formData['EOH'] == 0)
+					{
+						$formData['EOH'] == "";
+					}
                     $form->populate($formData);
                 }
             } else {
                 $id = $this->_getParam('id', 0);
                 $fin = new Model_DbTable_Finding();
 				$fdata = $fin->getFinding($id);
-               	$form->populate($fin->getFinding($id));
+				if($fdata['DOF'] == "0000-00-00")
+				{
+					$fdata['DOF'] = "";
+				}
+				if($fdata['EOH'] == 0)
+				{
+					$fdata['EOH'] = "";	
+				}
+               	$form->populate($fdata);
 				$form->subSysId->setValue($fdata['subSysId']);
 				$this->view->gtdata = $fin->getFinding($id);
             }

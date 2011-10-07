@@ -16,8 +16,10 @@ class UpgradesController extends Zend_Controller_Action {
             $this->view->headTitle('Add New Upgrade', 'PREPEND');
             $form = new Form_GTDataForm();
 			$form->showform($gtid['gtid'],0,"upgrade");
-            $form->submit->setLabel('Add');
+            $form->submit->setLabel('Add');           	
             $this->view->form = $form;
+            $sysModel = new Model_DbTable_Gtsystems();
+            $this->view->subsystems = $sysModel->fetchAll();
             $form->populate($gtid);
             if ($this->getRequest()->isPost()) {
                 $formData = $this->getRequest()->getPost();
@@ -35,7 +37,7 @@ class UpgradesController extends Zend_Controller_Action {
 								return;
 							}
 						}
-						/*if($content['presentationId'] != "")
+						if($content['presentationId'] != "")
 						{
 	                        $temp = '';
 	                        foreach ($content['presentationId'] as $pId) {
@@ -46,51 +48,85 @@ class UpgradesController extends Zend_Controller_Action {
 	                        }
 	                    }
 						$pmodel = new Model_DbTable_Presentation();
-						$pres=file_get_contents($form->content->getFileName());
 						$funcs = new Model_Functions();
-						$filename = $form->content->getFileName();
-						$fileext = $funcs->getFileExt($filename);
-						if($filename != NULL)
+						
+						$filenames = array(
+							1 => $form->content1->getFileName(),
+							2 => $form->content2->getFileName(),
+							3 => $form->content3->getFileName(),
+							4 => $form->content4->getFileName(),
+							5 => $form->content5->getFileName()
+						);
+						
+						$prestitles = array(
+							1 => $content['prestitle1'],
+							2 => $content['prestitle2'],
+							3 => $content['prestitle3'],
+							4 => $content['prestitle4'],
+							5 => $content['prestitle5']
+						);
+						$checked = array(1 => false,2 => false,3 => false,4 => false,5 => false);
+						/*-----
+						checks for allowed file extensions
+						*/
+						
+						$i=1;
+						for($i=1;$i<=5;$i++)
 						{
-							if(!in_array($fileext,array('pdf','doc','ppt','docx','pptx','xls','xlsx','jpeg','jpg','png','gif')))
+							$pres=file_get_contents($filenames[$i]);
+							$filename = $filenames[$i]; 
+							$fileext = $funcs->getFileExt($filename);
+							if($filename != NULL)
 							{
-								$this->view->message = "File Type Not Allowed";
+								if(!in_array(strtolower($fileext),array('pdf','doc','ppt','docx','pptx','xls','xlsx','jpeg','jpg','png','gif')))
+								{
+									$this->view->message = "File Type Not Allowed";
+									return;
+								}
+							}
+							/*creating the data array to be inserted into the db */
+							$data = array(
+								'title' => $prestitles[$i],
+								'GTId' => $gtid['gtid'],
+								'content' => $pres,
+								'filetype' => $fileext,
+								'userupdate' => Zend_Auth::getInstance()->getStorage()->read()->id
+							);
+							
+							/* checking for presentation title conflcts */
+							
+							$gtpres = $pmodel->fetchAll('GTId = '. $gtid['gtid']);
+							$exists = false;
+							foreach($gtpres as $gtp)
+							{
+								if($gtp['title'] == $prestitles[$i])
+								{
+									$exists = true;
+								}
+							}
+							if($exists && !$checked[$i])
+							{
+								$this->view->message = "Presentation title already exists";
 								return;
 							}
-						}
-						$data = array(
-							'title' => $content['prestitle'],
-							'GTId' => $gtid['gtid'],
-							'content' => $pres,
-							'filetype' => $fileext,
-							'userupdate' => Zend_Auth::getInstance()->getStorage()->read()->id
-						);
-						$gtpres = $pmodel->fetchAll('GTId = '. $gtid['gtid']);
-						$exists = false;
-						foreach($gtpres as $gtp)
-						{
-							if($gtp['title'] == $content['prestitle'])
+							
+							if($prestitles[$i] != "" && $prestitles[$i] != NULL)
 							{
-								$exists = true;
+								$p = $pmodel->insert($data);
+								$checked[$i] = true;
+								if($temp == "")
+								{
+									$temp = $p . ",";
+								}
+								else {
+									$temp = $temp . $p . ",";
+								}
 							}
 						}
-						if($exists)
-						{
-							$this->view->message = "Presentation title already exists";
-							return;
-						}
-						if($content['prestitle'] != "" && $content['prestitle'] != NULL)
-						{
-							$p = $pmodel->insert($data);
-							if($temp == "")
-							{
-								$temp = $p . ",";
-							}
-							else {
-								$temp = $temp . $p . ",";
-							}
-						}
-						$content['presentationId'] = $temp;*/
+						
+						//----
+						
+						$content['presentationId'] = $temp;
 						if($content['subSysId'] == 0 || $content['subSysId'] == "")
 						{
 							$content['subSysId'] = 34;
@@ -101,15 +137,16 @@ class UpgradesController extends Zend_Controller_Action {
 							'data' => $content['data'],
 							'userupdate' => Zend_Auth::getInstance()->getStorage()->read()->id,
 							'title' => $content['title'],
-							//'presentationId' => $temp,
+							'presentationId' => $temp,
 							'sysId' => $content['sysId'],
 							'subSysId' => $content['subSysId'],
 							'EOH' => $content['EOH'],
 							'DOF' => $content['DOF'],
 							'TOI' => $content['TOI']
+							
 						);
-                        $upid = $userp->add($inscontent);
-                        $this->_redirect('/upgrades/view?id='.$upid);
+                        $fid = $userp->add($inscontent);
+                        $this->_redirect('/upgrades/view?id=' . $fid);
                     } else {
                         $form->populate($formData);
                     }
@@ -142,99 +179,115 @@ class UpgradesController extends Zend_Controller_Action {
     public function editAction() {        
         $this->view->headTitle('Edit Upgrade', 'PREPEND');
         try {
-            $id = $this->_getParam('id', 0);
+        	$id = $this->_getParam('id', 0);
 			$gtdatamodel = new Model_DbTable_Gtdata();
 			$gtdata = $gtdatamodel->getData($id);
 			$gtid = $gtdata['gtid'];
             $form = new Form_GTDataForm();
 			$form->showForm($gtid,$id,"upgrade");
             $form->submit->setLabel('Save');
+			
             if (Zend_Auth::getInstance()->getStorage()->read()->lastlogin == '') {
                 $form->submit->setLabel('Save & Continue');
-            }
+			}           
             $this->view->form = $form;
-
             if ($this->getRequest()->isPost()) {
                 $formData = $this->getRequest()->getPost();
                 if ($form->isValid($formData)) {
-                    $upgrade = new Model_DbTable_Upgrade();
-
-                   $id = $this->_getParam('id',0);
+                    $finding = new Model_DbTable_Upgrade();
                     $gtdatamodel = new Model_DbTable_Gtdata();
                     $gtdata = $gtdatamodel->getData($id);
                     $content = $form->getValues();
-                    
-                    /*foreach($content['presentationId'] as $presentations) {
-                    	$presid = $presid . $presentations .",";
+                    foreach ($content['presentationId'] as $presentations) {
+                        $presid = $presid . $presentations . ",";
                     }
 					if ($presid == ',')
 					{
 						$presid = "";
 					}
-                    $content['presentationId'] = $presid;*/
-                    
-                    $r = array_diff($content,$gtdata);
+                    $content['presentationId'] = $presid;
+					$r = array_diff($content,$gtdata);
 					if(count($r) > 0)
 					{
-						/*$pmodel = new Model_DbTable_Presentation();
-						$pres=file_get_contents($form->content->getFileName());
+								
+						$filenames = array(
+							1 => $form->content1->getFileName(),
+							2 => $form->content2->getFileName(),
+							3 => $form->content3->getFileName(),
+							4 => $form->content4->getFileName(),
+							5 => $form->content5->getFileName()
+						);
+						$prestitles = array(
+							1 => $content['prestitle1'],
+							2 => $content['prestitle2'],
+							3 => $content['prestitle3'],
+							4 => $content['prestitle4'],
+							5 => $content['prestitle5']
+						);
+						$checked = array(1 => false,2 => false,3 => false,4 => false,5 => false);
+						$pmodel = new Model_DbTable_Presentation();
 						$funcs = new Model_Functions();
-						$filename = $form->content->getFileName();
-						$fileext = $funcs->getFileExt($filename);
-						if($filename != NULL)
+						$i=1;
+						for($i=1;$i<=5;$i++)
 						{
-							if(!in_array($fileext,array('pdf','doc','ppt','docx','pptx','xls','xlsx','jpeg','jpg','png','gif')))
+							$pres=file_get_contents($filenames[$i]);
+							$filename = $filenames[$i];
+							$fileext = $funcs->getFileExt($filename);
+							
+							if($filename != NULL)
 							{
-								$this->view->message = "File Type Not Allowed";
-								return;
-							}
-						}
-						$p=0;
-						if($content['prestitle'] != "")
-						{
-							$data = array(
-								'title' => $content['prestitle'],
-								'GTId' => $gtdata['gtid'],
-								'content' => $pres,
-								'filetype' => $fileext,
-								'userupdate' => Zend_Auth::getInstance()->getStorage()->read()->id
-							);
-							$gtpres = $pmodel->fetchAll('GTId = '. $gtdata['gtid']);
-							$exists = false;
-							foreach($gtpres as $gtp)
-							{
-								if($gtp['title'] == $content['prestitle'])
+								if(!in_array(strtolower($fileext),array('pdf','doc','ppt','docx','pptx','xls','xlsx','jpeg','jpg','png','gif')))
 								{
-									$exists = true;
+									$this->view->message = "File Type Not Allowed";
+									return;
 								}
 							}
-							if($exists)
+							
+							$p=0;
+							if($prestitles[$i] != "")
 							{
-								$this->view->message = "Presentation title already exists";
-								return;
+								$data = array(
+									'title' => $prestitles[$i],
+									'GTId' => $gtdata['gtid'],
+									'content' => $pres,
+									'filetype' => $fileext,
+									'userupdate' => Zend_Auth::getInstance()->getStorage()->read()->id
+								);
+								$gtpres = $pmodel->fetchAll('GTId = '. $gtdata['gtid']);
+								$exists = false;
+								foreach($gtpres as $gtp)
+								{
+									if($gtp['title'] == $prestitles[$i])
+									{
+										$exists = true;
+									}
+								}
+								if($exists && !$checked[$i])
+								{
+									$this->view->message = "Presentation title already exists";
+									return;
+								}
+								$p = $pmodel->insert($data);
+								$checked[$i] = true;
+									
 							}
-							$p = $pmodel->insert($data);	
-						}
-						if($p != 0)
-						{
-							$p = $p . ",";
-							$temp = $p;
-							
+							if($p != 0)
+							{
+								$temp_p .= $p . ",";
+							}
 							
 						}
-						else {
-							$p = "";
-						}
-						
 						if($presid != "")
 						{
-							$temp = $presid . $p;
+							$temp = $presid . $temp_p;
 						}
-
+						else {
+							$temp = $temp_p;
+						}
 						$gtdatamodel = new Model_DbTable_Gtdata();
 						$gtdata = $gtdatamodel->getData($id);
 						$temp = $temp . $gtdata['presentationId'];
-						$content['presentationId'] = $temp;*/
+						$content['presentationId'] = $temp;
 						if($content['subSysId'] == 0 || $content['subSysId'] == "")
 						{
 							$content['subSysId'] = 34;
@@ -246,30 +299,47 @@ class UpgradesController extends Zend_Controller_Action {
 							'data' => $content['data'],
 							'userupdate' => Zend_Auth::getInstance()->getStorage()->read()->id,
 							'title' => $content['title'],
-							//'presentationId' => $temp,
+							'presentationId' => $temp,
 							'sysId' => $content['sysId'],
 							'subSysId' => $content['subSysId'],
 							'EOH' => $content['EOH'],
 							'DOF' => $content['DOF'],
 							'TOI' => $content['TOI']
 						);
-                    	$upgrade->updateUpgrade($content);
+                    	$finding->updateUpgrade($content);
                     	$nf = new Model_DbTable_Notification();
                         $formD = $this->_getParam('id', 0);
                         $nf->add($formD, 'upgrade', 0);
                     }
+
                     $this->_redirect('/upgrades/view?id=' . $id);
                     if (Zend_Auth::getInstance()->getStorage()->read()->lastlogin == '') {
-                        $this->_redirect('upgrade/list');
-                    }                    
+                        $this->_redirect('upgrades/list');
+                    }
                 } else {
+                	if($formData['DOF'] == "0000-00-00")
+					{
+						$formData['DOF'] = "";
+					}
+					if($formData['EOH'] == 0)
+					{
+						$formData['EOH'] == "";
+					}
                     $form->populate($formData);
                 }
             } else {
                 $id = $this->_getParam('id', 0);
                 $fin = new Model_DbTable_Upgrade();
-                $form->populate($fin->getUpgrade($id));
-				$this->view->gtdata = $fin->getUpgrade($id);
+				$fdata = $fin->getUpgrade($id);
+				if($fdata['DOF'] == "0000-00-00")
+				{
+					$fdata['DOF'] = "";
+				}
+				if($fdata['EOH'] == 0)
+				{
+					$fdata['EOH'] = "";	
+				}
+               	$form->populate($fdata);
 				$form->subSysId->setValue($fdata['subSysId']);
 				$this->view->gtdata = $fin->getUpgrade($id);
             }

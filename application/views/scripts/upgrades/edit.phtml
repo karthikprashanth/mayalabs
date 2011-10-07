@@ -13,11 +13,9 @@ else
 	for($i=0;$i<count($pres_array);$i++)
 	{
 		$pres = $presmodel->getPresentation($pres_array[$i]);
-		$existPresList .= "<a href = '/presentation/view?id=" . $pres_array[$i] . "'>" . $pres['title'] . "</a>";
-		$existPresList .= "<form action = '/presentation/unlink' method = post>";
-		$existPresList .= "<input type = 'hidden' name = 'id' value = '" . $pres_array[$i] . "'>";
-		$existPresList .= "<input type = 'hidden' name = 'gtdataid' value = '" . $this->gtdata['id'] . "'>";
-		$existPresList .= "<input type = 'submit' class = 'gt-delete' value = ''></form><br>";
+		$existPresList .= "<div id = 'presdiv" . $pres_array[$i] . "'><a href = '/presentation/view?id=" . $pres_array[$i] . "'>" . $pres['title'] . "</a>";
+		$gid = $this->gtdata['id'];
+		$existPresList .= "<input type = 'button' onClick = 'unlink($pres_array[$i],$gid)' class = 'gt-delete' value = ''></form></div>";
 	}
 }
 echo $this->headScript()->prependFile($this->baseUrl().'/js/tiny_mce/tiny_mce.js');
@@ -27,8 +25,20 @@ echo "<div id = 'ssid' style = 'display:none'>" . $this->gtdata['subSysId'] . "<
 echo $this->tabContainer("UpgradeEdit",array());
 ?>
 <script type="text/javascript" src='/js/tinyMCEinit.js'></script>
+<script type = "text/javascript" src = "/js/multiattach.js"></script>
 <div id = "spinnerimage" style = "display:none">Uploading ... <img src = "/images/spinner.gif"></div>
 <script type = "text/javascript">
+	function unlink(pid,gid)
+	{
+		url = "/presentation/unlink";
+		var data = {};
+		data['id'] = pid;
+		data['gtdataid'] = gid;
+		$.post(url,data,function(resp){
+	        $('#presentationId').html(resp);
+	    });
+	    document.getElementById("presdiv" + pid).style.display = "none";
+	}
 	$(document).ready(function(){
 	var sid = document.getElementById("sysId").value;
 	var ssid = document.getElementById("ssid").innerHTML;

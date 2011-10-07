@@ -50,7 +50,6 @@ class Form_SearchForm extends Zend_Form {
         $plant = new Zend_Form_Element_Select('plantname');
         $plant->setLabel('Plant')
         ->addMultiOptions($data)
-        ->setRequired(true)
         ->addFilter('StripTags')
         ->addFilter('StringTrim')
          ->addValidator('NotEmpty');
@@ -60,7 +59,6 @@ class Form_SearchForm extends Zend_Form {
 		$type = new Zend_Form_Element_Select('type');
 	    $type->setLabel('Search by Type')
 	    ->addMultiOptions(array( ''=>'Select an Option','finding'=> 'Findings','upgrade' => 'Upgrades','lte' => 'LTE'))
-	    ->setRequired(true)
 	    ->addFilter('StripTags')
 	    ->addFilter('StringTrim')
 	    ->addDecorator('Htmltag',array('tag' => 'br'))
@@ -72,7 +70,6 @@ class Form_SearchForm extends Zend_Form {
 		$sys->setLabel('Search by System Name')
 			->addMultiOptions($sysNames)
 			->addDecorator('Htmltag', array('tag' => 'br'))
-            ->setRequired(true)
             ->addFilter('StripTags')
             ->addFilter('StringTrim')
             ->addValidator('NotEmpty');
@@ -81,12 +78,49 @@ class Form_SearchForm extends Zend_Form {
 		$subsys->setLabel('Search by Sub System Name')
 			->addMultiOptions($sysSubNames)
 			->addDecorator('Htmltag', array('tag' => 'br'))
-            ->setRequired(true)
+            ->addFilter('StripTags')
+            ->addFilter('StringTrim')
+            ->addValidator('NotEmpty');
+		
+		$ll = 0;
+		$ranges = array();
+		$ranges[''] = "Select an Option";
+		while($ll <= 195000)
+		{
+			$ul = $ll + 5000;
+			$ranges[$ll . "-" . $ul] = $ll . " - " . $ul;
+			$ll = $ll + 5000;
+		}
+		
+		$eohlabel = new Zend_Form_Element_Hidden('eohlabel');
+		$eohlabel->setLabel('EOH at Occurence')
+				 ->addDecorator('Htmltag', array('tag' => 'p'));
+		
+		$eohfrom = new Zend_Form_Element_Text('eohfrom');
+        $eohfrom->setLabel('From')
+        ->addDecorator('Htmltag',array('tag' => 'br'))
+        ->addValidator('NotEmpty')
+        ->addFilter('StripTags')
+        ->addFilter('StringTrim');
+		
+		$eohto = new Zend_Form_Element_Text('eohto');
+        $eohto->setLabel('To')
+        ->addDecorator('Htmltag',array('tag' => 'br'))
+        ->addValidator('NotEmpty')
+        ->addFilter('StripTags')
+        ->addFilter('StringTrim');
+			
+		$insp = array('' => 'Select an Option','Minor' => 'Minor','HGPI' => 'HGPI' , 'EHGPI' => 'EHGPI' , 'Major' => 'Major' , 'Unscheduled' => 'Unscheduled','Others' => 'Others');
+			
+		$toi = new Zend_Form_Element_Select('TOI');
+		$toi->setLabel('Type of Inspection')
+			->addMultiOptions($insp)
+			->addDecorator('Htmltag', array('tag' => 'br'))
             ->addFilter('StripTags')
             ->addFilter('StringTrim')
             ->addValidator('NotEmpty');
 			
-		$this->addElements(array($plant,$type,$sys,$subsys));				
+		$this->addElements(array($plant,$type,$sys,$subsys,$eohlabel,$eohfrom,$eohto,$toi));				
 	}
 
 	public function showSubmit()

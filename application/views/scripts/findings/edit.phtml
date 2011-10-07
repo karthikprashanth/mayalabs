@@ -13,11 +13,10 @@ else
 	for($i=0;$i<count($pres_array);$i++)
 	{
 		$pres = $presmodel->getPresentation($pres_array[$i]);
-		$existPresList .= "<a href = '/presentation/view?id=" . $pres_array[$i] . "'>" . $pres['title'] . "</a>";
-		$existPresList .= "<form action = '/presentation/unlink' method = post>";
-		$existPresList .= "<input type = 'hidden' name = 'id' value = '" . $pres_array[$i] . "'>";
-		$existPresList .= "<input type = 'hidden' name = 'gtdataid' value = '" . $this->gtdata['id'] . "'>";
-		$existPresList .= "<input type = 'submit' class = 'gt-delete' value = ''></form><br>";
+		$existPresList .= "<div id = 'presdiv" . $pres_array[$i] . "'><a href = '/presentation/view?id=" . $pres_array[$i] . "'>" . $pres['title'] . "</a>";
+		$gid = $this->gtdata['id'];
+		$existPresList .= "<div style = 'display:none' id = 'ptitle" . $pres_array[$i] . "'>" . $pres['title'] . "</div>";
+		$existPresList .= "<input type = 'button' onClick = 'unlink($pres_array[$i],$gid)' class = 'gt-delete' value = ''></form></div>";
 	}
 }
 echo $this->headScript()->prependFile($this->baseUrl().'/js/tiny_mce/tiny_mce.js');
@@ -26,45 +25,58 @@ $this->tabPane("findingEdit",$existPresList . $this->form . "<br>" . $this->mess
 echo $this->tabContainer("findingEdit",array());
 echo "<div id = 'ssid' style = 'display:none'>" . $this->gtdata['subSysId'] . "</div>";
 ?>
+
 <script type="text/javascript" src='/js/tinyMCEinit.js'></script>
 <script type = "text/javascript" src = "/js/multiattach.js"></script>
 <div id = "spinnerimage" style = "display:none">Uploading ... <img src = "/images/spinner.gif"></div>
 <script type = "text/javascript">
-	$(document).ready(function(){
-	var sid = document.getElementById("sysId").value;
-	var ssid = document.getElementById("ssid").innerHTML;
-	if(sid != "" && sid != 0)
+	function unlink(pid,gid)
 	{
-       $.ajax({
-            type: "POST",
-            data: "id=" + sid + "&ssid=" + ssid,
-            url: "/findings/index",
-            success: function(msg){
-                if (msg != ''){
-                    $("#subSysId").html(msg).show();
-                }
-            }
-       });
+		url = "/presentation/unlink";
+		var data = {};
+		data['id'] = pid;
+		data['gtdataid'] = gid;
+		$.post(url,data,function(resp){
+	        $('#presentationId').html(resp);
+	    });
+	    document.getElementById("presdiv" + pid).style.display = "none";
 	}
-	$("#submitbutton").click(function() {
-		var file = document.getElementById("content").value;
-		if (file != "")
+	$(document).ready(function(){
+		
+		var sid = document.getElementById("sysId").value;
+		var ssid = document.getElementById("ssid").innerHTML;
+		if(sid != "" && sid != 0)
 		{
-			document.getElementById("spinnerimage").style.display = "block";
+	       $.ajax({
+	            type: "POST",
+	            data: "id=" + sid + "&ssid=" + ssid,
+	            url: "/findings/index",
+	            success: function(msg){
+	                if (msg != ''){
+	                    $("#subSysId").html(msg).show();
+	                }
+	            }
+	       });
 		}
+		$("#submitbutton").click(function() {
+			var file = document.getElementById("content").value;
+			if (file != "")
+			{
+				document.getElementById("spinnerimage").style.display = "block";
+			}
+		});
+	    $("#sysId").change( function() {
+	        $.ajax({
+	            type: "POST",
+	            data: "id=" + $(this).val(),
+	            url: "/findings/index",
+	            success: function(msg){
+	                if (msg != ''){
+	                    $("#subSysId").html(msg).show();
+	                    
+	                }
+	            }
+	        });
+	    });
 	});
-    $("#sysId").change( function() {
-        $.ajax({
-            type: "POST",
-            data: "id=" + $(this).val(),
-            url: "/findings/index",
-            success: function(msg){
-                if (msg != ''){
-                    $("#subSysId").html(msg).show();
-                    
-                }
-            }
-        });
-    });
-});
 </script>

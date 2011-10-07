@@ -14,10 +14,13 @@ class PresentationController extends Zend_Controller_Action
     }
 	public function unlinkAction()
 	{
+		$this->_helper->getHelper('Layout')->disableLayout();
 		if($this->getRequest()->isPost())
 		{
 			$id = $this->getRequest()->getPost('id');
 			$gtdataid = $this->getRequest()->getPost('gtdataid');
+			$presmodel = new Model_DbTable_Presentation();
+			$pres = $presmodel->getPresentation($id);
 			$gtdatamodel = new Model_DbTable_Gtdata();
 			$gtdata = $gtdatamodel->getData($gtdataid);
 			$presid = substr($gtdata['presentationId'],0,strlen($gtdata['presentationId'])-1);
@@ -39,19 +42,27 @@ class PresentationController extends Zend_Controller_Action
 			}
 			$where['id = ?'] = $gtdataid;
 			$gtdatamodel->update($data,$where);
-			if($gtdata['type'] == "finding")
+			
+			$gtid = $gtdata['gtid'];
+			$gtpres = $presmodel->fetchAll("GTId = " . $gtid);
+			$presarray = explode(",",$data['presentationId']);
+			echo "<option value = '' label = 'Select an Option'>Select an Option</option>";
+			foreach($gtpres as $gtp)
 			{
-				$type = "findings";
+				$exists = false;
+				for($i=0;$i<count($presarray);$i++)
+				{
+					if($presarray[$i] == $gtp['presentationId'])
+					{
+						$exists = true;
+						break;
+					}
+				}
+				if(!$exists)
+				{
+					echo "<option value = '" . $gtp['presentationId'] . "' label = '" . $gtp['title'] . "'>" . $gtp['title'] . "</option>";
+				}
 			}
-			else if($gtdata['type'] == "upgrade")
-			{
-				$type = "upgrades";
-			}
-			else if($gtdata['type'] == "lte")
-			{
-				$type = "lte";
-			}
-			$this->_redirect("/" . $type . "/edit?id=".$gtdataid);
 			
 		}
 	}
