@@ -2,7 +2,13 @@
 echo $this->headScript()->prependFile($this->baseUrl().'/js/tiny_mce/tiny_mce.js');
 //echo $this->form;
 $this->spinner = "<div id = 'spinnerimage' style = 'display:none'>Uploading ... <img src = '/images/spinner.gif'></div>";
-$this->tabcontent = $this->form . "<br>" . $this->message . "<br>" . $this->spinner;
+if($this->message != "")
+	$this->message = "<br><div class ='errors'>" . $this->message . "</div>";
+else {
+	$this->message = "";
+}
+$this->tabcontent = $this->form .  $this->message  . $this->spinner;
+
 $this->tabPane("upgradeAdd",$this->tabcontent,array('title' => 'Upgrade Add'));
 echo $this->tabContainer("upgradeAdd",array());
 

@@ -1,6 +1,9 @@
 <?php 
 	echo $this->form;
-	echo $this->message;
+	if($this->message == "")
+		echo $this->message;
+	else 
+		echo "<div class = 'errors'>" . $this->message . "</div>";
 ?>
 <div id = "spinnerimage" style = "display:none">Uploading ... <img src = "/images/spinner.gif"></div>
 <script type = "text/javascript">

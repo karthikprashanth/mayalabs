@@ -1,5 +1,8 @@
 <?php
 	echo $this->form;
-	echo $this->message;
+	if($this->message == "")
+		echo $this->message;
+	else 
+		echo "<div class = 'errors'>" . $this->message . "</div>";
 	
 ?>

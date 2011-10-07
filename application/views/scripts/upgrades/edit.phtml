@@ -2,7 +2,7 @@
 $existPresList = "<b>Attachments already added to this</b><br><br>";
 $pres_str = substr($this->gtdata['presentationId'],0,strlen($this->gtdata['presentationId'])-1);
 $pres_array = explode(",",$pres_str);
-
+$this->spinner = "<div id = 'spinnerimage' style = 'display:none'>Uploading ... <img src = '/images/spinner.gif'></div>";
 if(count($pres_array) == 0 || (count($pres_array) == 1 && $pres_array[0] == 0))
 {
 	$existPresList = "";
@@ -20,13 +20,17 @@ else
 }
 echo $this->headScript()->prependFile($this->baseUrl().'/js/tiny_mce/tiny_mce.js');
 $this->jQuery()->enable();
-$this->tabPane("UpgradeEdit",$existPresList .$this->form . "<br>" . $this->message,array('title' => 'Upgrade Edit'));
+if($this->message != "")
+	$this->message = "<br><div class ='errors'>" . $this->message . "</div>";
+else {
+	$this->message = "";
+}
+$this->tabPane("UpgradeEdit",$existPresList . $this->form . $this->message . $this->spinner ,array('title' => 'Upgrade Edit'));
 echo "<div id = 'ssid' style = 'display:none'>" . $this->gtdata['subSysId'] . "</div>";
 echo $this->tabContainer("UpgradeEdit",array());
 ?>
 <script type="text/javascript" src='/js/tinyMCEinit.js'></script>
 <script type = "text/javascript" src = "/js/multiattach.js"></script>
-<div id = "spinnerimage" style = "display:none">Uploading ... <img src = "/images/spinner.gif"></div>
 <script type = "text/javascript">
 	function unlink(pid,gid)
 	{
