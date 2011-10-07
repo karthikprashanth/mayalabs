@@ -136,19 +136,24 @@
 				        </ul>
 				    </li>
 				    <li>
-				        <a href="#">Conference</a>
+				        <a href="/conference">Conference</a>
+				
 				        <ul>
 				            <li>
-				
-				                <a href="/conference/add">Add</a>
+				                <a href="/conference/list/id/<?php echo (isset($this->_rootref['CONF_ID_ONE'])) ? $this->_rootref['CONF_ID_ONE'] : ''; ?>"><?php echo (isset($this->_rootref['CONF_STR_ONE'])) ? $this->_rootref['CONF_STR_ONE'] : ''; ?></a>
 				            </li>
 				            <li>
-				                <a href="/conference">List</a>
+				                <a href="/conference/list/id/<?php echo (isset($this->_rootref['CONF_ID_TWO'])) ? $this->_rootref['CONF_ID_TWO'] : ''; ?>"><?php echo (isset($this->_rootref['CONF_STR_TWO'])) ? $this->_rootref['CONF_STR_TWO'] : ''; ?></a>
 				            </li>
+				            <li>
+				
+				                <a href="/conference">Others</a>
+				            </li>
+				            <li><a href = "/conference/add">Add Conference</a></li>
 				        </ul>
 				    </li>
-				    <li>
-				        <a href="http://www.hiveusers.com/forums">Forums</a>
+				    <li class = "active">
+				        <a class = "active" href="http://www.hiveusers.com/forums">Forums</a>
 				    </li>
 				    <li>
 				        <a href="/authentication/logout">Logout</a>
@@ -201,9 +206,22 @@
 
     </li>
     <li>
-        <a href="/conference">Conference</a>
-    </li>
-    <li>
+				        <a href="/conference">Conference</a>
+				
+				        <ul>
+				            <li>
+				                <a href="/conference/list/id/<?php echo (isset($this->_rootref['CONF_ID_ONE'])) ? $this->_rootref['CONF_ID_ONE'] : ''; ?>"><?php echo (isset($this->_rootref['CONF_STR_ONE'])) ? $this->_rootref['CONF_STR_ONE'] : ''; ?></a>
+				            </li>
+				            <li>
+				                <a href="/conference/list/id/<?php echo (isset($this->_rootref['CONF_ID_TWO'])) ? $this->_rootref['CONF_ID_TWO'] : ''; ?>"><?php echo (isset($this->_rootref['CONF_STR_TWO'])) ? $this->_rootref['CONF_STR_TWO'] : ''; ?></a>
+				            </li>
+				            <li>
+				
+				                <a href="/conference">Others</a>
+				            </li>
+				        </ul>
+				    </li>
+    <li class = "active">
         <a href="http://www.hiveusers.com/forums">Forums</a>
     </li>
     <li>
@@ -247,10 +265,22 @@
         <a href="/gasturbine/plantlist">Gasturbines</a>
     </li>
     <li>
-        <a href="/conference">Conference</a>
-
-    </li>
-    <li>
+				        <a href="/conference">Conference</a>
+				
+				        <ul>
+				            <li>
+				                <a href="/conference/list/id/<?php echo (isset($this->_rootref['CONF_ID_ONE'])) ? $this->_rootref['CONF_ID_ONE'] : ''; ?>"><?php echo (isset($this->_rootref['CONF_STR_ONE'])) ? $this->_rootref['CONF_STR_ONE'] : ''; ?></a>
+				            </li>
+				            <li>
+				                <a href="/conference/list/id/<?php echo (isset($this->_rootref['CONF_ID_TWO'])) ? $this->_rootref['CONF_ID_TWO'] : ''; ?>"><?php echo (isset($this->_rootref['CONF_STR_TWO'])) ? $this->_rootref['CONF_STR_TWO'] : ''; ?></a>
+				            </li>
+				            <li>
+				
+				                <a href="/conference">Others</a>
+				            </li>
+				        </ul>
+				    </li>
+    <li class = "active">
         <a href="http://www.hiveusers.com/forums">Forums</a>
     </li>
     <li>

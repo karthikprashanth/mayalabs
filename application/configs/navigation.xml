@@ -150,7 +150,8 @@
 		</conference>
 		<forum>
 			<label>Forums</label>
-			<uri>http://www.hiveusers.com/forums</uri>
+			<controller>forums</controller>
+			<action>index</action>
 		</forum>
         <logout>
             <label>Logout</label>
@@ -220,7 +221,8 @@
 		</conference>
 		<forum>
 			<label>Forums</label>
-			<uri>http://www.hiveusers.com/forums</uri>
+			<controller>forums</controller>
+			<action>index</action>
 		</forum>
         <logout>
             <label>Logout</label>

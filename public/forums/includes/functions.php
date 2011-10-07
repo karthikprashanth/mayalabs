@@ -4408,7 +4408,22 @@ function page_header($page_title = '', $display_online_list = true, $item_id = 0
 	$rres = $db->sql_query($rquery);
 	$r = $db->sql_fetchrow($rres); 
 	$hive_user_role = $r['role'];
-	$db->sql_freeresult($rres);	
+	$db->sql_freeresult($rres);
+	
+	//get conference names and years
+	$sql = "SELECT cId,year,place FROM conference ORDER BY year DESC LIMIT 0,1";
+	$result = $db->sql_query($sql);
+	$re = $db->sql_fetchrow(($result));
+	$confstr1 = $re['year'] . " (" . $re['place'] . ")";
+	$cid1 = $re['cId'];
+	$db->sql_freeresult($result);
+	
+	$sql = "SELECT cId,year,place FROM conference ORDER BY year DESC LIMIT 1,1";
+	$result = $db->sql_query($sql);
+	$re = $db->sql_fetchrow(($result));
+	$confstr2 = $re['year'] . " (" . $re['place'] . ")";
+	$cid2 = $re['cId'];
+	$db->sql_freeresult($result);	
 	// The following assigns all _common_ variables that may be used at any point in a template.
 	$template->assign_vars(array(
 		'SITENAME'						=> $config['sitename'],
@@ -4425,6 +4440,10 @@ function page_header($page_title = '', $display_online_list = true, $item_id = 0
 		'PRIVATE_MESSAGE_INFO_UNREAD'	=> $l_privmsgs_text_unread,
 		'HIVE_USER_ROLE'                => $r['role'],
 		'HIVE_USER_PLANT'               => $uplantid,
+		'CONF_STR_ONE'                  => $confstr1,
+		'CONF_ID_ONE'                   => $cid1,
+		'CONF_STR_TWO'                  => $confstr2,
+		'CONF_ID_TWO'                   => $cid2,
 		'S_USER_NEW_PRIVMSG'			=> $user->data['user_new_privmsg'],
 		'S_USER_UNREAD_PRIVMSG'			=> $user->data['user_unread_privmsg'],
 		'S_USER_NEW'					=> $user->data['user_new'],
