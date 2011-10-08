@@ -109,27 +109,35 @@ if($this->tgr != 0) :?>
 	                $searchData = substr($data['data'], 0, 400) . " ...";
 	            }
 			}
+			
+			if($data['type'] == 'finding')
+			{
+				$dofstr = "Finding";
+			}
+			else {
+				$dofstr = "Implementation"	;
+			}
         ?>
         	
 	    <div class = 'tendivgt search-result' id = 'tengroup<?php echo $i; ?>' onmouseover="glow(this,'f0f7ec'); this.style.borderLeft='solid 2px #2e4e68';" onmouseout="unglow(this); this.style.borderLeft='none';">
 	    
 	    <div class='search-result-title'><?php echo "<a href = '"  . $data['url'] . "'>" . Model_Functions::highlightResults($this->queryStr,$data['title']); ?><i> (<?php echo Model_Functions::highlightResults($this->queryStr,ucfirst($data['type'])); ?>) </i></a></div>
 	    <?php if($data['subsysname'] == "-") : ?>
-	    	<div class='search-result-details'><span class='search-result-ss'><?php echo Model_Functions::highlightResults($this->queryStr,$data['sysname']); ?>   </span>
+	    	<div class='search-result-details'><span class='search-result-ss'><?php echo Model_Functions::highlightResults($this->queryStr,$data['sysname']); ?>   </span></div>
 	    <?php else : ?>
-	    	<div class='search-result-details'><span class='search-result-ss'><?php echo Model_Functions::highlightResults($this->queryStr,$data['sysname']) . " / " . Model_Functions::highlightResults($this->queryStr,$data['subsysname']); ?>   </span>
+	    	<div class='search-result-details'><span class='search-result-ss'><?php echo Model_Functions::highlightResults($this->queryStr,$data['sysname']) . " / " . Model_Functions::highlightResults($this->queryStr,$data['subsysname']); ?>   </span></div>
 	    <?php endif;?>
 	    <?php if($data['eoh'] != "") : ?>
-	    	<div class='search-result-details'><span class='search-result-ss'><b>EOH at Occurence:</b><?php echo Model_Functions::highlightResults($this->queryStr,$data['eoh']); ?>   </span>
+	    	<div class='search-result-details'><span class='search-result-ss'><b>EOH at Occurence:</b><?php echo Model_Functions::highlightEOH($this->eohfrom,$this->eohto,$data['eoh']); ?>   </span></div>
 		<?php endif; ?>
 		<?php if($data['toi'] != "") : ?>
-			<div class='search-result-details'><span class='search-result-ss'><b>Type of Inspection:</b><?php echo Model_Functions::highlightResults($this->queryStr,$data['toi']); ?>   </span>
+			<div class='search-result-details'><span class='search-result-ss'><b>Type of Inspection:</b><?php echo Model_Functions::highlightResults($this->queryStr,$data['toi']); ?>   </span></div>
 		<?php endif; ?>
 		<?php if($data['dof'] != "") : ?>
-			<b><div class='search-result-details'><span class='search-result-ss'><b>Date of Occuerence:</b><?php echo $data['dof']; ?>   </span>
+			<b><div class='search-result-details'><span class='search-result-ss'><b>Date of <?php echo $dofstr;?> :</b><?php echo $data['dof']; ?>   </span></div>
 		<?php endif; ?>
 	    <span class='search-result-gt'><?php echo "<a href = '/gasturbine/view?id=" . $gt['GTId'] . "'>" . $gt['GTName'] . "</a>"; ?></span>
-		<span class='search-result-plant'><?php echo "<a href = '/plant/view?id=" . $plant['plantId'] . "'>" . Model_Functions::highlightResults($this->queryStr,$plant['plantName']) . "</a>"; ?></span></div></b>
+		<span class='search-result-plant'><?php echo "<a href = '/plant/view?id=" . $plant['plantId'] . "'>" . Model_Functions::highlightResults($this->queryStr,$plant['plantName']) . "</a>"; ?></span></b>
 	    <div class='search-result-data'><?php echo Model_Functions::highlightResults($this->queryStr,$searchData) ?></div>
 	    <div class='search-result-updatedby'><i> Updated by <?php echo "<a href = '/userprofile/view?id=" . $data['userupdate'] . "'>" .$username . "</a> - <a href = '/plant/view?id=" . $user['plantId'] . "'>"  .Model_Functions::highlightResults($this->queryStr,$data['userplantname']) . "</a>" ; ?> &nbsp;on <?php echo $data['updatedate']; ?></i></div>
 		

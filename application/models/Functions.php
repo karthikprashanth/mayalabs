@@ -68,6 +68,14 @@
 			
 		}
 		
+		public static function highlightEOH($from,$to,$eoh)
+		{
+			if((int)$eoh >= $from && (int)$eoh <= $to)
+			{
+				$eoh = "<span class = 'search-highlighter' style = 'font-weight: bold;color: #1A4C80;background-color : #c1e199;'>" . $eoh . "</span>";
+			}
+			return $eoh;
+		}
 		public static function strIsPartOf($str1,$str2)
 		{
 			

@@ -659,7 +659,6 @@ class Plugin_Breadcrumbs extends Zend_Controller_Plugin_Abstract {
             if ($action == 'add') {
             	
                 $gtid = $request->getPost('gtid');
-
                 $gtmodel = new Model_DbTable_Gasturbine();
                 $gt = $gtmodel->getGT($gtid);
                 $pid = $gt['plantId'];

@@ -2,30 +2,22 @@
 	echo $this->headScript()->prependFile($this->baseUrl().'/js/tiny_mce/tiny_mce.js');
 	//echo $this->form;
 	$this->spinner = "<div id = 'spinnerimage' style = 'display:none'>Uploading ... <img src = '/images/spinner.gif'></div>";
-	$this->tabcontent = $this->form . "<br>" . $this->message . "<br>" . $this->spinner;
+	if($this->message != "")
+	$this->message = "<br><div class ='errors'>" . $this->message . "</div>";
+	else {
+		$this->message = "";
+	}
+	$this->tabcontent = $this->form .  $this->message  . $this->spinner;
 	$this->tabPane("findingAdd",$this->tabcontent,array('title' => 'Finding Add'));
 	echo $this->tabContainer("findingAdd",array());
 	
 ?>
-<div id = "attachmentform"></div>
 
 <script type="text/javascript" src='/js/tinyMCEinit.js'></script>
-
+<script type="text/javascript" src = '/js/multiattach.js'></script>
 <script type="text/javascript">
 
 $(document).ready(function(){ 
-	$("#addattach").click(function(){
-		$.ajax({
-            type: "POST",
-            url: "/attachments/add",
-            success: function(msg){
-                if (msg != ''){
-                    $("#attachmentform").html(msg).show();   
-                }
-            }
-        });
-        $("#attachmentform").dialog({title: "Attachments Upload",height : 300,width: 300});
-	});
 	              
 	$("#submitbutton").click(function() {
 		var file = document.getElementById("content").value;

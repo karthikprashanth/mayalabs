@@ -3,7 +3,10 @@ function addBookmark(category,id)
     url='/bookmark/add/';
     var data ={};
     var name = prompt("Enter the Bookmark Name: (Only Characters and Numbers Allowed)");
-
+	if(name == null || name == "")
+	{
+		return;
+	}
     data['category']=category;
     data['id']=id;
     data['bmName'] = name;

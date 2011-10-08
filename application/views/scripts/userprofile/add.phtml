@@ -3,7 +3,10 @@ $this->jQuery()->enable();
 echo $this->headScript()->prependFile($this->baseUrl().'/js/ajaxvalidation.js');
 echo $this->adminId;
 echo $this->form;
-echo $this->message;
+if($this->message == "")
+	echo $this->message;
+else 
+	echo "<div class = 'errors'>" . $this->message . "</div>";
 ?>
 
 <script type="text/javascript">

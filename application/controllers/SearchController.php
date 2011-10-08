@@ -37,7 +37,12 @@ class SearchController extends Zend_Controller_Action
 		{
 			$query = $query . " " . $this->_getParam('subsysname',"");
 		}
+		if($this->_getParam('toi',"") != "")
+		{
+			$query = $query . " " . $this->_getParam('toi',"");
+		}
 		$this->view->query = $query;
+		$this->view->eoh = $this->_getParam('eoh',"");
 		if(isset($_GET['keyword']))
 		{
 			$this->view->keyword = $_GET['keyword'];
@@ -61,8 +66,17 @@ class SearchController extends Zend_Controller_Action
 			$cat = $this->_getParam('cat');
 			$ll = $this->_getParam('ll');
 			$ul = $this->_getParam('ul');
+			$eoh = $this->_getParam('eoh');
 			
-			
+			if  ($eoh != "")
+			{
+				$from =  substr($eoh,0,strlen($eoh)-(strpos($eoh,"-")+1));
+				$to = substr($eoh,strpos($eoh,"-")+1);
+				$from = (int)$from - ((int)$from % 5000);
+				$to = (int)$to - ((int)$to % 5000);
+				$this->view->eohfrom = $from;
+				$this->view->eohto = $to;
+			}
 			$queryStr = $this->_getParam('keyword',0);
 			$this->_helper->getHelper('layout')->disableLayout();
 			$t1= time();
@@ -70,13 +84,15 @@ class SearchController extends Zend_Controller_Action
 			$path = $appath . DIRECTORY_SEPARATOR . "search" . DIRECTORY_SEPARATOR . "gtdata";
 			$index = Zend_Search_Lucene::open($path);
 			$queryStr = $queryStr."*";
-			$query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
-  			$results = $index->find($query);
+			Zend_Search_Lucene_Analysis_Analyzer::setDefault(new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive());
+			if($eoh != "")
+  				$results = $index->find($queryStr . " AND eoh:[$from TO $to]");
+			else 
+				$results = $index->find($queryStr);
+			
 			
 			if($cat == "gt")
 			{
-			
-				
 				$gtdatamodel = new Model_DbTable_Gtdata();
 				$plantmodel  = new Model_DbTable_Plant();
 				$umodel = new Model_DbTable_Userprofile();
@@ -252,7 +268,7 @@ class SearchController extends Zend_Controller_Action
 			
 			$doc->addField(Zend_Search_Lucene_Field::UnStored('sysname',$sysname));  
 			$doc->addField(Zend_Search_Lucene_Field::UnStored('subsysname',$subsysname));
-			$doc->addField(Zend_Search_Lucene_Field::UnStored('eoh',$eoh));
+			$doc->addField(Zend_Search_Lucene_Field::Keyword('eoh',$eoh));
 			$doc->addField(Zend_Search_Lucene_Field::UnStored('toi',$toi));
 			$doc->addField(Zend_Search_Lucene_Field::UnStored('userplantname',$uplantname));
 			

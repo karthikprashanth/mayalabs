@@ -22,14 +22,15 @@ foreach($this->plist as $pvalue){
 		$filename = "images/pdf.png";
 	}
 	 else {
-	 	
+
 	 	$h = 300;
 		 $w = 400;
-	 	$filename = "random/thnail";
+		 $rn = rand(0,999999);
+	 	$filename = "random/thnail" . $rn;
 		$data = $pres['content'];
 		file_put_contents($filename,$data);
 	 }
-	 
+
      $list=$list."<a href='/presentation/view/?id=".$this->escape(key($pvalue))."'><img src = '/".$filename."' height = $h width = $w>".current($pvalue)."</a><br>";
 }
 $ssModel = $this->subSysModel;
@@ -64,12 +65,12 @@ else
 }
 $content = $content." <span style='color:#268FBB;'>".$this->gt['GTName']."</span><br/>";
 if($this->finding['EOH'] != 0 && $this->finding['EOH'] != "")
-	$content = $content." <span style='color:#000;'><b>EOH at Occurence</b>: ". $this->finding['EOH']."</span>";
-if($this->finding['DOF'] != "")
-	$content = $content." <span style='color:#000;'><b>Date of Finding</b>: ".$this->finding['DOF']."</span>";
+	$content = $content." <span style='color:#268FBB;'><b>EOH at Occurence</b>: ". $this->finding['EOH']."</span>";
+if($this->finding['DOF'] != "" && $this->finding['DOF'] != "0000-00-00")
+	$content = $content." <span style='color:#268FBB;'><b>Date of Finding</b>: ".$this->finding['DOF']."</span>";
 if($this->finding['TOI'] != "")
-	$content = $content." <span style='color:#000;'><b>Type of Inspection</b>: ".$this->finding['TOI']."</span><br>";
-$content = $content." <span style='color:#000; font-size: 12px; font-style: normal; font-weight:bold;'>Updated On <span style='color:#83ac52;'>".date("g:ia M jS, Y", strtotime($this->finding['updatedate']))."</span></span></div>";
+	$content = $content." <span style='color:#268FBB;'><b>Type of Inspection</b>: ".$this->finding['TOI']."</span><br>";
+$content = $content." <span style='color:#268FBB; font-size: 12px; font-style: normal; font-weight:bold;'>Updated On ".$this->finding['updatedate']."</span></div>";
 $content = $content."<div class='gtdata-data'>".$this->finding['data']."</div>";
 if($list == "")
 	$list="<span style='color:#d95e1c;'>No Attachments Added</span>";
