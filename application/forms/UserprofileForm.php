@@ -23,6 +23,11 @@ class Form_UserprofileForm extends Zend_Form {
         ->addFilter('StripTags')
         ->addFilter('StringTrim')
          ->addValidator('NotEmpty');
+        $plant->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
     }
 
     $firstName = new Zend_Form_Element_Text('firstName');
@@ -31,7 +36,12 @@ class Form_UserprofileForm extends Zend_Form {
     ->addValidator('NotEmpty')
     ->addValidator(Model_Validators::alpha())
     ->addFilter('StripTags')
-    ->addFilter('StringTrim');
+    ->addFilter('StringTrim')
+    ->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
     $lastName = new Zend_Form_Element_Text('lastName');
     $lastName->setLabel('Last Name')
@@ -39,7 +49,12 @@ class Form_UserprofileForm extends Zend_Form {
     ->addValidator('NotEmpty')
     ->addValidator(Model_Validators::alpha())
     ->addFilter('StripTags')
-    ->addFilter('StringTrim');
+    ->addFilter('StringTrim')
+    ->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
     $designation = new Zend_Form_Element_Text('designation');
     $designation->setLabel('Designation')
@@ -47,7 +62,12 @@ class Form_UserprofileForm extends Zend_Form {
     ->addValidator('NotEmpty')
     ->addValidator(Model_Validators::alpha())
     ->addFilter('StripTags')
-    ->addFilter('StringTrim');
+    ->addFilter('StringTrim')
+    ->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
     $phone = new Zend_Form_Element_Text('phone');
     $phone->setLabel('Phone(Landline)')
@@ -55,7 +75,12 @@ class Form_UserprofileForm extends Zend_Form {
     ->addValidator('NotEmpty')
 	->addValidator(Model_Validators::regex('/[^0-9+-]+/'))
     ->addFilter('StripTags')
-    ->addFilter('StringTrim');
+    ->addFilter('StringTrim')
+    ->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
     $mobile = new Zend_Form_Element_Text('mobile');
     $mobile->setLabel('Mobile')
@@ -63,7 +88,12 @@ class Form_UserprofileForm extends Zend_Form {
     ->addValidator('NotEmpty')
 	->addValidator(Model_Validators::regex('/[^0-9+-]+/'))
     ->addFilter('StripTags')
-    ->addFilter('StringTrim');
+    ->addFilter('StringTrim')
+    ->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
     $email = new Zend_Form_Element_Text('email');
     $email->setLabel('Email')
@@ -71,16 +101,26 @@ class Form_UserprofileForm extends Zend_Form {
     ->addValidator('NotEmpty')
     ->addValidator(Model_Validators::email())
     ->addFilter('StripTags')
-    ->addFilter('StringTrim');
+    ->addFilter('StringTrim')
+    ->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
 
     $submit = new Zend_Form_Element_Submit('submit');
     $submit->setAttrib('id', 'submitbutton')
 			->setAttrib('class','gt-add');
+    $submit->setDecorators(array('ViewHelper', 'Description', 'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td',
+                    'colspan' => '2', 'align' => 'center')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 	
     if(Zend_Registry::get('role')=='sa')
         $this->addElement($plant);
     $this->addElements(array($firstName, $lastName, $designation, $phone, $mobile, $email, $submit));
+    $this->setDecorators(array('FormElements', array(array('data' => 'HtmlTag'), array('tag' => 'table')), 'Form'));
   }
 }
 

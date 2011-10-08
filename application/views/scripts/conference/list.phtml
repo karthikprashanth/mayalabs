@@ -1,10 +1,5 @@
-<script type="text/javascript" src="../js/tablesorter.js"></script>
-<link href='/css/tablesorter/style.css' rel='stylesheet' type='text/css' />
-<script type="text/javascript">
-    $(function() {
-        $( "#tables1" ).tablesorter({sortList:[[0,0],[2,1]], widgets: ['zebra']});
-    });
-</script>
+<link href="/js/tablecloth/tablecloth.css" rel="stylesheet" type="text/css"/>
+<script type='text/javascript' src='/js/tablecloth/tablecloth.js'></script> 
 <?php
 echo $this->headScript()->prependFile($this->baseUrl() . '/js/frontend.js');
 
@@ -50,7 +45,7 @@ $prestype['xlsx'] = "Excel Sheet";
 $prestype['ppt'] = "Powerpoint Presentation";
 $prestype['pptx'] = "Powerpoint Presentation";
 
-$pres = "<table id='tables1' class='tablesorter'><thead><tr><th>Title</th><th>File Type</th><th>Plant Name</th><th>Upload Date and Time</th></tr></thead><tbody>";
+$pres = "<table id='tables1' onmouseover='tablecloth();'><thead><tr><th>Title</th><th>File Type</th><th>Plant Name</th><th>Upload Date and Time</th><th></th></tr></thead><tbody>";
 $role = Zend_Registry::get('role');
 foreach ($this->presList as $presentation) {
     $pres = $pres . "<tr><td>";

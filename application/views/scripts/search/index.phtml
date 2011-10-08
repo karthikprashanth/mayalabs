@@ -18,32 +18,24 @@
     <form action = "/search/index" method='get' onsubmit = "return false">
         <input type="text" id="keyword" name="keyword" class='ui-corner-left' value="<?php if(isset($this->keyword))echo $this->keyword;else echo "Type Keywords to Search..."; ?>" onfocus="focusfunc()" onblur="if (this.value == '') {this.value = 'Type Keywords to Search...';}"/>
         <input type="submit" id = "subbutton" value="" onclick = 'checktext()' style='-moz-border-radius-topleft: 0px; -moz-border-radius-bottomleft: 0px; -webkit-border-bottom-left-radius: 0px; -khtml-border-top-left-radius: 0px; -khtml-border-bottom-left-radius: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;'/>
-		<div id="advancedSearch" class="hidden" style="margin-bottom: 10px;"><?php echo $this->advSearch; ?>			
-			<div id="removeAdvancedSearch" style="float:right; color: #2e4e68; padding: 5px; margin-right: 7px;" class='hidden'><a href="#" onclick="normalSearch();" style="text-decoration: none;">Hide Options</a></div>			
-		</div>		
+            <div id="advancedSearch" class="hidden" style="margin-bottom: 10px;">                
+                <div style="float:left; margin-right: 70px; margin-top: 20px;"><?php echo $this->advSearch; ?></div>
+                <div style="float:left;"><input style="margin-top: 40px; width: 70px; background-color: #2e4e68; color: #fff; border: none;" type="submit" value="Search"/></div>
+                <div style="clear:both;"></div>
+                <div id="removeAdvancedSearch" style="float:right; color: #2e4e68; padding: 5px; margin-right: 7px;" class='hidden'><a href="#" onclick="normalSearch();" style="text-decoration: none;">Hide Options</a></div>
+            </div>
 	</form>
     <div id="displayAdvancedSearch" style="float:right; color: #2e4e68; padding: 5px; margin-right: 7px;"><a href="#" onclick="advancedSearch();" style="text-decoration: none;">Advanced Search</a></div>
     <div style="clear:both;height:5px;">&nbsp;</div>
 </div>
 <div style = "display:none" id = 'nature'><?php echo $this->nature;?></div>
-
 <?php if($this->nature == "toggle") : ?>
-<!--<div id="tabs">
-<ul>
-<li><a id = "gtresults" href = '#tabs-1'>GT Data</a></li>
-<li><a id = "forumresults" href = '#tabs-2'>Forums</a></li>
-</ul>
-<div id="tabs-1"></div>
-<div id="tabs-2"></div>
-</div>-->
 <div style="clear:both;"></div>
-<div style="margin-left: 25px;">
-<?php
-$this->tabPane("searchresult", $gtdata, array('title' => 'GT Data'));
-$this->tabPane("searchresult", $forum, array('title' => 'Forums'));
-
-echo $this->tabContainer("searchresult", array());
-?>
+<div style="margin-left: 25px; font-size: 18px; margin-bottom: 40px;">
+<span style="margin-right: 10px; color: #83ac52;">Show Results From: </span>
+<a id = "gtresults" class="result-active" href = '#tabs-1'>GT Data</a>
+<a id = "forumresults" href = '#tabs-2' style="margin-left:5px;">Forums</a>
+<hr/>
 </div>
 <?php endif; ?>
 <div id = "results"></div>
@@ -64,14 +56,14 @@ echo $this->tabContainer("searchresult", array());
 		}
 		function focusfunc()
 		{
-			if(document.getElementById("keyword").value == 'Type Keywords to Search...') 
+			if(document.getElementById("keyword").value == 'Type Keywords to Search...')
 			{
 				document.getElementById("keyword").value = '';
 			}
 		}
 		function sendData()
 		{
-		
+
 			var query = document.getElementById("query").innerHTML;
 	    	var text = document.getElementById("keyword").value;
 	    	if(text == "Type Keywords to Search...")
@@ -83,7 +75,7 @@ echo $this->tabContainer("searchresult", array());
 	    		query = text;
 	    	}
 	    	var plantname = document.getElementById("plantname").value;
-	    	
+
 	    	var type = document.getElementById("type").value;
 	    	var sysname = "";
 	    	var subsysname = "";
@@ -91,15 +83,15 @@ echo $this->tabContainer("searchresult", array());
 	    	var sysobj = document.getElementById("sys"+sysid);
 	    	if(sysobj != null)
 	    	{
-	    		sysname = document.getElementById("sys"+sysid).innerHTML;	
-	    		
+	    		sysname = document.getElementById("sys"+sysid).innerHTML;
+
 	    	}
 	        var subsysid = document.getElementById("subSysId").value;
 	        var subsysobj = document.getElementById("subsys"+subsysid);
 	        if(subsysobj != null)
 	        {
 	        	subsysname = document.getElementById("subsys"+subsysid).innerHTML;
-	        	
+
 	        }
 	  		window.location = "/search/index?keyword=" + query + "&plantname=" + plantname
 	  		+"&type=" + type + "&sysname=" + sysname + "&subsysname=" + subsysname + "&nature=toggle";
@@ -108,6 +100,9 @@ echo $this->tabContainer("searchresult", array());
 			return false;
 		});
 		$("#gtresults").click( function(event) {
+                    $("#gtresults").addClass('result-active');
+                    $("#forumresults").removeClass('result-active');
+
 			var query;
 			query = document.getElementById("query").innerHTML;
 	        $.ajax({
@@ -116,28 +111,30 @@ echo $this->tabContainer("searchresult", array());
 	            success: function(msg){
 	                if (msg != ''){
 	                    $("#results").html(msg);
-	                    
+
 	                }
 	            }
 	        });
 		});
 		$("#forumresults").click( function(event) {
+                    $("#gtresults").removeClass('result-active');
+                    $("#forumresults").addClass('result-active');
 			var query;
 			query = document.getElementById("query").innerHTML;
-	    	
+
 	        $.ajax({
 	            data: "keyword=" + query + "&ll=1" + "&ul=10" + "&cat=forum",
 	            url: "/search/view",
 	            success: function(msg){
 	                if (msg != ''){
 	                    $("#results").html(msg);
-	                    
+
 	                }
 	            }
 	        });
 		});
         $(document).ready(function(){
-        	
+
         	var query;
         	query = document.getElementById("query").innerHTML;
         	if(query != "")
@@ -148,7 +145,7 @@ echo $this->tabContainer("searchresult", array());
 		            success: function(msg){
 		                if (msg != ''){
 		                    $("#results").html(msg);
-		                    
+
 		                }
 		            }
 		        });
@@ -159,7 +156,7 @@ echo $this->tabContainer("searchresult", array());
 			  		sendData();
 			  	}
 			});
-			
+
 			$("#sysId").change( function() {
 	        $.ajax({
 	            type: "POST",
@@ -168,7 +165,7 @@ echo $this->tabContainer("searchresult", array());
 	            success: function(msg){
 	                if (msg != ''){
 	                    $("#subSysId").html(msg).show();
-	                    
+
 	                }
 	            }
 	        });

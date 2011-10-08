@@ -1,10 +1,3 @@
-<script type="text/javascript" src="/js/tablesorter.js"></script>
-<link href='/css/tablesorter/style.css' rel='stylesheet' type='text/css' />
-<script type="text/javascript">
-    $(function() {
-        $( "#tables2" ).tablesorter({sortList:[[0,0],[2,1]], widgets: ['zebra']});
-    });
-</script>
 <?php
 
 if ($this->schCount == 0) {
@@ -16,19 +9,19 @@ if ($this->schCount == 0) {
     exit;
 }
 
-echo "<h3>Conference held from " . $this->eventDet['first_day'] . " to " . $this->eventDet['last_day'] . "</h3>";
-echo "<table id='tables2' class='tablesorter'>";
+echo "<h4>Conference held from " . $this->eventDet['first_day'] . " to " . $this->eventDet['last_day'] . "</h4>";
+echo "<table id='tables2' onmouseover='tablecloth();'>";
 echo "<thead><tr>";
 echo "<th>No.</th>";
-echo "<th>Date</th>";
-echo "<th>Timings</th>";
+echo "<th style='min-width: 90px;'>Date</th>";
+echo "<th style='min-width: 90px;'>Timings</th>";
 echo "<th>Description</th></tr></thead><tbody>";
 $i = 1;
 
-foreach ($this->eventList as $eList) {
+foreach ($this->eventList as $eList) {    
     echo "<tr>";
     echo "<td>" . $i . "</td>";
-    echo "<td>" . $eList['event_date'] . "</td>";
+    echo "<td>" . date("M jS, Y", strtotime($eList['event_date'])) . "</td>";
     echo "<td>" . $eList['timings'] . "</td>";
     echo "<td>" . $eList['description'] . "</td>";
     echo "</tr>";
