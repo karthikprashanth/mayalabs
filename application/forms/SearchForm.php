@@ -13,6 +13,7 @@ class Form_SearchForm extends Zend_Form {
 	    ->addFilter('StringTrim');
 
 
+
 		$this->addElements(array($searchBox));
 	}
 
@@ -53,6 +54,11 @@ class Form_SearchForm extends Zend_Form {
         ->addFilter('StripTags')
         ->addFilter('StringTrim')
          ->addValidator('NotEmpty');
+        $plant->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
 
 
@@ -63,6 +69,11 @@ class Form_SearchForm extends Zend_Form {
 	    ->addFilter('StringTrim')
 	    ->addDecorator('Htmltag',array('tag' => 'br'))
 	    ->addValidator('NotEmpty');
+            $type->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
 
 
@@ -73,6 +84,11 @@ class Form_SearchForm extends Zend_Form {
             ->addFilter('StripTags')
             ->addFilter('StringTrim')
             ->addValidator('NotEmpty');
+                $sys->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
             
        	$subsys = new Zend_Form_Element_Select('subSysId');
 		$subsys->setLabel('Search by Sub System Name')
@@ -81,6 +97,11 @@ class Form_SearchForm extends Zend_Form {
             ->addFilter('StripTags')
             ->addFilter('StringTrim')
             ->addValidator('NotEmpty');
+                $subsys->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
 		$ll = 0;
 		$ranges = array();
@@ -94,7 +115,7 @@ class Form_SearchForm extends Zend_Form {
 
 		$eohlabel = new Zend_Form_Element_Hidden('eohlabel');
 		$eohlabel->setLabel('EOH at Occurence')
-				 ->addDecorator('Htmltag', array('tag' => 'p'));
+				 ->addDecorator('Htmltag', array('tag' => 'td'));
 
 		$eohfrom = new Zend_Form_Element_Text('eohfrom');
         $eohfrom->setLabel('From')
@@ -102,6 +123,11 @@ class Form_SearchForm extends Zend_Form {
         ->addValidator('NotEmpty')
         ->addFilter('StripTags')
         ->addFilter('StringTrim');
+        $eohfrom->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
 		$eohto = new Zend_Form_Element_Text('eohto');
         $eohto->setLabel('To')
@@ -109,6 +135,11 @@ class Form_SearchForm extends Zend_Form {
         ->addValidator('NotEmpty')
         ->addFilter('StripTags')
         ->addFilter('StringTrim');
+        $eohto->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
 		$insp = array('' => 'Select an Option','Minor' => 'Minor','HGPI' => 'HGPI' , 'EHGPI' => 'EHGPI' , 'Major' => 'Major' , 'Unscheduled' => 'Unscheduled','Others' => 'Others');
 
@@ -119,8 +150,14 @@ class Form_SearchForm extends Zend_Form {
             ->addFilter('StripTags')
             ->addFilter('StringTrim')
             ->addValidator('NotEmpty');
+                $toi->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
-		$this->addElements(array($plant,$type,$sys,$subsys,$eohlabel,$eohfrom,$eohto,$toi));				
+		$this->addElements(array($plant,$type,$sys,$subsys,$eohlabel,$eohfrom,$eohto,$toi));
+                $this->setDecorators(array('FormElements', array(array('data' => 'HtmlTag'), array('tag' => 'table')), 'Form'));
 	}
 
 	public function showSubmit()
@@ -129,6 +166,10 @@ class Form_SearchForm extends Zend_Form {
 	    $submit->addDecorator('Htmltag',array('tag' => 'p'));
 	    $submit->setAttrib('id', 'submitbutton')
 	            ->setAttrib('type', 'submit');
+            $submit->setDecorators(array('ViewHelper', 'Description', 'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td',
+                    'colspan' => '2', 'align' => 'center')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
 		$this->addElements(array($submit));
 	}

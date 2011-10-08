@@ -508,7 +508,7 @@ table.clist-table tbody td {
     float: left;    
 }
 
-.hm-search input{        
+.hm-search-input{
     color: #777;
     border:solid 1px #e8e8e8;
     border-right: none;
@@ -531,6 +531,8 @@ table.clist-table tbody td {
     cursor: pointer;
     float: left;
 }
+
+.hm-search
 
 /* Search Bar */
 

@@ -1,10 +1,4 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 class Form_GTDataForm extends Zend_Form {
 
 		public function showform($gturbineid,$gtdataid,$gtdatatype)    
@@ -76,6 +70,11 @@ class Form_GTDataForm extends Zend_Form {
 	            ->addFilter('StripTags')
 	            ->addFilter('StringTrim')
 	            ->addValidator('NotEmpty');
+                        $sys->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
 	       	$subsys = new Zend_Form_Element_Select('subSysId');
 			$subsys->setLabel('Sub System Name')
@@ -84,6 +83,11 @@ class Form_GTDataForm extends Zend_Form {
 	            ->addFilter('StripTags')
 	            ->addFilter('StringTrim')
 	            ->addValidator('NotEmpty');
+                        $subsys->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
 	       	$appath = substr(APPLICATION_PATH,0,strlen(APPLICATION_PATH)-12);
 
@@ -100,6 +104,11 @@ class Form_GTDataForm extends Zend_Form {
 		    ->addValidator(Model_Validators::dateval())
 		    ->addFilter('StripTags')
 		    ->addFilter('StringTrim');
+                        $eoh->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
 			$insp = array('' => 'Select an Option','Minor' => 'Minor','HGPI' => 'HGPI' , 'EHGPI' => 'EHGPI' , 'Major' => 'Major' , 'Unscheduled' => 'Unscheduled','Others' => 'Others');
 
@@ -110,6 +119,11 @@ class Form_GTDataForm extends Zend_Form {
 	            ->addFilter('StripTags')
 	            ->addFilter('StringTrim')
 	            ->addValidator('NotEmpty');
+                        $toi->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
 			$prestitle1 = new Zend_Form_Element_Text('prestitle1');
 	        $prestitle1->setLabel('Attachment Title')
@@ -118,6 +132,11 @@ class Form_GTDataForm extends Zend_Form {
 	        ->addFilter('StripTags')
 	        ->addFilter('StringTrim')
 	        ->addValidator(Model_Validators::alnum());
+                $prestitle1->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
 	        $content1=new Zend_Form_Element_File('content1');
 	        $content1->setLabel('Upload the File')
@@ -136,6 +155,11 @@ class Form_GTDataForm extends Zend_Form {
 	        ->addFilter('StripTags')
 	        ->addFilter('StringTrim')
 	        ->addValidator(Model_Validators::alnum());
+                $prestitle2->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
 	        $content2=new Zend_Form_Element_File('content2');
 	        $content2->setLabel('Upload the File')
@@ -153,6 +177,11 @@ class Form_GTDataForm extends Zend_Form {
 	        ->addFilter('StripTags')
 	        ->addFilter('StringTrim')
 	        ->addValidator(Model_Validators::alnum());
+                $prestitle3->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
 	        $content3=new Zend_Form_Element_File('content3');
 	        $content3->setLabel('Upload the File')
@@ -170,6 +199,11 @@ class Form_GTDataForm extends Zend_Form {
 	        ->addFilter('StripTags')
 	        ->addFilter('StringTrim')
 	        ->addValidator(Model_Validators::alnum());
+                $prestitle4->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
 	        $content4=new Zend_Form_Element_File('content4');
 	        $content4->setLabel('Upload the File')
@@ -187,6 +221,11 @@ class Form_GTDataForm extends Zend_Form {
 	        ->addFilter('StripTags')
 	        ->addFilter('StringTrim')
 	        ->addValidator(Model_Validators::alnum());
+                $prestitle5->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
 	        $content5=new Zend_Form_Element_File('content5');
 	        $content5->setLabel('Upload the File')
@@ -211,7 +250,12 @@ class Form_GTDataForm extends Zend_Form {
 	                ->addMultiOptions($data)
 	                ->addDecorator('Htmltag', array('tag' => 'br'))
 	                ->addFilter('StripTags')
-	                ->addFilter('StringTrim');      
+	                ->addFilter('StringTrim');
+                $pid->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
 
 	        $gtid = new Zend_Form_Element_Hidden('gtid');
@@ -227,6 +271,11 @@ class Form_GTDataForm extends Zend_Form {
 	                ->addValidator('NotEmpty')
 	                ->addFilter('StripTags')
 	                ->addFilter('StringTrim');
+                $Title->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
 
 	        $Data = new Zend_Form_Element_Textarea('data');
@@ -235,17 +284,27 @@ class Form_GTDataForm extends Zend_Form {
 	                ->addDecorator('Htmltag', array('tag' => 'br'))
 	                ->addValidator('NotEmpty')
 	                ->addFilter('StringTrim');
+                $Data->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
 	        $submit = new Zend_Form_Element_Button('submit');
 	        $submit->addDecorator('Htmltag', array('tag' => 'p'));
 	        $submit->setAttrib('id', 'submitbutton')
 					->setAttrib('class','gt-add')
 	                ->setAttrib('type', 'submit');
+                $submit->setDecorators(array('ViewHelper', 'Description', 'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td',
+                    'colspan' => '2', 'align' => 'center')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
 
 	        $this->addElements(array($id,$gtid,$sys,$subsys,$eoh,$dof,$toi,
 	        $info2,$info,$prestitle1,$content1,$prestitle2,
 	        $content2,$del2,$prestitle3,$content3,$del3,$prestitle4,
 	        $content4,$del4,$prestitle5,$content5,$del5,$addmore,$pid, $Title, $Data, $submit));
+                $this->setDecorators(array('FormElements', array(array('data' => 'HtmlTag'), array('tag' => 'table')), 'Form'));
 
     }
 

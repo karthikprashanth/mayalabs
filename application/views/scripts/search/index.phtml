@@ -17,11 +17,11 @@
 <div class="hm-search ui-corner-all" style="margin-bottom: 20px;">
     <div style="padding: 10px; font-family:arial,helvetica,verdana,sans-serif; font-size: 20px; color: #2e4e68; background: url(../images/bulb.png) left no-repeat; padding-left: 40px;">Query the <span style="color: #3f6413">hive</span> knowledge base</div>
     <form action = "/search/index" method='get' onsubmit = "return false">
-        <input type="text" id="keyword" name="keyword" class='ui-corner-left' value="<?php if(isset($this->keyword))echo $this->keyword;else echo "Type Keywords to Search..."; ?>" onfocus="focusfunc()" onblur="if (this.value == '') {this.value = 'Type Keywords to Search...';}"/>
+        <input type="text" id="keyword" name="keyword" class='hm-search-input ui-corner-left' value="<?php if(isset($this->keyword))echo $this->keyword;else echo "Type Keywords to Search..."; ?>" onfocus="focusfunc()" onblur="if (this.value == '') {this.value = 'Type Keywords to Search...';}"/>
         <input type="submit" id = "subbutton" value="" onclick = 'checktext()' style='-moz-border-radius-topleft: 0px; -moz-border-radius-bottomleft: 0px; -webkit-border-bottom-left-radius: 0px; -khtml-border-top-left-radius: 0px; -khtml-border-bottom-left-radius: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;'/>
             <div id="advancedSearch" class="hidden" style="margin-bottom: 10px;">                
                 <div style="float:left; margin-right: 70px; margin-top: 20px;"><?php echo $this->advSearch; ?></div>
-                <div style="float:left;"><input style="margin-top: 40px; width: 70px; background-color: #2e4e68; color: #fff; border: none;" type="submit" value="Search"/></div>
+                <div style="float:left;"><input style="margin-top: 80px; width: 70px; background-color: #2e4e68; color: #fff; border: none;" type="submit" value="Search"/></div>
                 <div style="clear:both;"></div>
                 <div id="removeAdvancedSearch" style="float:right; color: #2e4e68; padding: 5px; margin-right: 7px;" class='hidden'><a href="#" onclick="normalSearch();" style="text-decoration: none;">Hide Options</a></div>
             </div>
@@ -131,12 +131,12 @@
                     $("#forumresults").addClass('result-active');
 			var query;
 			query = document.getElementById("query").innerHTML;
-<<<<<<< HEAD
 
-=======
+
+
 	    	var eoh;
         	eoh = document.getElementById("eoh").innerHTML;
->>>>>>> 89d94a928b4fc2606fa1486695b329b931588ffc
+
 	        $.ajax({
 	            data: "keyword=" + query + "&eoh=" + eoh + "&ll=1" + "&ul=10" + "&cat=forum",
 	            url: "/search/view",

@@ -18,7 +18,7 @@
 <div class="hm-search ui-corner-all" style="margin-bottom: 20px;">
     <div style="padding: 10px; font-family:arial,helvetica,verdana,sans-serif; font-size: 20px; color: #2e4e68; background: url(../images/bulb.png) left no-repeat; padding-left: 40px;">Query the <span style="color: #3f6413">hive</span> knowledge base</div>
     <form action = "/search/index" method='get' onsubmit = "return false">
-        <input type="text" id="keyword" name="keyword" class='ui-corner-left' value="<?php if(isset($this->keyword))echo $this->keyword;else echo "Type Keywords to Search..."; ?>" onfocus="focusfunc()" onblur="if (this.value == '') {this.value = 'Type Keywords to Search...';}"/>
+        <input class="hm-search-input" type="text" id="keyword" name="keyword" class='ui-corner-left' value="<?php if(isset($this->keyword))echo $this->keyword;else echo "Type Keywords to Search..."; ?>" onfocus="focusfunc()" onblur="if (this.value == '') {this.value = 'Type Keywords to Search...';}"/>
         <input type="submit" id = "subbutton" value="" onclick = 'checktext()' style='-moz-border-radius-topleft: 0px; -moz-border-radius-bottomleft: 0px; -webkit-border-bottom-left-radius: 0px; -khtml-border-top-left-radius: 0px; -khtml-border-bottom-left-radius: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;'/>
             <div id="advancedSearch" class="hidden" style="margin-bottom: 10px;">
                 <div style="float:left; margin-right: 70px; margin-top: 20px;"><?php echo $this->advSearch; ?></div>
@@ -32,8 +32,13 @@
 </div>
 <div style = "display:none" id = 'nature'><?php echo $this->nature;?></div>
 <?php if($this->nature == "toggle") : ?>
-<li><a id = "gtresults" href = '#'>GT Data</a></li><br>
-<li><a id = "forumresults" href = '#'>Forums</a></li>
+<div style="clear:both;"></div>
+<div style="margin-left: 25px; font-size: 18px; margin-bottom: 40px;">
+<span style="margin-right: 10px; color: #83ac52;">Show Results From: </span>
+<a id = "gtresults" class="result-active" href = '#tabs-1'>GT Data</a>
+<a id = "forumresults" href = '#tabs-2' style="margin-left:5px;">Forums</a>
+<hr/>
+</div>
 <?php endif; ?>
 <div id = "results"></div>
 
