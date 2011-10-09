@@ -86,7 +86,7 @@ class SearchController extends Zend_Controller_Action
 			$queryStr = $queryStr."*";
 			Zend_Search_Lucene_Analysis_Analyzer::setDefault(new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive());
 			if($eoh != "")
-  				$results = $index->find($queryStr . " AND eoh:[$from TO $to]");
+  				$results = $index->find($queryStr . " OR eoh:[$from TO $to]");
 			else 
 				$results = $index->find($queryStr);
 			
@@ -157,7 +157,7 @@ class SearchController extends Zend_Controller_Action
 				$path = $appath . DIRECTORY_SEPARATOR . "search" . DIRECTORY_SEPARATOR . "forum";
 				$forumIndex = Zend_Search_Lucene::open($path);
 				
-				$results = $forumIndex->find($query);
+				$results = $forumIndex->find($queryStr . " OR eoh:[$from TO $to]");
 				
 				$forummodel = new Model_DbTable_Forum_Data();
 				$postmodel = new Model_DbTable_Forum_Posts();

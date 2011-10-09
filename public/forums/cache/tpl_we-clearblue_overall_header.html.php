@@ -153,7 +153,7 @@
 				        </ul>
 				    </li>
 				    <li class = "active">
-				        <a class = "active" href="http://www.hiveusers.com/forums">Forums</a>
+				        <a class = "active" href="/forums">Forums</a>
 				    </li>
 				    <li>
 				        <a href="/authentication/logout">Logout</a>
@@ -222,7 +222,7 @@
 				        </ul>
 				    </li>
     <li class = "active">
-        <a href="http://www.hiveusers.com/forums">Forums</a>
+        <a href="/forums">Forums</a>
     </li>
     <li>
 
@@ -281,20 +281,13 @@
 				        </ul>
 				    </li>
     <li class = "active">
-        <a href="http://www.hiveusers.com/forums">Forums</a>
+        <a href="/forums">Forums</a>
     </li>
     <li>
         <a href="/authentication/logout">Logout</a>
     </li>
 </ul></div><?php } ?>
 		</div>
-		<div id="search-box-menu" class="search-box">
-            <img src="/images/search-form-left.png" alt="search"/>
-			<form method="get" action="/search/index">
-				<input type="text" size="15" class="search-field" name="keyword" value="Search.." onfocus="if(this.value == 'Search..') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search..';}"/>
-				<input type="submit"  value="" class="search-go" />
-            </form>
-        </div>
 	</div>
 	</div>
 	<div id="wrapper">

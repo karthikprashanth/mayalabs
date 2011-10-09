@@ -2,3 +2,21 @@
 	echo $this->form;
 	echo $this->message;
 ?>
+<script type = "text/javascript">
+	$("#data").change(function(){
+		var filename = document.getElementById("data").value;
+		var file_ext = filename.substring(filename.indexOf(".")+1);
+		file_ext = file_ext.toLowerCase();
+		if(file_ext == 'jpeg' || file_ext == 'jpg' || file_ext == 'gif' ||
+		file_ext == 'png' )
+		{
+			return;
+		}
+		else
+		{
+			alert("'" + file_ext + "' Files are not allowed");
+			document.getElementById("data").value = "";
+		}
+			
+	});
+</script>

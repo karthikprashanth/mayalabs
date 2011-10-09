@@ -99,6 +99,10 @@
 	        var eohfrom = document.getElementById("eohfrom").value;
 	        var eohto = document.getElementById("eohto").value;
 	        var eoh = eohfrom + "-" + eohto;
+	        if(eoh == "-")
+	        {
+	        	eoh = "";
+	        }
 	        toi = document.getElementById("TOI").value;
 	  		window.location = "/search/index?keyword=" + query + "&plantname=" + plantname
 	  		+"&type=" + type + "&sysname=" + sysname + "&subsysname=" + subsysname + "&toi=" + toi + "&eoh=" + eoh + "&nature=toggle";

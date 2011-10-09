@@ -1,9 +1,9 @@
 <?php
-
+$role = Zend_Registry::get('role');
 if ($this->schCount == 0) {
     echo "<center>No schedule available</center>";
 
-    if ($this->iscc) {
+    if ($this->iscc || $role == 'sa') {
         echo "<center><form method = 'post' action = '/schedule/add?id=$this->id'><input type = 'submit' class = 'gt-add' value = 'Add Schedule'></form></center>";
     }
     exit;
@@ -28,7 +28,7 @@ foreach ($this->eventList as $eList) {
     $i++;
 }
 echo "</tbody></table>";
-$role = Zend_Registry::get('role');
+
 if($role == 'sa')
 {
 	echo "<a class='a-edit ui-corner-all' href = '/schedule/edit?id=" . $this->id . "'>&nbsp;Edit Schedule</a>";
