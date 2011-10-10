@@ -60,7 +60,7 @@ class Form_ConferenceForm extends Zend_Form {
         ));
 
         $abstract = new Zend_Form_Element_Textarea('abstract');
-        $abstract->setLabel('Synopsis')
+        $abstract
                 ->setRequired(true)
                 ->setAttrib('COLS', '16')
                 ->setAttrib('ROWS', '5')

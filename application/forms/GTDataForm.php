@@ -138,21 +138,12 @@ class Form_GTDataForm extends Zend_Form {
 
         $content1 = new Zend_Form_Element_File('content1');
         $content1->setLabel('Upload the File')
-                ->setDestination($appath . '/public/uploads')
-                ->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
-            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
-            array('Label', array('tag' => 'td')),
-            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
-        ));
+                ->setDestination($appath . '/public/uploads');
 
         $addmore = new Zend_Form_Element_Button('addmore');
         $addmore->setAttrib('id', 'addmore')
                 ->setLabel("...")
-                ->setAttrib("class", "gt-add")
-                ->setDecorators(array('ViewHelper', 'Description', 'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td',
-                    'colspan' => '2', 'align' => 'center')),
-            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
-        ));
+                ->setAttrib("class", "gt-add");
 
 
 
@@ -170,22 +161,13 @@ class Form_GTDataForm extends Zend_Form {
 
         $content2 = new Zend_Form_Element_File('content2');
         $content2->setLabel('Upload the File')
-                ->setDestination($appath . '/public/uploads')
-                ->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
-            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
-            array('Label', array('tag' => 'td')),
-            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
-        ));
+                ->setDestination($appath . '/public/uploads');
 
 
         $del2 = new Zend_Form_Element_Button('del2');
         $del2->setAttrib('id', 'del2')
                 ->setLabel("...")
-                ->setAttrib("class", "gt-delete")
-                ->setDecorators(array('ViewHelper', 'Description', 'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td',
-                    'colspan' => '2', 'align' => 'center')),
-            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
-        ));
+                ->setAttrib("class", "gt-delete");
 
         $prestitle3 = new Zend_Form_Element_Text('prestitle3');
         $prestitle3->setLabel('Attachment Title')
@@ -201,22 +183,13 @@ class Form_GTDataForm extends Zend_Form {
 
         $content3 = new Zend_Form_Element_File('content3');
         $content3->setLabel('Upload the File')
-                ->setDestination($appath . '/public/uploads')
-                ->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
-            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
-            array('Label', array('tag' => 'td')),
-            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
-        ));
+                ->setDestination($appath . '/public/uploads');
 
 
         $del3 = new Zend_Form_Element_Button('del3');
         $del3->setAttrib('id', 'del3')
                 ->setLabel("...")
-                ->setAttrib("class", "gt-delete")
-                ->setDecorators(array('ViewHelper', 'Description', 'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td',
-                    'colspan' => '2', 'align' => 'center')),
-            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
-        ));
+                ->setAttrib("class", "gt-delete");
 
         $prestitle4 = new Zend_Form_Element_Text('prestitle4');
         $prestitle4->setLabel('Attachment Title')
@@ -232,22 +205,13 @@ class Form_GTDataForm extends Zend_Form {
 
         $content4 = new Zend_Form_Element_File('content4');
         $content4->setLabel('Upload the File')
-                ->setDestination($appath . '/public/uploads')
-                ->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
-            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
-            array('Label', array('tag' => 'td')),
-            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
-        ));
+                ->setDestination($appath . '/public/uploads');
 
 
         $del4 = new Zend_Form_Element_Button('del4');
         $del4->setAttrib('id', 'del4')
                 ->setLabel("...")
-                ->setAttrib("class", "gt-delete")
-                ->setDecorators(array('ViewHelper', 'Description', 'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td',
-                    'colspan' => '2', 'align' => 'center')),
-            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
-        ));
+                ->setAttrib("class", "gt-delete");
 
         $prestitle5 = new Zend_Form_Element_Text('prestitle5');
         $prestitle5->setLabel('Attachment Title')
@@ -263,21 +227,12 @@ class Form_GTDataForm extends Zend_Form {
 
         $content5 = new Zend_Form_Element_File('content5');
         $content5->setLabel('Upload the File')
-                ->setDestination($appath . '/public/uploads')
-                ->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
-            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
-            array('Label', array('tag' => 'td')),
-            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
-        ));
+                ->setDestination($appath . '/public/uploads');
 
         $del5 = new Zend_Form_Element_Button('del5');
         $del5->setAttrib('id', 'del5')
                 ->setLabel("...")
-                ->setAttrib("class", "gt-delete")
-                ->setDecorators(array('ViewHelper', 'Description', 'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td',
-                    'colspan' => '2', 'align' => 'center')),
-            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
-        ));
+                ->setAttrib("class", "gt-delete");
 
 
         $info2 = new Zend_Form_Element_Hidden('info2');
