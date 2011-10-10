@@ -1,11 +1,13 @@
 <?php
-	echo $this->form;
-	echo $this->message;
+$data = $this->form;
+$data .= $this->message;
+$this->tabPane("ConfAddPres",$data,array('title' => 'Add Conference Presentation'));
+echo $this->tabContainer("ConfAddPres",array());
 ?>
 <div id = "spinnerimage" style = "display:none">Uploading ... <img src = "/images/spinner.gif"></div>
 <script type = "text/javascript" src = "/js/file_ext_check.js"></script>
 <script type = "text/javascript">
-	$("#submitbutton").click(function() {
-		document.getElementById("spinnerimage").style.display = "block";
-	});
+    $("#submitbutton").click(function() {
+        document.getElementById("spinnerimage").style.display = "block";
+    });
 </script>

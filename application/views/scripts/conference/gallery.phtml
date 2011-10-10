@@ -1,6 +1,7 @@
 <?php
-	echo $this->form;
-	echo $this->message;
+$data = $this->form.$this->message;
+$this->tabPane("ConfGall",$data,array('title' => 'Conference Gallery'));
+echo $this->tabContainer("ConfGall",array());
 ?>
 <script type = "text/javascript">
 	$("#data").change(function(){

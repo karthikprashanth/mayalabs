@@ -1,12 +1,14 @@
 <?php
 $this->jQuery()->enable();
 echo $this->headScript()->prependFile($this->baseUrl().'/js/ajaxvalidation.js');
-echo $this->adminId;
-echo $this->form;
+$data = $this->adminId;
+$data .= $this->form;
 if($this->message == "")
-	echo $this->message;
+	$data .= $this->message;
 else 
-	echo "<div class = 'errors'>" . $this->message . "</div>";
+	$data .= "<div class = 'errors'>" . $this->message . "</div>";
+$this->tabPane("UPAdd",$data,array('title' => 'Userprofile Add'));
+echo $this->tabContainer("UPAdd",array());
 ?>
 
 <script type="text/javascript">

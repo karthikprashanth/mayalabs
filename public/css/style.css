@@ -90,6 +90,7 @@ body {
 #header-menu
 {    
     padding-top: 20px;
+    margin-left: 70px;
     float:left;
     font-weight: normal;
 }
@@ -115,7 +116,7 @@ body {
 
     position: relative;
     min-height:100%;
-    _height:100%;    
+    _height:100%;   
 }
 
 #main

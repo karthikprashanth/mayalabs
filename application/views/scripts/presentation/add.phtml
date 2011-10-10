@@ -1,16 +1,18 @@
-<?php 
-	echo $this->form;
-	if($this->message == "")
-		echo $this->message;
-	else 
-		echo "<div class = 'errors'>" . $this->message . "</div>";
+<?php
+$data = $this->form;
+if ($this->message == "")
+    $data = $this->message;
+else
+    $data = "<div class = 'errors'>" . $this->message . "</div>";
+$this->tabPane("PresAdd", $data, array('title' => 'Add Presentation'));
+echo $this->tabContainer("PresAdd", array());
 ?>
 <div id = "spinnerimage" style = "display:none">Uploading ... <img src = "/images/spinner.gif"></div>
 <script type = "text/javascript" src = "/js/file_ext_check.js"></script>
 <script type = "text/javascript">
 	
-	$("#submitbutton").click(function() {
-		document.getElementById("spinnerimage").style.display = "block";
-	});
+    $("#submitbutton").click(function() {
+        document.getElementById("spinnerimage").style.display = "block";
+    });
 	
 </script>

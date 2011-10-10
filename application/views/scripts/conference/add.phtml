@@ -1,8 +1,11 @@
 <?php
-	echo $this->form;
-	if($this->message == "")
-		echo $this->message;
-	else 
-		echo "<div class = 'errors'>" . $this->message . "</div>";
-	
+echo $this->headScript()->prependFile($this->baseUrl() . '/js/tiny_mce/tiny_mce.js');
+$data = $this->form;
+if ($this->message == "")
+    $data.= $this->message;
+else
+    $data.= "<div class = 'errors'>" . $this->message . "</div>";
+$this->tabPane("ConfAdd", $data, array('title' => 'Add Conference'));
+echo $this->tabContainer("ConfAdd", array());
 ?>
+<!-- TinyMCE --><script type="text/javascript" src='/js/tinyMCEinit.js'></script><!-- /TinyMCE -->
