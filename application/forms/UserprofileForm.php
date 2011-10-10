@@ -102,11 +102,13 @@ class Form_UserprofileForm extends Zend_Form {
     ->addValidator(Model_Validators::email())
     ->addFilter('StripTags')
     ->addFilter('StringTrim')
-    ->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
-            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
-            array('Label', array('tag' => 'td')),
-            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
-        ));
+
+      ->setDecorators(array('ViewHelper',
+           array(array('data'=>'HtmlTag'), array('tag' => 'td')),
+           array('Label', array('tag' => 'td')),
+           array('Errors', array('tag' => 'td')),
+           array(array('row'=>'HtmlTag'),array('tag'=>'tr'))
+   ));
 
 
     $submit = new Zend_Form_Element_Submit('submit');

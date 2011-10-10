@@ -72,6 +72,7 @@ class Form_GasturbineForm extends Zend_Form {
         $EOHDate = new ZendX_JQuery_Form_Element_DatePicker('EOHDate',
                         array('jQueryParams' => array('dateFormat' => 'yy-mm-dd', 'defaultDate' => '0', 'changeYear' => 'true'))
         );
+
         $EOHDate->setLabel('EOH Date (last updated)')
                 ->setRequired(true)
                 ->addDecorator('Htmltag', array('tag' => 'br'))
@@ -79,17 +80,15 @@ class Form_GasturbineForm extends Zend_Form {
                 ->addValidator(Model_Validators::dateval())
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim');
-//        $EOHDate->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
-//            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
-//            array('Label', array('tag' => 'td')),
-//            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
-//        ));
 
-//        $EOHDate->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
-//            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
-//            array('Label', array('tag' => 'td')),
-//            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
-//        ));
+        $EOHDate->setDecorators(array(
+        array('UiWidgetElement', array('tag' => '')),
+        array('Errors'),
+        array('Description', array('tag' => 'span')),
+        array('HtmlTag', array('tag' => 'td')),
+        array('Label', array('tag' => 'td', 'class' =>'element')),
+        array(array('row' => 'HtmlTag'), array('tag' => 'tr')),
+        ));
 
         $EOH = new Zend_Form_Element_Text('EOH');
         $EOH->setLabel('EOH')
@@ -104,6 +103,8 @@ class Form_GasturbineForm extends Zend_Form {
             array('Label', array('tag' => 'td')),
             array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
         ));
+
+
 
         $numStarts = new Zend_Form_Element_Text('numStarts');
         $numStarts->setLabel('Number of Starts')
@@ -185,11 +186,15 @@ class Form_GasturbineForm extends Zend_Form {
                 ->addValidator(Model_Validators::dateval())
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim');
-//        $nextMinor->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
-//            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
-//            array('Label', array('tag' => 'td')),
-//            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
-//        ));
+
+        $nextMinor->setDecorators(array(
+        array('UiWidgetElement', array('tag' => '')),
+        array('Errors'),
+        array('Description', array('tag' => 'span')),
+        array('HtmlTag', array('tag' => 'td')),
+        array('Label', array('tag' => 'td', 'class' =>'element')),
+        array(array('row' => 'HtmlTag'), array('tag' => 'tr')),
+        ));
 
         $nextMajor = new ZendX_JQuery_Form_Element_DatePicker('nextMajor',
                         array('jQueryParams' => array('dateFormat' => 'yy-mm-dd', 'defaultDate' => '0', 'changeYear' => 'true'))
@@ -201,11 +206,14 @@ class Form_GasturbineForm extends Zend_Form {
                 ->addValidator(Model_Validators::dateval())
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim');
-//        $nextMajor->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
-//            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
-//            array('Label', array('tag' => 'td')),
-//            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
-//        ));
+        $nextMajor->setDecorators(array(
+        array('UiWidgetElement', array('tag' => '')),
+        array('Errors'),
+        array('Description', array('tag' => 'span')),
+        array('HtmlTag', array('tag' => 'td')),
+        array('Label', array('tag' => 'td', 'class' =>'element')),
+        array(array('row' => 'HtmlTag'), array('tag' => 'tr')),
+        ));
 
         $submit = new Zend_Form_Element_Button('submit');
         $submit->addDecorator('Htmltag', array('tag' => 'p'));

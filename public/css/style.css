@@ -387,14 +387,15 @@ p
 /* 4 States */
 
 .errors{
-    background-color: #edcaca;
+/*    background-color: #edcaca;
     border: solid 1px #ab5454;
     color: #943838;
     padding: 8px;
     margin: 5px;
     font-weight: bold;
     font-size: 14px;
-    max-width: 540px;
+    max-width: 540px;*/
+display: inline;
 }
 
 .success{

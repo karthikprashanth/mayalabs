@@ -7,11 +7,12 @@
 <th>Username</th>
 <th>Name</th>
 <th>Role</th>
-<?php if($role == 'sa') : ?>
-<th></th>
-<th></th>
-<?php endif; ?>
-<th></th>
+<?php if($role == 'sa'){
+echo "<th></th><th></th><th></th>";
+} else{
+  echo "<th></th>";
+}
+?>
 </tr>
 </thead>
 <tbody>
@@ -20,16 +21,15 @@
 <td><?php echo $this->escape($user['username']);?></td>
 <td><?php echo $this->escape($user['firstName']).' '.$this->escape($user['lastName']); ?></td>
 <td><?php echo $this->escape($user['role']);?></td>
-<td>
 
+<?php if($user['role'] == 'sa') : ?>
+<td>
 <form action="<?php echo $this->url(array('action'=>'deleteacc')); ?>" method="post">
 <input type="hidden" name="id" value="<?php echo $this->escape($user['id']);?>" />
-<?php if($user['role'] == 'sa') : ?>
-<input class='gt-delete' type="submit" name="del" value="Delete"	/>
-<?php endif; ?>
+<input class='gt-delete' type="submit" name="del" value="Delete"/>
 </form>
-
 </td>
+<?php endif; ?>
 <td>
 <form action= "/administration/resetpassword?source=adminlist" method="post">
 <input type="hidden" name="id" value="<?php echo $this->escape($user['id']);?>" />

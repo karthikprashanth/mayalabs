@@ -403,6 +403,11 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $this->addSubForm($partPlant1, 'partPlant1');
         $this->addSubForm($partPlant2, 'partPlant2');
         $this->addSubForm($partPlant3, 'partPlant3');
+
+//        $this->setDecorators(array('FormElements', array(array('data' => 'HtmlTag'), array('tag' => 'table')), 'partPlant1'));
+//        $this->setDecorators(array('FormElements', array(array('data' => 'HtmlTag'), array('tag' => 'table')), 'partPlant2'));
+//        $this->setDecorators(array('FormElements', array(array('data' => 'HtmlTag'), array('tag' => 'table')), 'partPlant3'));
+
     }
 
 }
