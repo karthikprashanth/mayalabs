@@ -15,7 +15,11 @@
 				$indexModel = new Model_SearchIndex();
 				foreach($posts as $post)
 				{
-					$indexModel->updateIndex("forum",$post['post_id']);
+					if($post['post_id'] != 0)
+						$indexModel->updateIndex("forum",$post['post_id'],"newpost");
+					else
+						$indexModel->updateIndex("forum",$post['topic_id'],"newtopic");
+					
 				}
 				$searchIndexModel->delete();
 			}

@@ -83,7 +83,17 @@ class SearchController extends Zend_Controller_Action
 			$appath = substr(APPLICATION_PATH,0,strlen(APPLICATION_PATH)-12);
 			$path = $appath . DIRECTORY_SEPARATOR . "search" . DIRECTORY_SEPARATOR . "gtdata";
 			$index = Zend_Search_Lucene::open($path);
-			$queryStr = $queryStr."*";
+			$qarray = explode(" ",$queryStr);
+			$valid = true;
+			foreach($qarray as $q)
+			{
+				if(strlen($q) <= 2)
+				{
+					$valid = false;
+				}
+			}
+			if($valid)
+				$queryStr = $queryStr . "*";
 			Zend_Search_Lucene_Analysis_Analyzer::setDefault(new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive());
 			if($eoh != "")
   				$results = $index->find($queryStr . " OR eoh:[$from TO $to]");
@@ -118,7 +128,10 @@ class SearchController extends Zend_Controller_Action
 					$gtdataid = $data[$count]['id'];
 					
 					$gtdata = $gtdatamodel->getData($gtdataid);
-					
+					if(!count($gtdata))
+					{
+						continue;
+					}
 					$user = $umodel->getUser($gtdata['userupdate']);
 					$uplant = $plantmodel->getPlant($user['plantId']);
 					$uplantname = $uplant['plantName'];
@@ -166,6 +179,7 @@ class SearchController extends Zend_Controller_Action
 				$plantmodel = new Model_DbTable_Plant();
 				
 				$i=1;
+				$tc=0;
 				foreach($results as $result)
 				{
 						
@@ -177,6 +191,12 @@ class SearchController extends Zend_Controller_Action
 					$fdata[$count]['post_id'] = $result->post_id;
 					$pid = $fdata[$count]['post_id'];
 					$post = $postmodel->getPost($pid);
+					if(!count($post))
+					{
+						$i--;
+						continue;
+						
+					}
 					$fid = $post['forum_id'];
 					$tid = $post['topic_id'];
 					$uid = $post['poster_id'];
@@ -189,7 +209,7 @@ class SearchController extends Zend_Controller_Action
 					$forum = $forummodel->getForum($fid);
 					$forumname = $forum['forum_name'];
 					
-					$fdata[$count]['url'] = "/forums/viewtopic.php?f=" .$fid ."&t=".$pid;
+					$fdata[$count]['url'] = "/forums/viewtopic.php?f=" .$fid ."&t=".$tid."&p=".$pid."#p".$pid;
 					$fdata[$count]['post_id'] = $pid;
 					$fdata[$count]['topic_id'] = $tid;
 					$fdata[$count]['forum_id'] = $fid;
@@ -199,7 +219,7 @@ class SearchController extends Zend_Controller_Action
 					$fdata[$count]['topicname'] = $topicname;
 					$fdata[$count]['forumname'] = $forumname;
 					$fdata[$count]['userplantname'] = $uplantname;
-					
+					$fdata[$count]['lucene_id'] = $result->id;
 								
 					$count++;
 					

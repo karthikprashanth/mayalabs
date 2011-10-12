@@ -261,6 +261,11 @@ class ConferenceController extends Zend_Controller_Action
 	
 	        $plantDet = new Model_DbTable_Plant();
 	        $this->view->plantDet = $plantDet;
+			
+			$uid = Zend_Auth::getInstance()->getStorage()->read()->id;
+			$uModel = new Model_DbTable_User();
+			$iscc = $uModel->is_confchair($uid);
+    		$this->view->iscc = $iscc;
         }
         catch(Exception $e){
             echo $e;

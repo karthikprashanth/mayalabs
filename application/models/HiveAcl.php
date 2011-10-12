@@ -60,7 +60,6 @@ class Model_HiveAcl extends Zend_Acl {
         
 
         $this->add(new Zend_Acl_Resource('presentation'));
-        
 
         $this->add(new Zend_Acl_Resource('advertisement'));
         $this->add(new Zend_Acl_Resource('advertisement:add'),'advertisement');
@@ -105,7 +104,6 @@ class Model_HiveAcl extends Zend_Acl {
 		$this->allow('guest','index');
 		$this->allow('guest','error');
 		$this->allow('guest','authentication',array('login','forgotpassword'));
-
 		
 //		access privilages for user
 		

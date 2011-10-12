@@ -59,6 +59,13 @@ class Form_ConferenceForm extends Zend_Form {
             array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
         ));
 
+		$ablabel = new Zend_Form_Element_Hidden('ablabel');
+		$ablabel->setLabel('Abstract');
+		$ablabel->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
+            'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
+            array('Label', array('tag' => 'td')),
+            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+        ));
         $abstract = new Zend_Form_Element_Textarea('abstract');
         $abstract
                 ->setRequired(true)
@@ -83,7 +90,7 @@ class Form_ConferenceForm extends Zend_Form {
             array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
         ));
 
-        $this->addElements(array($place, $year, $host, $abstract, $submit));
+        $this->addElements(array($place, $year, $host, $ablabel,$abstract, $submit));
         $this->setDecorators(array('FormElements', array(array('data' => 'HtmlTag'), array('tag' => 'table')), 'Form'));
     }
 

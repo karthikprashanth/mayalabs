@@ -1,9 +1,9 @@
 <?php
-$data = $this->form;
+$data .= $this->form;
 if ($this->message == "")
-    $data = $this->message;
+    $data .= $this->message;
 else
-    $data = "<div class = 'errors'>" . $this->message . "</div>";
+    $data .= "<div class = 'errors'>" . $this->message . "</div>";
 $this->tabPane("PresAdd", $data, array('title' => 'Add Presentation'));
 echo $this->tabContainer("PresAdd", array());
 ?>

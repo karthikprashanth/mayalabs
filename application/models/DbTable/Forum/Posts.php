@@ -6,6 +6,11 @@
 		public function getPost($id)
 		{	
 			$row = $this->fetchRow('post_id = '.$id);
+			if(!$row)
+			{
+				$row = array();
+				return $row;
+			}
 			return $row->toArray();
 			
 		}

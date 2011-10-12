@@ -5,7 +5,7 @@ class Plugin_NotificationLayout extends Zend_Controller_Plugin_Abstract  {
     protected $_view;
     public function  preDispatch(Zend_Controller_Request_Abstract $request) {
         parent::preDispatch($request);
-        echo "hey";
+        
 
     }
     public function  dispatchLoopStartup(Zend_Controller_Request_Abstract $request) {

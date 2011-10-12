@@ -8,7 +8,8 @@ class Model_DbTable_Gtdata extends Zend_Db_Table_Abstract {
         $id = (int) $id;
         $row = $this->fetchRow('id = ' . $id);
         if (!$row) {
-            throw new Exception("Could not find row $pid");
+            $row = array();
+			return $row;
         }
         return $row->toArray();
     }

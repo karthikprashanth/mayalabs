@@ -13,8 +13,27 @@ $("#content4").change(function(){
 $("#content5").change(function(){
 	checkExt("content5");
 });
-
-function checkExt(content)
+$("#GTData").submit(function(){
+	var filename;
+	var prestitle;
+	var i=1;
+	for(i=1;i<=5;i++)
+	{
+		filename = document.getElementById("content"+i).value;
+		prestitle = document.getElementById("prestitle"+i).value;
+		if(prestitle != "" && filename == "")
+		{
+			alert("You have not uploaded a file for '" + prestitle + "'");
+			return false;
+		}
+		if(filename != "" && prestitle == "")
+		{
+			alert("You have not given a title for '" + filename + "'");
+			return false;
+		}
+	}
+});
+function checkExt(content,title)
 {
 	var filename = document.getElementById(content).value;
 	var file_ext = filename.substring(filename.indexOf(".")+1);

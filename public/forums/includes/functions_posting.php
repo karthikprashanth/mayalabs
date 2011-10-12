@@ -1712,6 +1712,7 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
             break;
     }
 	require_once($_SERVER['DOCUMENT_ROOT'].'/mailer/class.phpmailer.php');
+	//setup mailer class
 	$mail = new PHPMailer();
 	$mail->IsSMTP();
 	$mail->Subject = "Forum Notifications";
@@ -1733,18 +1734,24 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
                     'topic_id' => $data['topic_id'])
         );
 
-		//setup mailer class
-		
-		
-
-		
         //add hive notifications here
-
+		
+		$topicid = $data['topic_id'];
+		$sql = "SELECT * FROM forum_posts WHERE topic_id = " . $topicid;
+		$result = $db->sql_query($sql);		
+		$hrow = $db->sql_fetchrow($result);
+		$insdata = array(
+			'topic_id' => $topicid,
+			'forum_id' => $data['forum_id'],
+			'poster_id' => $user->data['user_id']
+		);
+		$sql = "INSERT INTO search_post_index " . $db->sql_build_array('INSERT',$insdata);
+		$r = $db->sql_query($sql);
+		
         $catId = $data['topic_id'];
         $edit = 1;
         $userupdate = (int) $user->data['user_id'];
         $category = "forum_topic";
-
         $sql = "INSERT INTO notification(category,catid,userupdate,edit) values('" . $category . "'," . $catId . "," . $userupdate . "," . $edit . ")";
         $db->sql_query($sql);
 
@@ -1814,7 +1821,7 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
             );
             $isReply = 1;
         }
-
+		
         $sql = 'INSERT INTO ' . POSTS_TABLE . ' ' . $db->sql_build_array('INSERT', $sql_data[POSTS_TABLE]['sql']);
         $db->sql_query($sql);
         $data['post_id'] = $db->sql_nextid();
@@ -1824,7 +1831,15 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
 		$result = $db->sql_query($sql);
 		while($post = $db->sql_fetch_assoc($result))
 		{
-			$sql = "INSERT INTO search_post_index(post_id,topic_id,forum_id,poster_id,post_subject,post_text) VALUES(" . $post['post_id'] . "," . $topicid . "," . $post['forum_id'] . "," . $user->data['user_id'] . ",'" . $post['post_subject'] . "','" . $post['post_text'] . "')";
+			$insdata = array(
+				'post_id' => $post['post_id'],
+				'topic_id' => $topicid,
+				'forum_id' => $post['forum_id'],
+				'poster_id' => $user->data['user_id'],
+				'post_subject' => $post['post_subject'],
+				'post_text' => $post['post_text']
+			);
+			$sql = "INSERT INTO search_post_index " . $db->sql_build_array('INSERT',$insdata);
 			$r = $db->sql_query($sql);
 		}
         if ($post_mode == 'post') {
@@ -1912,7 +1927,15 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
 			$postDet = $db->sql_fetchrow($result);
 			$postSub = $postDet['post_subject'];
 			$postText = $postDet['post_text'];
-            $sql = "INSERT INTO search_post_index(post_id,topic_id,forum_id,poster_id,post_subject,post_text) VALUES(" . $catId . "," . $topicId . "," . $forumId . "," . $user->data['user_id'] . ",'" . $postSub . "','" . $postText . "')";
+			$insdata = array(
+				'post_id' => $catId,
+				'topic_id' => $topicid,
+				'forum_id' => $forumId,
+				'poster_id' => $user->data['user_id'],
+				'post_subject' => $postSub,
+				'post_text' => $postText
+			);
+            $sql = "INSERT INTO search_post_index" . $db->sql_build_array('INSERT',$insdata);
 			$db->sql_query($sql);
 			
        	}

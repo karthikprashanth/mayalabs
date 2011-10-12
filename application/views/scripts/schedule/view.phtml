@@ -29,7 +29,7 @@ foreach ($this->eventList as $eList) {
 }
 echo "</tbody></table>";
 
-if($role == 'sa')
+if($role == 'sa' || $this->iscc)
 {
 	echo "<a class='a-edit ui-corner-all' href = '/schedule/edit?id=" . $this->id . "'>&nbsp;Edit Schedule</a>";
 	echo "<a class='a-delete ui-corner-all' href = '/schedule/delete?id=" . $this->id . "'>&nbsp;Delete Schedule</a>";

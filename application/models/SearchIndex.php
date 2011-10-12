@@ -1,8 +1,9 @@
 <?php
 	class Model_SearchIndex
 	{
-		public function updateIndex($type,$id)
+		public function updateIndex($type,$id,$category = "")
 		{
+			
 			$appath = substr(APPLICATION_PATH,0,strlen(APPLICATION_PATH)-12);
 			$path = $appath . DIRECTORY_SEPARATOR . "search" . DIRECTORY_SEPARATOR . $type;
 			$index = Zend_Search_Lucene::open($path);
@@ -35,9 +36,16 @@
 			else if($type == "forum")
 			{
 				$forumModel = new Model_DbTable_Forum_Posts();
-				$list = $forumModel->getPost($id);
-				$doc = new Zend_Search_Lucene_Document();
 				$topicmodel = new Model_DbTable_Forum_Topics();
+				if($category == "newtopic")
+				{
+					$temp_topic = $forumModel->fetchRow("topic_id = " . $id);
+					$id = $temp_topic['post_id'];
+				}
+				$list = $forumModel->getPost($id);
+				
+				$doc = new Zend_Search_Lucene_Document();
+				
 				$topic = $topicmodel->getTopic($list['topic_id']);
 				$topicname = $topic['topic_title'];
 				$forummodel = new Model_DbTable_Forum_Data();
@@ -49,7 +57,7 @@
 				$plantmodel = new Model_DbTable_Plant();
 				$plant = $plantmodel->getPlant($poster['plantId']);
 				$uplantname = $plant['plantName'];
-			
+				
 				$doc->addField(Zend_Search_Lucene_Field::UnIndexed('post_id',$list['post_id']));
 				
 				$doc->addField(Zend_Search_Lucene_Field::UnStored('post_subject',$list['post_subject']));
@@ -58,7 +66,6 @@
 				$doc->addField(Zend_Search_Lucene_Field::UnStored('forumname',$forumname));
 				
 				$doc->addField(Zend_Search_Lucene_Field::UnStored('userplantname',$uplantname));
-				$index->addDocument($doc);
 			}
 			$index->addDocument($doc);  
 			$index->commit();  

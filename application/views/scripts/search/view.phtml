@@ -183,6 +183,10 @@ if($this->fgr != 0) :
             $postModel = new Model_DbTable_Forum_Posts();
             $uModel = new Model_DbTable_Userprofile();
             foreach ($this->forumData as $fdata) :
+				if($fdata['topic_id'] == NULL)
+				{
+					continue;
+				}
                 $topic = $topicModel->getTopic($fdata['topic_id']);
                 $post = $postModel->getPost($fdata['post_id']);
                 $user = $uModel->getUser($fdata['poster_id']);
@@ -190,15 +194,13 @@ if($this->fgr != 0) :
 				$uplant = $pmodel->getPlant($user['plantId']);
 				$uplantname = $uplant['plantName'];
 ?>		
-		
-
 
 				<div class = 'tendivf search-result' id = 'tengroupf<?php echo $i; ?>' onmouseover="glow(this,'f0f7ec'); this.style.borderLeft='solid 2px #2e4e68';" onmouseout="unglow(this); this.style.borderLeft='none';">
         		<b><div class='search-result-details'>
-				<div class='search-result-ss'><?php echo "<a href = '" . $fdata['url'] . "'>" . $fdata['post_subject'] . "</a>"; ?></div>
-        		<div class='search-result-gt'>Topic : <?php echo $fdata['topicname']; ?></div>
-        		<div class='search-result-plant'>Subject : <?php echo $fdata['post_subject']; ?></div></div></b>
-        		<div class='search-result-data'><?php echo $fdata['post_text']; ?></div>
+				<div class='search-result-ss'><?php echo "<a href = '" . $fdata['url'] . "'>" . Model_Functions::highlightResults($this->queryStr,$fdata['post_subject']) . "</a>"; ?></div>
+        		<div class='search-result-gt'>Topic : <?php echo Model_Functions::highlightResults($this->queryStr,$fdata['topicname']); ?></div>
+        		<div class='search-result-plant'>Subject : <?php echo Model_Functions::highlightResults($this->queryStr,$fdata['post_subject']); ?></div></div></b>
+        		<div class='search-result-data'><?php echo Model_Functions::highlightResults($this->queryStr,$fdata['post_text']); ?></div>
                 <div class='search-result-updatedby'><i>Posted by <?php echo "<a href = '/userprofile/view?id=" . $user['id'] . "'>" . $username . "</a> - <a href = '/plant/view?id=" . $user['plantId'] . "'>" . $fdata['userplantname'] . "</a> "; ?></i></div>
                 </div>
              
@@ -206,7 +208,7 @@ if($this->fgr != 0) :
                 endforeach;
 				
 					
-                if (!count($this->forumData) && !count($this->searchData)) {
+                if ($this->fgr == 0 && $this->tgr == 0) {
                     echo "<center><i>No results to display</i></center>";
                 }
         ?>		

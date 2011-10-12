@@ -30,7 +30,7 @@ foreach ($this->GTData as $gasturbines) {
     } else if ($fcount == 1) {
         $finding = $gtdatamodel->fetchRow("type = 'finding' AND gtid = " . $gasturbines['GTId']);
         $fid = $finding['id'];
-        $fline = "<a href = '/findings/view?id=$fid' style='color: #2e4e68;'>1 Finding</a>";
+        $fline = "<a href = '/gasturbine/view?id=" . $gasturbines['GTId'] . "#ui-tabs-2' style='color: #2e4e68;'>1 Finding</a>";
     } else {
         $fline = "<a href = '/gasturbine/view?id=" . $gasturbines['GTId'] . "#ui-tabs-2' style='color: #2e4e68;'>" . $fcount . " Findings</a>";
     }
@@ -39,7 +39,7 @@ foreach ($this->GTData as $gasturbines) {
     } else if ($ucount == 1) {
         $upgrade = $gtdatamodel->fetchRow("type = 'upgrade' AND gtid = " . $gasturbines['GTId']);
         $uid = $upgrade['id'];
-        $uline = "<a href = '/upgrades/view?id=$uid' style='color: #2e4e68;'>1 Upgrade</a>";
+        $uline = "<a href = '/gasturbine/view?id=" . $gasturbines['GTId'] . "#ui-tabs-3' style='color: #2e4e68;'>1 Upgrade</a>";
     } else {
         $uline = "<a href = '/gasturbine/view?id=" . $gasturbines['GTId'] . "#ui-tabs-3' style='color: #2e4e68;'>" . $ucount . " Upgrades</a>";
     }
@@ -48,9 +48,9 @@ foreach ($this->GTData as $gasturbines) {
     } else if ($lcount == 1) {
         $lte = $gtdatamodel->fetchRow("type = 'lte' AND gtid = " . $gasturbines['GTId']);
         $lid = $lte['id'];
-        $lline = "<a href = '/upgrades/view?id=$lid' style='color: #2e4e68;'>1 LTE</a>";
+        $lline = "<a href = '/gasturbine/view?id=" . $gasturbines['GTId'] . "#ui-tabs-4' style='color: #2e4e68;'>1 LTE</a>";
     } else {
-        $lline = "<a href = '/upgrades/view?id=$lid' style='color: #2e4e68;'>" . $lcount . " LTEs</a>";
+        $lline = "<a href = '/gasturbine/view?id=" . $gasturbines['GTId'] . "#ui-tabs-4' style='color: #2e4e68;'>" . $lcount . " LTEs</a>";
     }
     $plant = $pmodel->getPlant($gasturbines['plantId']);
     $pname = $plant['plantName'];

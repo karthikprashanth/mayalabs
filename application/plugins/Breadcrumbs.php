@@ -639,8 +639,8 @@ class Plugin_Breadcrumbs extends Zend_Controller_Plugin_Abstract {
                     $breadcontainer->findOneBy('codename', 'gtlist')->addPage($page);
                 }
             }
-        } else if ($controller == 'findings' || $controller == 'upgrades' || $controller == 'lte'  || ($controller == 'presentation' && $action != 'view') && $action != 'list') {
-            if ($action == 'list') {
+        } else if ($controller == 'findings' || $controller == 'upgrades' || $controller == 'lte'  || ($controller == 'presentation' && $action != 'view' && $action != 'delete') && $action != 'list') {
+            if ($action == 'list' || $action == 'delete') {
                 return;
             }
             if ($controller == 'findings') {

@@ -24,12 +24,15 @@ class Plugin_EditPermission extends Zend_Controller_Plugin_Abstract {
 		}
         $controller = $request->getControllerName();
         $id = $request->getParam('id');
-
+		if(!in_array($controller,array("gasturbine","plant","findings","findings","upgrades","lte")))
+		{
+			return;
+		}
         $up = new Model_DbTable_Userprofile();
         $up = $up->getUser(Zend_Auth::getInstance()->getStorage()->read()->id);
         $pid = $up['plantId'];
-
         if ($controller == 'gasturbine') {
+        	
             $gt = new Model_DbTable_Gasturbine();
             $gt = $gt->getGTP($pid);
             foreach ($gt as $temp) {
@@ -75,8 +78,8 @@ class Plugin_EditPermission extends Zend_Controller_Plugin_Abstract {
         }
 
         if(!$valid){
-            $request->setControllerName('dashboard');
-            $request->setActionName('index');
+            //$request->setControllerName('dashboard');
+            //$request->setActionName('index');
         }            
     }
 }

@@ -50,8 +50,7 @@ $username = $user['firstName'] . " " . $user['lastName'] . " - " . $user['plantN
 <td><?php echo $username;?></td>
 <td><?php echo $this->escape($upgrade['updatedate']); ?></td>
 
-<td><a href="/upgrades/edit?id=<?php echo $upgrade['id']; ?>">Edit</a>
-</td>
+
 <?php
 	
     $valid = false;
@@ -64,6 +63,8 @@ $username = $user['firstName'] . " " . $user['lastName'] . " - " . $user['plantN
     $role = Zend_Registry::get('role');
     if($valid || $role == 'sa') {
 ?>
+<td><a href="/upgrades/edit?id=<?php echo $upgrade['id']; ?>">Edit</a>
+</td>
 <td>
 <form action="<?php echo $this->url(array('action'=>'delete')); ?>" method="post">
 <input type="hidden" name="id" value="<?php echo $this->escape($upgrade['id']);?>" />

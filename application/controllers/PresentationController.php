@@ -173,7 +173,6 @@ class PresentationController extends Zend_Controller_Action
 		if($this->getRequest()->isPost())
 		{
 			$id = $this->getRequest()->getPost('id');
-			echo $id."<br>";
 			$gtdatamodel = new Model_DbTable_Gtdata();
 			$gtdata = $gtdatamodel->fetchAll("presentationId like '%" . $id . "%'");
 			foreach($gtdata as $d)

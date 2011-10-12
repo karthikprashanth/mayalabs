@@ -23,7 +23,7 @@ class Model_DbTable_Notification extends Zend_Db_Table_Abstract {
 			$ul = 9;
 		}
         $dbAdapter = Zend_Db_Table_Abstract::getDefaultAdapter();
-        $stmt = $dbAdapter->query("SELECT * FROM notification ORDER BY timeupdate DESC LIMIT 0," . $ul);
+        $stmt = $dbAdapter->query("SELECT * FROM notification WHERE category != 'gasturbine' AND NOT(category = 'plant' AND edit = 0) ORDER BY timeupdate DESC LIMIT 0," . $ul);
 		
         $row = $stmt->fetchAll();
         return $row;

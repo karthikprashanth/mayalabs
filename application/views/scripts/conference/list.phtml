@@ -57,7 +57,7 @@ foreach ($this->presList as $presentation) {
     $pres = $pres . "</td><td>";
     $pres = $pres . $this->escape($presentation['uploadTime']);
     $pres = $pres . "</td>";
-    if($role == 'sa')
+    if($role == 'sa' || $this->iscc)
     {
     	$pres = $pres . "<td><form action = '/conference/delpres' method = 'post'><input type = 'hidden' name = 'presid' value = '" . $presentation['presentationId'] . "'><input type = 'submit' value = '' class = 'gt-delete'></form></td>";
     }
