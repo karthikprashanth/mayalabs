@@ -67,7 +67,10 @@ if($this->tgr != 0) :?>
         <?php
         	
         	$data['data'] = strip_tags($data['data']);
-            
+            if($data['gtid'] == 0)
+			{
+				continue;
+			}
             $gt = $gtmodel->getGT($data['gtid']);
             $plant = $pmodel->getPlant($gt['plantId']);
 			

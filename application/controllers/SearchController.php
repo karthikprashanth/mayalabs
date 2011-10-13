@@ -130,6 +130,7 @@ class SearchController extends Zend_Controller_Action
 					$gtdata = $gtdatamodel->getData($gtdataid);
 					if(!count($gtdata))
 					{
+						$i--;
 						continue;
 					}
 					$user = $umodel->getUser($gtdata['userupdate']);
