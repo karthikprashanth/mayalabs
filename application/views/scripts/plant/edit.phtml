@@ -4,10 +4,12 @@ echo $this->headScript()->prependFile($this->baseUrl().'/js/ajaxvalidation.js');
 echo $this->adminId;
 echo $this->form;
 $content = array_merge($this->form->partPlant1->getValues(), $this->form->partPlant2->getValues(), $this->form->partPlant3->getValues());
+$uid = Zend_Auth::getInstance()->getStorage()->read()->id;
+echo "<a href = '/userprofile/view?id=$uid'>&lt;&lt; Back</a>";
 ?>
 
 	<div style = 'display:none' id = 'plantId'><?php echo $this->plantId; ?></div>
-	
+
 
 <div id = 'sample-div'></div>
 <script type="text/javascript">
