@@ -7,14 +7,10 @@ foreach ($this->schlist as $sch) {
             "&schid=" . $sch['sch_id'] . "'>Delete Event</a><br><br>";
     $i++;
 }
-if($i!=1)
-{
+
 	$data .= "<form action = '/schedule/delsch?id=" . $this->schid . "' method = 'post'>
 		<input class = 'gt-delete' type = 'submit' value = 'Delete Full Schedule'></form>";
-}
-else {
-	$data = "<center>No schedule exists</center>";
-}
+
 $this->tabPane("DelSch", $data, array('title' => 'Delete Schedule'));
 echo $this->tabContainer("DelSch", array());
 ?>

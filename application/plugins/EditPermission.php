@@ -51,7 +51,7 @@ class Plugin_EditPermission extends Zend_Controller_Plugin_Abstract {
 		{
 			return;
 		}
-		if($action != 'view' && $action != 'delete')
+		if($action != 'edit' && $action != 'delete')
 		{
 			return;
 		}
