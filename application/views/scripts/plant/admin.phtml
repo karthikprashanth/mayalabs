@@ -3,7 +3,7 @@
 <?php
 try {
     $this->jQuery()->enable();
-	$currentgitcommit = Zend_Registry::get('currentgitcommit');
+	//$currentgitcommit = Zend_Registry::get('currentgitcommit');
 	//echo "Current GIT Commit Name - '" . $currentgitcommit . "'";
     echo $this->headScript()->prependFile($this->baseUrl().'/js/frontend.js');
     $i=0;
