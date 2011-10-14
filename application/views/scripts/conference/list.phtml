@@ -10,7 +10,8 @@ $synopsis = "<center>" . $conf['abstract'] . "</center>";
 
 
 $i = 0;
-$gallery = $gallery . "<a href = '/conference/gallery?id=".$conf['cId']."'>Add a new photo</a><br><br>";
+if($role == "sa" || $this->iscc)
+	$gallery = $gallery . "<a href = '/conference/gallery?id=".$conf['cId']."'>Add a new photo</a><br><br>";
 $tag[] = array();
 $role = Zend_Registry::get("role");
 foreach ($this->confGallery as $photos) {
@@ -21,7 +22,7 @@ foreach ($this->confGallery as $photos) {
     if ($i % 3 == 0 && $i != 0) {
         $gallery = $gallery . "<br><br>";
     }
-	if($role == "sa")
+	if($role == "sa" || $this->iscc)
 	{
 		$gallery .= "<a href = '/conference/delphoto?id=".$photos['photoId'] ."' class = 'gt-delete' method = 'post'>   &nbsp;&nbsp;&nbsp;</a>";
 		 
@@ -65,11 +66,13 @@ foreach ($this->presList as $presentation) {
     $i++;
 }
 $pres = $pres . "</tbody></table>";
-$pres = $pres . "<br><br><form action = '" . $this->baseUrl . "/conference/addpresentation?id=".$this->id."' method = 'post'><input type = 'submit' class = 'gt-add' name = 'add' value = 'Add New Attachment'></form></center>";
+if($role == 'sa' || $this->iscc)
+	$pres = $pres . "<br><br><form action = '" . $this->baseUrl . "/conference/addpresentation?id=".$this->id."' method = 'post'><input type = 'submit' class = 'gt-add' name = 'add' value = 'Add New Attachment'></form></center>";
 if ($i == 0) {
     $pres = NULL;
     $pres = $pres . "<center>No presentations available";
-    $pres = $pres . "<br><br><form action = '" . $this->baseUrl . "/conference/addpresentation?id=".$this->id."' method = 'post'><input class='gt-add' type = 'submit' name = 'add' value = 'Add New Attachment'></form></center>";
+	if($role == 'sa' || $this->iscc)
+    	$pres = $pres . "<br><br><form action = '" . $this->baseUrl . "/conference/addpresentation?id=".$this->id."' method = 'post'><input class='gt-add' type = 'submit' name = 'add' value = 'Add New Attachment'></form></center>";
 }
 $this->tabPane("confdata", $synopsis, array('title' => 'Synopsis'));
 $this->tabPane("confdata", $empty, array('title' => 'Schedule', 'contentUrl' => "/schedule/view?id=$this->id"));
