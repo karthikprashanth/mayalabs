@@ -13,8 +13,7 @@ class Form_ConfPresentationForm extends Zend_Form{
                 ->addDecorator('Htmltag',array('tag' => 'br'))
                 ->addValidator('NotEmpty')
                 ->addFilter('StripTags')
-                ->addFilter('StringTrim')
-                ->addValidator(Model_Validators::alnum());
+                ->addFilter('StringTrim');
                 
                 $plantModel = new Model_DbTable_Plant();
                 $plantList = $plantModel->fetchAll();

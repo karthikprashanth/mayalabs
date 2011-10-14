@@ -15,6 +15,35 @@ else
 		$pres = $presmodel->getPresentation($pres_array[$i]);
 		$existPresList .= "<div id = 'presdiv" . $pres_array[$i] . "'><a href = '/presentation/view?id=" . $pres_array[$i] . "'>" . $pres['title'] . "</a>";
 		$gid = $this->gtdata['id'];
+		$filetype = $pres['filetype'];
+		$h = 25;
+		$w = 25;
+		 if($filetype == 'doc' || $filetype == 'docx')
+		 {
+		 	$filename = "images/word.png";
+		 }
+		 else if($filetype == 'xls' || $filetype == 'xlsx')
+		{
+			$filename = "images/excel.png";
+		}
+		else if($filetype == 'ppt' || $filetype == 'pptx')
+		{
+			$filename = "images/ppt.png";
+		}
+		else if($filetype == 'pdf')
+		{
+			$filename = "images/pdf.png";
+		}
+		 else {
+		 	$h = 50;
+		 	$w = 50;
+			$rn = rand(0,999999);
+		 	$filename = "random/thnail" . $rn;
+			$data = $pres['content'];
+			file_put_contents($filename,$data);
+		 }
+		 $existPresList .= "<img src = '/".$filename."' height = $h width = $w>";
+		$existPresList .= "<div style = 'display:none' id = 'ptitle" . $pres_array[$i] . "'>" . $pres['title'] . "</div>";
 		$existPresList .= "<input type = 'button' onClick = 'unlink($pres_array[$i],$gid)' class = 'gt-delete' value = ''></form></div>";
 	}
 }

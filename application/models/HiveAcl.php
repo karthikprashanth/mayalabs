@@ -83,8 +83,10 @@ class Model_HiveAcl extends Zend_Acl {
 		
         $this->add(new Zend_Acl_Resource('schedule'));
 		$this->add(new Zend_Acl_Resource('schedule:add'),'schedule');
-		$this->add(new Zend_Acl_Resource('schedule:addeventlist'),'schedule');
+		$this->add(new Zend_Acl_Resource('schedule:add-event-list'),'schedule');
 		$this->add(new Zend_Acl_Resource('schedule:view'),'schedule');
+		$this->add(new Zend_Acl_Resource('schedule:edit'),'schedule');
+		$this->add(new Zend_Acl_Resource('schedule:delete'),'schedule');
 		
         $this->add(new Zend_Acl_Resource('notification'));
 
@@ -122,7 +124,7 @@ class Model_HiveAcl extends Zend_Acl {
         $this->allow('us','advertisement',array('view','randomad','list'));
         $this->allow('us','bookmark');
         $this->allow('us','conference');
-        $this->allow('us','schedule');
+        $this->allow('us','schedule',array('edit','view','add','add-event-list','delete'));
         $this->allow('us','notification');
 		$this->allow('us','attachments');
         $this->allow('us','search');

@@ -65,10 +65,7 @@ class ScheduleController extends Zend_Controller_Action
     public function editAction()
     {
     	$role = Zend_Registry::get('role');
-		if($role != 'sa')
-		{
-			$this->_redirect("/dashboard/index");
-		}
+		
 		$cid = $this->_getParam('id',0);
 		$form = new Form_ScheduleForm();
 		$this->view->form = $form;
@@ -100,10 +97,7 @@ class ScheduleController extends Zend_Controller_Action
 	public function deleteAction()
 	{
 		$role = Zend_Registry::get('role');
-		if($role != 'sa')
-		{
-			$this->_redirect("/dashboard/index");
-		}
+		
 		$cid = $this->_getParam('id',0);
 		$schmodel = new Model_DbTable_Schedule();
 		$scheventmodel = new Model_DbTable_ScheduleEvent();
@@ -184,12 +178,7 @@ class ScheduleController extends Zend_Controller_Action
 		$u = new Model_DbTable_User();
 		$role = Zend_Registry::get('role');
 		$uid = Zend_Auth::getInstance()->getStorage()->read()->id;
-   		if($schModel->schExists($this->_getParam('id',0)) || !$u->is_confchair($uid)) {
-   			if($role != 'sa')
-			{
-   				$this->_redirect('/conference/list?id='.$this->_getParam('id',0));
-			}
-   		}
+   		
     	$schId = $schModel->getSchId($this->_getParam('id',0));
     	$schId = $schId['sch_id'];
     	

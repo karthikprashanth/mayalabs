@@ -19,7 +19,9 @@ class SearchController extends Zend_Controller_Action
 		
         if($this->_getParam('keyword',"") != "")
 		{
-			$query = $this->_getParam('keyword',"");
+			$query = strip_tags($this->_getParam('keyword',""));
+			$query = stripslashes($query);
+			
 		}
 		if($this->_getParam('plantname',"") != "")
 		{

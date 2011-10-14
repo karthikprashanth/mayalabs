@@ -15,12 +15,21 @@ class Plugin_EditPermission extends Zend_Controller_Plugin_Abstract {
         if($request->getActionName()!='edit')
                 if($request->getActionName()!='delete')
                         return;
-
         $valid = false;
 		$role = Zend_Registry::get('role');
 		if($role == 'sa')
 		{
 			$valid = true;
+		}
+		if($controller == 'schedule')
+		{
+			if($action == 'delete' || $action == 'add' || $action == 'addeventlist' || $action == 'edit')
+			{
+				if(!$iscc && $role != 'sa')
+				{
+					$valid = false;
+				}
+			}
 		}
         $controller = $request->getControllerName();
         $id = $request->getParam('id');
@@ -29,7 +38,10 @@ class Plugin_EditPermission extends Zend_Controller_Plugin_Abstract {
 			return;
 		}
         $up = new Model_DbTable_Userprofile();
+		$umodel = new Model_DbTable_User();
         $up = $up->getUser(Zend_Auth::getInstance()->getStorage()->read()->id);
+		$iscc = $umodel->is_confchair(Zend_Auth::getInstance()->getStorage()->read()->id);
+		
         $pid = $up['plantId'];
         if ($controller == 'gasturbine') {
         	
@@ -78,8 +90,8 @@ class Plugin_EditPermission extends Zend_Controller_Plugin_Abstract {
         }
 
         if(!$valid){
-            //$request->setControllerName('dashboard');
-            //$request->setActionName('index');
+            $request->setControllerName('dashboard');
+            $request->setActionName('index');
         }            
     }
 }

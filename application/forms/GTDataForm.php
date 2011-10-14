@@ -128,8 +128,7 @@ class Form_GTDataForm extends Zend_Form {
                 ->addDecorator('Htmltag', array('tag' => 'br'))
                 ->addValidator('NotEmpty')
                 ->addFilter('StripTags')
-                ->addFilter('StringTrim')
-                ->addValidator(Model_Validators::alnum());
+                ->addFilter('StringTrim');
         $prestitle1->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
             'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
             array('Label', array('tag' => 'td')),
@@ -151,8 +150,7 @@ class Form_GTDataForm extends Zend_Form {
         $prestitle2->setLabel('Attachment Title')
                 ->addValidator('NotEmpty')
                 ->addFilter('StripTags')
-                ->addFilter('StringTrim')
-                ->addValidator(Model_Validators::alnum());
+                ->addFilter('StringTrim');
         $prestitle2->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
             'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
             array('Label', array('tag' => 'td')),
@@ -173,8 +171,7 @@ class Form_GTDataForm extends Zend_Form {
         $prestitle3->setLabel('Attachment Title')
                 ->addValidator('NotEmpty')
                 ->addFilter('StripTags')
-                ->addFilter('StringTrim')
-                ->addValidator(Model_Validators::alnum());
+                ->addFilter('StringTrim');
         $prestitle3->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
             'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
             array('Label', array('tag' => 'td')),
@@ -195,8 +192,7 @@ class Form_GTDataForm extends Zend_Form {
         $prestitle4->setLabel('Attachment Title')
                 ->addValidator('NotEmpty')
                 ->addFilter('StripTags')
-                ->addFilter('StringTrim')
-                ->addValidator(Model_Validators::alnum());
+                ->addFilter('StringTrim');
         $prestitle4->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
             'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
             array('Label', array('tag' => 'td')),
@@ -217,8 +213,7 @@ class Form_GTDataForm extends Zend_Form {
         $prestitle5->setLabel('Attachment Title')
                 ->addValidator('NotEmpty')
                 ->addFilter('StripTags')
-                ->addFilter('StringTrim')
-                ->addValidator(Model_Validators::alnum());
+                ->addFilter('StringTrim');
         $prestitle5->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
             'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
             array('Label', array('tag' => 'td')),

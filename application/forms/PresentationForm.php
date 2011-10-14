@@ -16,8 +16,7 @@ class Form_PresentationForm extends Zend_Form {
                 ->addDecorator('Htmltag', array('tag' => 'br'))
                 ->addValidator('NotEmpty')
                 ->addFilter('StripTags')
-                ->addFilter('StringTrim')
-                ->addValidator(Model_Validators::alnum());
+                ->addFilter('StringTrim');
 
 
         $appath = substr(APPLICATION_PATH, 0, strlen(APPLICATION_PATH) - 12);

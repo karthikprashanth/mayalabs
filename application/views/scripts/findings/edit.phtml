@@ -35,7 +35,9 @@ else
 			$filename = "images/pdf.png";
 		}
 		 else {
-			 $rn = rand(0,999999);
+		 	$h = 50;
+		 	$w = 50;
+			$rn = rand(0,999999);
 		 	$filename = "random/thnail" . $rn;
 			$data = $pres['content'];
 			file_put_contents($filename,$data);

@@ -11,8 +11,7 @@ class Form_AttachmentsForm extends Zend_Form{
                 ->addValidator('NotEmpty')
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim')
-				->setAttrib('id','title')
-                ->addValidator(Model_Validators::alnum());
+				->setAttrib('id','title');
 
 
 				$appath = substr(APPLICATION_PATH,0,strlen(APPLICATION_PATH)-12);
