@@ -30,8 +30,7 @@ class UserprofileController extends Zend_Controller_Action {
 					$pid = $user['plantId'];                    
                     $userup->updateUser($id, $content);
                     if (Zend_Auth::getInstance()->getStorage()->read()->lastlogin == '') {
-                        if (Zend_Auth::getInstance()->getStorage()->read()->role != 'us')
-                            $this->_redirect('plant/edit?id='.$pid);
+                            $this->_redirect('userprofile/view');
                     }
                     $this->_helper->redirector('view');
                 }

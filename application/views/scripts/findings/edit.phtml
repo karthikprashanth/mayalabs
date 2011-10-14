@@ -34,7 +34,7 @@ else
 		{
 			$filename = "images/pdf.png";
 		}
-		 else {
+		else {
 		 	$h = 50;
 		 	$w = 50;
 			$rn = rand(0,999999);
@@ -42,9 +42,10 @@ else
 			$data = $pres['content'];
 			file_put_contents($filename,$data);
 		 }
-		 $existPresList .= "<img src = '/".$filename."' height = $h width = $w>";
-		$existPresList .= "<div style = 'display:none' id = 'ptitle" . $pres_array[$i] . "'>" . $pres['title'] . "</div>";
-		$existPresList .= "<input type = 'button' onClick = 'unlink($pres_array[$i],$gid)' class = 'gt-delete' value = ''></form></div>";
+		$existPresList .= "<img src = '/".$filename."' height = $h width = $w>";
+		$existPresList .= "<span style = 'display:none' id = 'ptitle" . $pres_array[$i] . "'>" . $pres['title'] . "</span>";
+		$existPresList .= "<input type = 'button' onClick = 'unlink($pres_array[$i],$gid)' class = 'gt-delete' value = ''></form>";
+		
 	}
 }
 echo $this->headScript()->prependFile($this->baseUrl().'/js/tiny_mce/tiny_mce.js');

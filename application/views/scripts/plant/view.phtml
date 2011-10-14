@@ -185,7 +185,16 @@ $gt = "<table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
        </table>";
 if($valid)
 	$gt = $gt .  $editlink;
-	
+$lastlogin = Zend_Auth::getInstance()->getStorage()->read()->lastlogin;
+$pid = $this->id;
+if($lastlogin == NULL)
+{
+	$data .= "<center><a href = '/plant/edit?id=$pid'>&lt;&lt; Back</a>&nbsp;&nbsp;";
+	$data .= "<a href = '/gasturbine/plantlist?id=$pid'>Continue &gt;&gt;</a></center>";
+	$corporate .= $data;
+	$plant .= $data;
+	$gt .= $data;
+}
 $this->tabPane("plantdata", $corporate, array('title' => 'Corporate Info'));
 $this->tabPane("plantdata", $plant, array('title' => 'Plant Info'));
 $this->tabPane("plantdata", $gt, array('title' => 'GT Statistics'));

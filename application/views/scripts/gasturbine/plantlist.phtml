@@ -65,7 +65,7 @@ foreach ($this->GTData as $gasturbines) {
 }
 $lastlogin = Zend_Auth::getInstance()->getStorage()->read()->lastlogin;
 if ($lastlogin == NULL) {
-    $list .= "<center><a href = '/userprofile/view'>&lt;&lt; Back &nbsp;&nbsp;</a>";
+    $list .= "<center><a href = '/plant/view?id=$pid'>&lt;&lt; Back &nbsp;&nbsp;</a>";
     $list .= "<a href = '/dashboard/index'>Continue &gt;&gt;</a></center>";
 }
 $this->tabPane("GTList", $list, array('title' => 'GT List'));
