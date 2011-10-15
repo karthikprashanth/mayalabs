@@ -2,7 +2,7 @@ function addBookmark(category,id)
 {
     url='/bookmark/add/';
     var data ={};
-    var name = prompt("Enter the Bookmark Name: (Only Characters and Numbers Allowed)");
+    var name = prompt("Enter the Bookmark Name: ");
 	if(name == null || name == "")
 	{
 		return;
@@ -11,14 +11,7 @@ function addBookmark(category,id)
     data['id']=id;
     data['bmName'] = name;
     
-    //var RegularExpression = /d/
-	var RegularExpression  =  new RegExp(/^[ \ta-zA-Z0-9]+/i);
-	var b = RegularExpression.test(name);
-	if(!b)
-	{
-		alert("Illegal characters specified");
-		return;
-	}
+	
     $.post(url,data,function(resp){
         $('#bookmark-container').html(resp);
     });

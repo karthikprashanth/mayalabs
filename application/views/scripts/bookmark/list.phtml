@@ -4,7 +4,11 @@
         foreach($this->list as $l){
             $t = $this->escape($l['category']);
             $list=$list."<img src='/images/$t.png' width='15px' height='15px'/>";
-            $list=$list."<a href='/".$this->escape($l['category'])."/view/?id=".$this->escape($l['catId'])."'>".$l['bmName']."</a><br/><br/>";
+			if($l['category'] != 'conference')
+            	$list=$list."<a href='/".$this->escape($l['category'])."/view/?id=".$this->escape($l['catId'])."'>".$l['bmName']."</a><br/><br/>";
+			else 
+				$list=$list."<a href='/".$this->escape($l['category'])."/list/?id=".$this->escape($l['catId'])."'>".$l['bmName']."</a><br/><br/>";
+			
 			$i++;
         }
 		if(!$i)

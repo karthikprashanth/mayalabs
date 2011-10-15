@@ -9,10 +9,19 @@ class Plugin_BookmarkLayout extends Zend_Controller_Plugin_Abstract  {
     }
     public function  dispatchLoopStartup(Zend_Controller_Request_Abstract $request) {
         parent::dispatchLoopStartup($request);
+		
         if($request->isXmlHttpRequest())
-            return;
+            $valid = false;
         if($request->getActionName()!='view')
-            return;
+            $valid = false;
+		else 
+			$valid = true;
+		if($request->getControllerName() == 'userprofile')
+			$valid = false;
+		if($request->getControllerName() == 'conference' && $request->getActionName() == 'list')
+			$valid = true;
+		if(!$valid)
+			return;
         $front = Zend_Controller_Front::getInstance();
         if (!$front->hasPlugin(
                         'Zend_Controller_Plugin_ActionStack')) {

@@ -25,7 +25,7 @@ class BookmarkController extends Zend_Controller_Action
             $updatedtime = $updatedtime->timestamp();
 
             $content=array();
-            $content['bmName']=$bmName;
+            $content['bmName']=strip_tags($bmName);
             $content['userId']=$userid;
             $content['category']=$controller;
             $content['catId']=$id;
