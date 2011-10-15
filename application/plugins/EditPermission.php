@@ -10,38 +10,51 @@ class Plugin_EditPermission extends Zend_Controller_Plugin_Abstract {
 
     public function  dispatchLoopStartup(Zend_Controller_Request_Abstract $request) {
         parent::dispatchLoopStartup($request);
-        if($request->isXmlHttpRequest())
-            return;
-        if($request->getActionName()!='edit')
-                if($request->getActionName()!='delete')
-                        return;
-        $valid = false;
-		$role = Zend_Registry::get('role');
-		if($role == 'sa')
+        $role = Zend_Registry::get('role');
+       	$valid = false;
+       	if($role == 'sa')
 		{
 			$valid = true;
 		}
-		if($controller == 'schedule')
-		{
-			if($action == 'delete' || $action == 'add' || $action == 'addeventlist' || $action == 'edit')
-			{
-				if(!$iscc && $role != 'sa')
-				{
-					$valid = false;
-				}
-			}
-		}
         $controller = $request->getControllerName();
+		$action = $request->getActionName();
         $id = $request->getParam('id');
-		if(!in_array($controller,array("gasturbine","plant","findings","findings","upgrades","lte")))
-		{
-			return;
-		}
+		
         $up = new Model_DbTable_Userprofile();
 		$umodel = new Model_DbTable_User();
         $up = $up->getUser(Zend_Auth::getInstance()->getStorage()->read()->id);
 		$iscc = $umodel->is_confchair(Zend_Auth::getInstance()->getStorage()->read()->id);
-		
+		if($controller == 'schedule' && (in_array($action,array('add','edit','addeventlist','delete','delsch','delevent'))))
+		{
+			if($role != 'sa' && !$iscc)
+			{
+				$request->setControllerName('dashboard');
+            	$request->setActionName('index');
+			}
+		}
+		else if($controller == 'schedule'){
+			$valid = true;
+		}
+		if($controller == 'conference' && (in_array($action,array('add','edit','delete','addpresentation','delpres','delphoto'))))
+		{
+			if($role != 'sa' && !$iscc)
+			{
+				$request->setControllerName('dashboard');
+            	$request->setActionName('index');
+			}
+		}
+		else if($controller == 'conference')
+		{
+			$valid = true;
+		}
+		if(!in_array($controller,array("gasturbine","plant","findings","upgrades","lte")))
+		{
+			return;
+		}
+		if($action != 'view' && $action != 'delete')
+		{
+			return;
+		}
         $pid = $up['plantId'];
         if ($controller == 'gasturbine') {
         	

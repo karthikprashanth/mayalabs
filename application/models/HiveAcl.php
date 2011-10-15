@@ -76,10 +76,6 @@ class Model_HiveAcl extends Zend_Acl {
         $this->add(new Zend_Acl_Resource('bookmark:longlist'),'bookmark');
 
         $this->add(new Zend_Acl_Resource('conference'));
-		$this->add(new Zend_Acl_Resource('conference:add'),'conference');
-		$this->add(new Zend_Acl_Resource('conference:edit'),'conference');
-		$this->add(new Zend_Acl_Resource('conference:delete'),'conference');
-		
 		
         $this->add(new Zend_Acl_Resource('schedule'));
 		$this->add(new Zend_Acl_Resource('schedule:add'),'schedule');
@@ -87,6 +83,8 @@ class Model_HiveAcl extends Zend_Acl {
 		$this->add(new Zend_Acl_Resource('schedule:view'),'schedule');
 		$this->add(new Zend_Acl_Resource('schedule:edit'),'schedule');
 		$this->add(new Zend_Acl_Resource('schedule:delete'),'schedule');
+		$this->add(new Zend_Acl_Resource('schedule:delevent'),'schedule');
+		$this->add(new Zend_Acl_Resource('schedule:delsch'),'schedule');
 		
         $this->add(new Zend_Acl_Resource('notification'));
 
@@ -124,7 +122,7 @@ class Model_HiveAcl extends Zend_Acl {
         $this->allow('us','advertisement',array('view','randomad','list'));
         $this->allow('us','bookmark');
         $this->allow('us','conference');
-        $this->allow('us','schedule',array('edit','view','add','add-event-list','delete'));
+        $this->allow('us','schedule',array('delevent','edit','view','add','add-event-list','delete'));
         $this->allow('us','notification');
 		$this->allow('us','attachments');
         $this->allow('us','search');

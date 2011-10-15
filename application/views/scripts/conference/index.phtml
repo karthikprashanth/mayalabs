@@ -2,18 +2,23 @@
 	$my_list = "<ul>";
 	$i = 1;
 	$role = Zend_Registry::get('role');
+	$up = new Model_DbTable_Userprofile();
+	$umodel = new Model_DbTable_User();
+    $up = $up->getUser(Zend_Auth::getInstance()->getStorage()->read()->id);
+	$iscc = $umodel->is_confchair(Zend_Auth::getInstance()->getStorage()->read()->id);
+	
 	foreach($this->yrList as $list) {
 		if($i <= 5) {
 			$my_list = $my_list . "<li><a href = '" . $this->baseUrl . "/conference/list?id=" . $list['cId'] . "'>". $list['year'] . "</a>&nbsp;&nbsp;(".$list['place'].")";
-			if($role == 'sa')
+			if($role == 'sa' || $iscc)
 			{
-				$my_list = $my_list . "&nbsp;&nbsp;&nbsp;<a href = '/conference/edit?id=" . $list['cId'] . "'>Edit</a>&nbsp;&nbsp;&nbsp;<a href = '/conference/delete?id=" . $list['cId'] . "'>Delete</a>";
+				$my_list = $my_list . "<br><br>&nbsp;&nbsp;&nbsp;<a class = 'a-edit ui-corner-all' href = '/conference/edit?id=" . $list['cId'] . "'>Edit</a>&nbsp;&nbsp;&nbsp;<a class = 'a-delete ui-corner-all' href = '/conference/delete?id=" . $list['cId'] . "'>Delete</a>";
 			}
 			$my_list = $my_list . "</li><br>";
 		}
 		else {
 			$my_list = $my_list . "<li style = 'display:none' id = 'older".$i."'><a href = '" . $this->baseUrl . "/conference/list?id=" . $list['cId'] . "'>". $list['year'] . "</a>&nbsp;&nbsp;(".$list['place'].")";
-			if($role == 'sa')
+			if($role == 'sa' || $iscc)
 			{
 				$my_list = $my_list . "&nbsp;&nbsp;&nbsp;<a href = '/conference/edit?id=" . $list['cId'] . "'>Edit</a>&nbsp;&nbsp;&nbsp;<a href = '/conference/delete?id=" . $list['cId'] . "'>Delete</a>";
 			}

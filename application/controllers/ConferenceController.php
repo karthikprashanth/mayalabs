@@ -137,11 +137,6 @@ class ConferenceController extends Zend_Controller_Action
 	
 	public function delphotoAction()
 	{
-		$role = Zend_Registry::get("role");
-		if($role != 'sa')
-		{
-			return;
-		}
 		$id = $this->_getParam('id',0);
 		$confgal = new Model_DbTable_Gallery();
 		$gal = $confgal->getPhoto($id);
@@ -152,11 +147,7 @@ class ConferenceController extends Zend_Controller_Action
 	}
     public function addAction()
     {
-    	$role = Zend_Registry::get('role');
-		if($role != 'sa')
-		{
-			$this->_redirect("/dashboard/index");
-		}
+    	
         $form = new Form_ConferenceForm();
 		$this->view->form = $form;
 		$form->submit->setLabel('Add Conference');
@@ -184,11 +175,7 @@ class ConferenceController extends Zend_Controller_Action
 	
 	public function editAction()
 	{
-		$role = Zend_Registry::get('role');
-		if($role != 'sa')
-		{
-			$this->_redirect("/dashboard/index");
-		}
+		
 		$cid = $this->_getParam('id',0);
 		$confmodel = new Model_DbTable_Conference();
 		$form = new Form_ConferenceForm();
@@ -216,11 +203,6 @@ class ConferenceController extends Zend_Controller_Action
 	
 	public function deleteAction()
 	{
-		$role = Zend_Registry::get('role');
-		if($role != 'sa')
-		{
-			$this->_redirect("/dashboard/index");
-		}
 		$cid = $this->_getParam('id',0);
 		$confmodel = new Model_DbTable_Conference();
 		$confmodel->delete('cId = ' . (int)$cid);

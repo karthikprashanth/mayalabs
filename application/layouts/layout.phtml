@@ -84,8 +84,12 @@
 						);
 						
 						$navContainer->findOneBy('codename','conf')->addPage($page);
+						$up = new Model_DbTable_Userprofile();
+						$umodel = new Model_DbTable_User();
+				        $up = $up->getUser(Zend_Auth::getInstance()->getStorage()->read()->id);
+						$iscc = $umodel->is_confchair(Zend_Auth::getInstance()->getStorage()->read()->id);
 						
-						if($role == 'sa')
+						if($role == 'sa' || $iscc)
 						{
 							$page = array(
 								'label' => "Add Conference",
