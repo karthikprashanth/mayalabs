@@ -16,7 +16,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         } else {
             Zend_Registry::set('role', 'guest');
         }
-		
+		//Zend_Registry::set('currentgitcommit','conference chairman privileges');
 		$mailconfig = $this->getOption('mailconfig');
 		Zend_Registry::set('mailconfig',$mailconfig);
 		
