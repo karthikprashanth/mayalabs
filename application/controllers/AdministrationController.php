@@ -312,7 +312,7 @@ class AdministrationController extends Zend_Controller_Action {
         $mailbody = $mailbody . "<span style='font-size: 26px; color: #83ac52; text-decoration:none;'><b>users.com</b></span></a><br/><br/>GT Data Notification</div>";
         $mailbody = $mailbody . "<div style='margin-bottom:10px;'><span style='color: #000;'><i>Hello</i>,<br/><br/>The following Findings/Upgrades/LTEs were added: <br/><br/></span>";
         foreach ($gtdata as $list) {
-        	$list['data'] = strip_tags($list['tags']);
+        	$list['data'] = strip_tags($list['data']);
             if(strlen($list['data'])>200){
                 $list['data'] = substr($list['data'], 0, 200);
                 $list['data'] = $list['data']."...<br/><br/>";
