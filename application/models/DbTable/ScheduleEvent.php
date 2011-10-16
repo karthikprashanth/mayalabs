@@ -17,7 +17,7 @@ class Model_DbTable_ScheduleEvent extends Zend_Db_Table_Abstract {
 	        return $row;
         }
         catch(Exception $e) {
-            echo $e;
+            return 0;
         }
 	} 
 	

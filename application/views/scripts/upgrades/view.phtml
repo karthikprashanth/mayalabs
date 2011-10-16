@@ -8,18 +8,22 @@
 		 if($filetype == 'doc' || $filetype == 'docx')
 		 {
 		 	$filename = "images/word.png";
+			$list=$list."<a href='/presentation/view/?id=".$this->escape(key($pvalue))."'><img src = '/".$filename."' height = $h width = $w>".current($pvalue)."</a><br>";
 		 }
 		 else if($filetype == 'xls' || $filetype == 'xlsx')
 		{
 			$filename = "images/excel.png";
+			$list=$list."<a href='/presentation/view/?id=".$this->escape(key($pvalue))."'><img src = '/".$filename."' height = $h width = $w>".current($pvalue)."</a><br>";
 		}
 		else if($filetype == 'ppt' || $filetype == 'pptx')
 		{
 			$filename = "images/ppt.png";
+			$list=$list."<a href='/presentation/view/?id=".$this->escape(key($pvalue))."'><img src = '/".$filename."' height = $h width = $w>".current($pvalue)."</a><br>";
 		}
 		else if($filetype == 'pdf')
 		{
 			$filename = "images/pdf.png";
+			$list=$list."<a href='/presentation/view/?id=".$this->escape(key($pvalue))."'><img src = '/".$filename."' height = $h width = $w>".current($pvalue)."</a><br>";
 		}
 		 else {
 		 	$h = 300;
@@ -27,10 +31,11 @@
 		 	$filename = "random/thnail" . rand(0,999999);
 			$data = $pres['content'];
 			file_put_contents($filename,$data);
+			$ilist=$ilist."<a href='/presentation/view/?id=".$this->escape(key($pvalue))."'><img src = '/".$filename."' height = $h width = $w>".current($pvalue)."</a><br>";
 		 }
-
-     $list=$list."<a href='/presentation/view/?id=".$this->escape(key($pvalue))."'><img src = '/".$filename."' height = $h width = $w>".current($pvalue)."</a><br>";
+     
 }
+$list .= $ilist;
 $dataid = $this->upgrade['id'];
 
 $role = Zend_Registry::get("role");

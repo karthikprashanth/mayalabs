@@ -18,7 +18,7 @@ foreach($this->results as $result) :?>
 	$i = 1;
 	$userdet = "<table class='clist-table'><thead><tr><th>Name</th><th>Designation</th><th>Email</th></tr></thead><tbody>";
 	foreach($userlist as $list) {
-		$userdet = $userdet . "<tr><td><a href = '/userprofile/view?id=" . $list['id'] . "'>" . $list['firstName'] . " " . $list['lastName'] . "</a>  </td><td>  " . $list['designation'] . " </td><td>  " . $list['email'] . "</td></tr>";
+		$userdet = $userdet . "<tr><td><a href = '/userprofile/view?id=" . $list['id'] . "'>" . $list['firstName'] . " " . $list['lastName'] . "</a>  </td><td>  " . $list['designation'] . " </td><td>  <a href = 'mailto:" . $list['email'] ."'>" . $list['email'] . "</a></td></tr>";
 	}
 	$userdet = $userdet . "</tbody></table>";
 ?>

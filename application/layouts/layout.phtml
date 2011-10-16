@@ -33,6 +33,16 @@
             $(document).ready(function(){
                     $('[title]').colorTip({color:'yellow'});
             });
+            
+            $.ajax({
+		        data: "ul=9&mode=paginate",
+		        url: "/notification/view",
+		        success: function(msg){
+		            if (msg != ''){
+		                $("#notifications").html(msg);
+		            }
+		        }
+		    });
         </script>
     </head>
 

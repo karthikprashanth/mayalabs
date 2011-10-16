@@ -44,7 +44,7 @@ else
 		 }
 		$existPresList .= "<img src = '/".$filename."' height = $h width = $w>";
 		$existPresList .= "<span style = 'display:none' id = 'ptitle" . $pres_array[$i] . "'>" . $pres['title'] . "</span>";
-		$existPresList .= "<input type = 'button' onClick = 'unlink($pres_array[$i],$gid)' class = 'gt-delete' value = ''></form>";
+		$existPresList .= "<input type = 'button' onClick = 'unlink($pres_array[$i],$gid)' class = 'gt-delete' value = ''></form></div>";
 		
 	}
 }
@@ -55,12 +55,13 @@ if($this->message != "")
 else {
 	$this->message = "";
 }
-$this->tabPane("findingEdit",$existPresList . $this->form . "<br>" . $this->message  . $this->spinner ,array('title' => 'Finding Edit'));
-echo $this->tabContainer("findingEdit",array());
+$this->tabPane("FindingEdit",$existPresList .$this->form . $this->message . $this->spinner ,array('title' => 'Finding Edit'));
 echo "<div id = 'ssid' style = 'display:none'>" . $this->gtdata['subSysId'] . "</div>";
+echo $this->tabContainer("FindingEdit",array());
 ?>
 <script type = "text/javascript" src = "/js/gtdata_checkext.js"></script>
 <script type="text/javascript" src='/js/tinyMCEinit.js'></script>
+<script type = "text/javascript" src = "/js/spinnerImage.js"></script>
 <script type = "text/javascript" src = "/js/multiattach.js"></script>
 <script type = "text/javascript">
 	function unlink(pid,gid)
@@ -75,41 +76,33 @@ echo "<div id = 'ssid' style = 'display:none'>" . $this->gtdata['subSysId'] . "<
 	    document.getElementById("presdiv" + pid).style.display = "none";
 	}
 	$(document).ready(function(){
-		
-		var sid = document.getElementById("sysId").value;
-		var ssid = document.getElementById("ssid").innerHTML;
-		if(sid != "" && sid != 0)
-		{
-	       $.ajax({
-	            type: "POST",
-	            data: "id=" + sid + "&ssid=" + ssid,
-	            url: "/findings/index",
-	            success: function(msg){
-	                if (msg != ''){
-	                    $("#subSysId").html(msg).show();
-	                }
-	            }
-	       });
-		}
-		$("#submitbutton").click(function() {
-			var file = document.getElementById("content").value;
-			if (file != "")
-			{
-				document.getElementById("spinnerimage").style.display = "block";
-			}
-		});
-	    $("#sysId").change( function() {
-	        $.ajax({
-	            type: "POST",
-	            data: "id=" + $(this).val(),
-	            url: "/findings/index",
-	            success: function(msg){
-	                if (msg != ''){
-	                    $("#subSysId").html(msg).show();
-	                    
-	                }
-	            }
-	        });
-	    });
-	});
+	var sid = document.getElementById("sysId").value;
+	var ssid = document.getElementById("ssid").innerHTML;
+	if(sid != "" && sid != 0)
+	{
+       $.ajax({
+            type: "POST",
+            data: "id=" + sid + "&ssid=" + ssid,
+            url: "/findings/index",
+            success: function(msg){
+                if (msg != ''){
+                    $("#subSysId").html(msg).show();
+                }
+            }
+       });
+	}
+    $("#sysId").change( function() {
+        $.ajax({
+            type: "POST",
+            data: "id=" + $(this).val(),
+            url: "/findings/index",
+            success: function(msg){
+                if (msg != ''){
+                    $("#subSysId").html(msg).show();
+                    
+                }
+            }
+        });
+    });
+});
 </script>

@@ -1409,7 +1409,10 @@ function delete_post($forum_id, $topic_id, $post_id, &$data) {
     if ($data['post_reported'] && ($post_mode != 'delete_topic')) {
         sync('topic_reported', 'topic_id', array($topic_id));
     }
-
+	
+	$sql = "DELETE FROM notification WHERE catid = " . $post_id . " AND category = 'forum_post'";
+	$result = $db->sql_query($sql);
+	
     return $next_post_id;
 }
 

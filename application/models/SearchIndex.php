@@ -10,6 +10,7 @@
 			$doc = new Zend_Search_Lucene_Document();
 			if($type == "gtdata")
 			{
+				
 				$gtdatamodel = new Model_DbTable_Gtdata();
 				$list = $gtdatamodel->getData($id);
 				$umodel = new Model_DbTable_Userprofile();
@@ -18,12 +19,20 @@
 				$upmodel = new Model_DbTable_Plant();
 				$uplant = $upmodel->getPlant($user['plantId']);
 				$uplantname = $uplant['plantName'];
+				
 				$sysmodel = new Model_DbTable_Gtsystems();
 				$sysname = $sysmodel->getSystem($list['sysId']);
 				$sysname = $sysname['sysName'];
+				
 				$subsysmodel = new Model_DbTable_Gtsubsystems();
-				$subsysname = $subsysmodel->getSubSystem($list['subSysId']);
-				$subsysname = $subsysname['subSysName'];
+				if($list['subSysId'] != 34)
+				{
+					$subsysname = $subsysmodel->getSubSystem($list['subSysId']);
+					$subsysname = $subsysname['subSysName'];
+				}
+				else {
+					$subsysname = "-";
+				}
 				$doc->addField(Zend_Search_Lucene_Field::UnIndexed('dataid',$list['id']));
 				
 				$doc->addField(Zend_Search_Lucene_Field::UnStored('title',$list['title']));
@@ -43,10 +52,17 @@
 					$id = $temp_topic['post_id'];
 				}
 				$list = $forumModel->getPost($id);
-				
+				if($list == 0)
+				{
+					return;
+				}
 				$doc = new Zend_Search_Lucene_Document();
 				
 				$topic = $topicmodel->getTopic($list['topic_id']);
+				if($topic == 0)
+				{
+					return;
+				}
 				$topicname = $topic['topic_title'];
 				$forummodel = new Model_DbTable_Forum_Data();
 				$forum = $forummodel->getForum($list['forum_id']);

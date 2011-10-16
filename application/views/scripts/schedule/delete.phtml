@@ -7,7 +7,6 @@ foreach ($this->schlist as $sch) {
             "&schid=" . $sch['sch_id'] . "'>Delete Event</a><br><br>";
     $i++;
 }
-
 	$data .= "<form action = '/schedule/delsch?id=" . $this->schid . "' method = 'post'>
 		<input class = 'gt-delete' type = 'submit' value = 'Delete Full Schedule'></form>";
 

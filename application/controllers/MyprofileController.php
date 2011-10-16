@@ -28,7 +28,10 @@ class MyprofileController extends Zend_Controller_Action {
 				$plant = $plantmodel->getPlant($pid);
 				$plantname = $plant['plantName'];
 			}
-
+			$uid = Zend_Auth::getInstance()->getStorage()->read()->id;
+			$uModel = new Model_DbTable_User();
+			$iscc = $uModel->is_confchair($uid);
+    		$this->view->iscc = $iscc;
             $this->view->name = $name;
 			$this->view->pid = $pid;
 			$this->view->pname = $plantname;

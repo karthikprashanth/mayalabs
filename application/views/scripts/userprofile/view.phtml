@@ -5,7 +5,7 @@ $data="<table  cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
     
     <tr>
         <td>Name</td>
-        <td><b>".$this->profileData['firstName']." ".$this->profileData['lastName']."</b></td>
+        <td><b>".$this->profileData['firstName']." ".$this->profileData['lastName']."</b>$this->iscc</td>
     </tr>
     
 	<tr>
@@ -30,7 +30,7 @@ $data="<table  cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
 
     <tr>
         <td>E-Mail</td>
-        <td>".$this->profileData['email']."</td>
+        <td><a href = 'mailto:".$this->profileData['email']."'>".$this->profileData['email']."</a></td>
     </tr>
     
 </table>";

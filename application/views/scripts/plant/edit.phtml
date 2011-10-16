@@ -5,7 +5,9 @@ echo $this->adminId;
 echo $this->form;
 $content = array_merge($this->form->partPlant1->getValues(), $this->form->partPlant2->getValues(), $this->form->partPlant3->getValues());
 $uid = Zend_Auth::getInstance()->getStorage()->read()->id;
-echo "<a href = '/userprofile/view?id=$uid'>&lt;&lt; Back</a>";
+$lastlogin = Zend_Auth::getInstance()->getStorage()->read()->lastlogin;
+if($lastlogin == NULL)
+	echo "<a href = '/userprofile/view?id=$uid'>&lt;&lt; Back</a>";
 ?>
 
 	<div style = 'display:none' id = 'plantId'><?php echo $this->plantId; ?></div>

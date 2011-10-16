@@ -148,6 +148,11 @@ class UpgradesController extends Zend_Controller_Action {
                         $fid = $userp->add($inscontent);
                         $this->_redirect('/upgrades/view?id=' . $fid);
                     } else {
+                    	$x = 1;
+						for($x=1;$x<=5;$x++)
+						{
+							$formData['prestitle' . $x] = "";
+						}
                         $form->populate($formData);
                     }
                 }
@@ -207,9 +212,7 @@ class UpgradesController extends Zend_Controller_Action {
 					}
                     $content['presentationId'] = $presid;
 					$r = array_diff($content,$gtdata);
-					if(count($r) > 0)
-					{
-								
+
 						$filenames = array(
 							1 => $form->content1->getFileName(),
 							2 => $form->content2->getFileName(),
@@ -228,6 +231,7 @@ class UpgradesController extends Zend_Controller_Action {
 						$pmodel = new Model_DbTable_Presentation();
 						$funcs = new Model_Functions();
 						$i=1;
+						$noPresAdded = 0;
 						for($i=1;$i<=5;$i++)
 						{
 							$pres=file_get_contents($filenames[$i]);
@@ -268,6 +272,7 @@ class UpgradesController extends Zend_Controller_Action {
 									return;
 								}
 								$p = $pmodel->insert($data);
+								$noPresAdded++;
 								$checked[$i] = true;
 									
 							}
@@ -306,12 +311,13 @@ class UpgradesController extends Zend_Controller_Action {
 							'DOF' => $content['DOF'],
 							'TOI' => $content['TOI']
 						);
-                    	$finding->updateUpgrade($content);
-                    	$nf = new Model_DbTable_Notification();
-                        $formD = $this->_getParam('id', 0);
-                        $nf->add($formD, 'upgrade', 0);
-                    }
-
+                    	$affRows = $finding->updateUpgrade($content);
+						if($affRows + $noPresAdded > 0)
+						{
+	                    	$nf = new Model_DbTable_Notification();
+	                        $formD = $this->_getParam('id', 0);
+	                        $nf->add($formD, 'upgrade', 0);
+						}
                     $this->_redirect('/upgrades/view?id=' . $id);
                     if (Zend_Auth::getInstance()->getStorage()->read()->lastlogin == '') {
                         $this->_redirect('upgrades/list');
@@ -324,6 +330,11 @@ class UpgradesController extends Zend_Controller_Action {
 					if($formData['EOH'] == 0)
 					{
 						$formData['EOH'] == "";
+					}
+					$x = 1;
+					for($x=1;$x<=5;$x++)
+					{
+						$formData['prestitle' . $x] = "";
 					}
                     $form->populate($formData);
                 }

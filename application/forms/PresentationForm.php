@@ -5,7 +5,7 @@ class Form_PresentationForm extends Zend_Form {
     public function __construct($options = null) {
         parent::__construct($options);
 
-        $this->setName('Attachments');
+        $this->setName('attachments');
 
         $gtid = new Zend_Form_Element_Hidden('GTId');
         $gtid->setAttrib('value', 'TESTING');
@@ -23,6 +23,7 @@ class Form_PresentationForm extends Zend_Form {
 
         $content = new Zend_Form_Element_File('content');
         $content->setLabel('Upload the File')
+				->setRequired(true)
                 ->setDestination($appath . '/public/uploads')
                 ->addDecorator('Htmltag', array('tag' => 'br'));
 

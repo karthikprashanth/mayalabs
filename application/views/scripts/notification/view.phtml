@@ -56,26 +56,26 @@
             $ssModel = new Model_DbTable_Gtsubsystems();
             $data = $this->fdet->getFinding($list['catid']);
             $ss = $ssModel->getSubSystem($data['subSysId']);
-            $sys = $sModel->getSystem($ss['sysId']);
+            $sys = $sModel->getSystem($data['sysId']);
             $systemName = $sys['sysName'];
 			$subsystemname = $ss['subSysName'];
             if ($list['edit'] == 1) {
             	if($subsystemname == "-")
 				{
-					$gtdataextra = " to " . $systemName;
+					$gtdataextra = " to <b>" . $systemName . "</b>";
 				}
 				else
 				{
-					$gtdataextra = " to " . $systemName . "/" . $subsystemname;
+					$gtdataextra = " to <b>" . $systemName . "/" . $subsystemname . "</b>";
 				}
             } else {
             	if($subsystemname == "-")
 				{
-					$gtdataextra = " of " . $systemName;
+					$gtdataextra = " </b>belonging to <b>" . $systemName;
 				}
                 else
 				{
-					$gtdataextra = " of " . $systemName . "/" . $subsystemname;
+					$gtdataextra = " </b>belonging to <b>" . $systemName . "/" . $subsystemname;
 				}
             }
 			
@@ -92,26 +92,26 @@
             $ssModel = new Model_DbTable_Gtsubsystems();
             $data = $this->udet->getUpgrade($list['catid']);
             $ss = $ssModel->getSubSystem($data['subSysId']);
-            $sys = $sModel->getSystem($ss['sysId']);
+            $sys = $sModel->getSystem($data['sysId']);
             $systemName = $sys['sysName'];
 			$subsystemname = $ss['subSysName'];
             if ($list['edit'] == 1) {
             	if($subsystemname == "-")
 				{
-					$gtdataextra = " to " . $systemName;
+					$gtdataextra = " to <b>" . $systemName . "</b>";
 				}
 				else
 				{
-					$gtdataextra = " to " . $systemName . "/" . $subsystemname;
+					$gtdataextra = " to <b>" . $systemName . "/" . $subsystemname . "</b>";
 				}
             } else {
             	if($subsystemname == "-")
 				{
-					$gtdataextra = " of " . $systemName;
+					$gtdataextra = " </b>belonging to <b>" . $systemName;
 				}
                 else
 				{
-					$gtdataextra = " of " . $systemName . "/" . $subsystemname;
+					$gtdataextra = " </b>belonging to <b>" . $systemName . "/" . $subsystemname;
 				}
             }
             $catdet = $this->udet->getUpgrade($list['catid']);
@@ -127,26 +127,26 @@
             $ssModel = new Model_DbTable_Gtsubsystems();
             $data = $this->ldet->getLTE($list['catid']);
             $ss = $ssModel->getSubSystem($data['subSysId']);
-            $sys = $sModel->getSystem($ss['sysId']);
+            $sys = $sModel->getSystem($data['sysId']);
             $systemName = $sys['sysName'];
             $subsystemname = $ss['subSysName'];
             if ($list['edit'] == 1) {
             	if($subsystemname == "-")
 				{
-					$gtdataextra = " to " . $systemName;
+					$gtdataextra = " to <b>" . $systemName . "</b>";
 				}
 				else
 				{
-					$gtdataextra = " to " . $systemName . "/" . $subsystemname;
+					$gtdataextra = " to <b>" . $systemName . "/" . $subsystemname . "</b>";
 				}
             } else {
             	if($subsystemname == "-")
 				{
-					$gtdataextra = " of " . $systemName;
+					$gtdataextra = " </b>belonging to <b>" . $systemName;
 				}
                 else
 				{
-					$gtdataextra = " of " . $systemName . "/" . $subsystemname;
+					$gtdataextra = " </b>belonging to <b>" . $systemName . "/" . $subsystemname;
 				}
             }			
             $catdet = $this->ldet->getLTE($list['catid']);
@@ -241,7 +241,18 @@
 	                "<br><font size = 2>by <i>" .$uDet['firstName'] . " " . $uDet['lastName'] . " - " . $plantname."</i></font></a>";
 				}
             } else {
-                echo $listcat[$list['category']] . " -  <b><a href=$url>" . $catname . "</a>" . $gtdataextra . "</b><i> was  " . $edit[$list['edit']] . "</i>" . $gextra . "<i> by </i><b>" . $uDet['firstName'] . " " . $uDet['lastName'] ." - " . $plantname . "</b>";
+                if($uDet['plantId'] != 1)
+				{
+	                echo "<b>" .$listcat[$list['category']]."</b> - <b><a href=$url>" . $catname . "</a>" . $gextra . $gtdataextra ."</b><i> was  " . $edit[$list['edit']] . ".</i>" . 
+	                "<br><b>Gasturbine</b> : <a href = '/gasturbine/view?id=$datagtid'>$datagtname</a>" . 
+	                "<br><font size = 2><i>by <a href = '/userprofile/view?id=" . $list['userupdate'] ."'>" .$uDet['firstName'] . " " . $uDet['lastName'] . " - <a href='/plant/view?id=" .$uDet['plantId'] ."'>" . $plantname."</i></font></a>";
+				}
+				else
+				{
+					echo "<b>" . $listcat[$list['category']]."</b> - <b><a href=$url>" . $catname . "</a></b><i> was  " . $edit[$list['edit']] . "</i>" . $gextra . $gtdataextra .
+					"<br><b>Gasturbine</b> : <a href = '/gasturbine/view?id=$datagtid'>$datagtname</a>" . 
+	                "<br><font size = 2>by <i>" .$uDet['firstName'] . " " . $uDet['lastName'] . " - " . $plantname."</i></font></a>";
+				}
             }
         }
         $ts = $list['timeupdate'];
@@ -273,6 +284,7 @@
 </div>
 </div>
 <script type = "text/javascript">
+		
 	function showMore(x)
 	{
 		var upperlimit = ((x*10)-1)+10;

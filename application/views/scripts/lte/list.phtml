@@ -2,20 +2,23 @@
 	if(!count($this->ltes))
 	{
 		echo "<center>No LTEs Added</center>";
+		
+	}
+	else {
+		echo"<table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
+		<tr>
+		<th>Title</th>
+		<th>System/Subsystem</th>
+		<th>EOH</th>
+		<th>Type of Inspection</th>
+		<th>User</th>
+		<th>Date</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+		</tr>";
 	}
 ?>
 
-<table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
-<tr>
-<th>Title</th>
-<th>System/Subsystem</th>
-<th>EOH</th>
-<th>Type of Inspection</th>
-<th>User</th>
-<th>Date</th>
-<th>&nbsp;</th>
-<th>&nbsp;</th>
-</tr>
 <?php
 foreach($this->ltes as $lte) :?>
 <tr>
@@ -27,7 +30,7 @@ $username = $user['firstName'] . " " . $user['lastName'] . " - " . $user['plantN
 <?php
 	$ssModel = $this->subSysModel;
 	$ss = $ssModel->getSubSystem($lte['subSysId']);
-	$system = $this->sysModel->getSystem($ss['sysId']);
+	$system = $this->sysModel->getSystem($lte['sysId']);
 ?>
 <?php if($ss['subSysName'] == '-') : ?>
 	<td><?php echo $system['sysName']; ?></td>

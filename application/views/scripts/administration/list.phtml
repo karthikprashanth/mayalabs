@@ -1,3 +1,10 @@
+<?php 
+	if(!count($this->users))
+	{
+		echo "<center>No users added</center>";
+		return;
+	}
+?>
 <script type="text/javascript" src="/js/tablecloth/tablecloth.js"></script>
 <link href='/js/tablecloth/tablecloth.css' rel='stylesheet' type='text/css' />
 <?php $role = Zend_Registry::get('role'); ?>

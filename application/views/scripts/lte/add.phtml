@@ -14,20 +14,10 @@ echo $this->tabContainer("LTEAdd",array());
 
 <!-- TinyMCE --><script type="text/javascript" src='/js/tinyMCEinit.js'></script><!-- /TinyMCE -->
 <script type = "text/javascript" src = "/js/gtdata_checkext.js"></script>
+<script type = "text/javascript" src = "/js/spinnerImage.js"></script>
 <script type = "text/javascript" src = "/js/multiattach.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-	$("#submitbutton").click(function() {
-		var file = document.getElementById("content1").value 
-		+document.getElementById("content2").value
-		+document.getElementById("content3").value
-		+document.getElementById("content4").value
-		+document.getElementById("content5").value;
-		if (file != "")
-		{
-			document.getElementById("spinnerimage").style.display = "block";
-		}
-	});
     $("#sysId").change( function() {
         $.ajax({
             type: "POST",

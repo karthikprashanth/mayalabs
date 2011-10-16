@@ -1,6 +1,12 @@
 <ul id="sidemenu" class="sidemenu">
     <li class = "ui-corner-top sidemenu-head">
-        <?php echo $this->name; ?>
+        <?php 
+        if($this->iscc)
+        	echo $this->name . " (Conference Chairman)";
+		else 
+			echo $this->name;
+	    
+        ?>
     </li>    
     <li class="sidemenu-profile" onmouseover="glow(this,'e5f1fa')" onmouseout="unglow(this)">
         <a href="<?php echo $this->baseUrl(); ?>/userprofile/index">        

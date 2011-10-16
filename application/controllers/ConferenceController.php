@@ -204,6 +204,7 @@ class ConferenceController extends Zend_Controller_Action
 	{
 		$cid = $this->_getParam('id',0);
 		$confmodel = new Model_DbTable_Conference();
+		$noteModel = new Model_DbTable_Notification();
 		$confmodel->delete('cId = ' . (int)$cid);
 		$schmodel = new Model_DbTable_Schedule();
 		$sch = $schmodel->getSchId($cid);
@@ -214,6 +215,7 @@ class ConferenceController extends Zend_Controller_Action
 		$nf->delete('catId = ' . (int)$cid);
 		$scheventmodel = new Model_DbTable_ScheduleEvent();
 		$scheventmodel->delete('sch_id = ' . (int)$schid);
+		$noteModel->delete("category = 'schedule' AND catid = " . $cid);
 		$this->_redirect("/conference/index");
 	}
 	

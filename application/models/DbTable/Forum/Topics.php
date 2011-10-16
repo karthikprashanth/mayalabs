@@ -4,9 +4,16 @@
 		protected $_name = 'forum_topics';
 		
 		public function getTopic($id)
-		{	
-			$row = $this->fetchRow('topic_id = '.$id);
-			return $row->toArray();
+		{
+			try
+			{	
+				$row = $this->fetchRow('topic_id = '.$id);
+				return $row->toArray();
+			}
+			catch(Exception $e)
+			{
+				return 0;
+			}
 			
 		}
 	}

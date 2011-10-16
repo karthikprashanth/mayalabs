@@ -1,5 +1,5 @@
 <?php
-
+echo $this->headScript()->prependFile($this->baseUrl() . '/js/tiny_mce/tiny_mce.js');
 $data = $this->form;
 if ($this->message == "")
     $data .= $this->message;
@@ -8,3 +8,4 @@ else
 $this->tabPane("ConfEdit", $data, array('title' => 'Edit Conference'));
 echo $this->tabContainer("ConfEdit", array());
 ?>
+<!-- TinyMCE --><script type="text/javascript" src='/js/tinyMCEinit.js'></script><!-- /TinyMCE -->

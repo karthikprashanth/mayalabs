@@ -1584,13 +1584,6 @@ function handle_post_delete($forum_id, $topic_id, $post_id, &$post_data)
 
 			$next_post_id = delete_post($forum_id, $topic_id, $post_id, $data);
 			
-	        $sql = "DELETE FROM notification WHERE catid = " . $post_id . " AND category = 'forum_post'";
-	        $result = $db->sql_query($sql);
-			$sql = "DELETE FROM notification WHERE catid = " . $topic_id . " AND category = 'forum_topic'";
-	        $result = $db->sql_query($sql);
-			
-			
-			
 			$post_username = ($post_data['poster_id'] == ANONYMOUS && !empty($post_data['post_username'])) ? $post_data['post_username'] : $post_data['username'];
 
 			if ($next_post_id === false)

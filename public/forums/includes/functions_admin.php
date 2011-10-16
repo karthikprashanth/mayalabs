@@ -678,6 +678,9 @@ function delete_topics($where_type, $where_ids, $auto_sync = true, $post_count_s
 		$sql = "DELETE FROM $table
 			WHERE " . $db->sql_in_set('topic_id', $topic_ids);
 		$db->sql_query($sql);
+		
+		$sql = "DELETE FROM notification WHERE " . $db->sql_in_set('catid',$topic_ids). " AND category = 'forum_topic'";
+		$db->sql_query($sql);
 	}
 	unset($table_ary);
 
@@ -715,7 +718,9 @@ function delete_topics($where_type, $where_ids, $auto_sync = true, $post_count_s
 	{
 		set_config_count('num_topics', $approved_topics * (-1), true);
 	}
-
+	
+	
+	
 	return $return;
 }
 

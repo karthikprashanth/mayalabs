@@ -13,7 +13,6 @@ if($this->id == $upid || $role == 'sa')
 	if($role != 'us')
 	{
 		$valid = true;
-		$editlink = "<div class = 'gt-edit'><a href='/plant/edit"  . "?id=" . $this->id . "' style='color: #719b3e;'>Edit</a></div>";
 	}
 		
 }
@@ -61,7 +60,7 @@ $corporate = "<table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'
 </table>";
 
 if($valid)
-	$corporate = $corporate .  $editlink;
+	$corporate = $corporate .  "<div class = 'gt-edit'><a href='/plant/edit"  . "?id=" . $this->id . "#tabContainer-frag-1' style='color: #719b3e;'>Edit</a></div>";
 
 $plant = "<table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
 
@@ -102,7 +101,7 @@ $plant = "<table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
        </table>";
      
 if($valid)
-	$plant = $plant .  $editlink;
+	$plant = $plant .  "<div class = 'gt-edit'><a href='/plant/edit"  . "?id=" . $this->id . "#tabContainer-frag-2' style='color: #719b3e;'>Edit</a></div>";
 
 $gt = "<table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
 
@@ -184,7 +183,7 @@ $gt = "<table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
             </tr>
        </table>";
 if($valid)
-	$gt = $gt .  $editlink;
+	$gt = $gt .  "<div class = 'gt-edit'><a href='/plant/edit"  . "?id=" . $this->id . "#tabContainer-frag-3' style='color: #719b3e;'>Edit</a></div>";
 $lastlogin = Zend_Auth::getInstance()->getStorage()->read()->lastlogin;
 $pid = $this->id;
 if($lastlogin == NULL)

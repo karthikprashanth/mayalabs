@@ -34,7 +34,7 @@ else
 		{
 			$filename = "images/pdf.png";
 		}
-		 else {
+		else {
 		 	$h = 50;
 		 	$w = 50;
 			$rn = rand(0,999999);
@@ -42,9 +42,10 @@ else
 			$data = $pres['content'];
 			file_put_contents($filename,$data);
 		 }
-		 $existPresList .= "<img src = '/".$filename."' height = $h width = $w>";
-		$existPresList .= "<div style = 'display:none' id = 'ptitle" . $pres_array[$i] . "'>" . $pres['title'] . "</div>";
+		$existPresList .= "<img src = '/".$filename."' height = $h width = $w>";
+		$existPresList .= "<span style = 'display:none' id = 'ptitle" . $pres_array[$i] . "'>" . $pres['title'] . "</span>";
 		$existPresList .= "<input type = 'button' onClick = 'unlink($pres_array[$i],$gid)' class = 'gt-delete' value = ''></form></div>";
+		
 	}
 }
 echo $this->headScript()->prependFile($this->baseUrl().'/js/tiny_mce/tiny_mce.js');
@@ -60,6 +61,7 @@ echo $this->tabContainer("UpgradeEdit",array());
 ?>
 <script type = "text/javascript" src = "/js/gtdata_checkext.js"></script>
 <script type="text/javascript" src='/js/tinyMCEinit.js'></script>
+<script type = "text/javascript" src = "/js/spinnerImage.js"></script>
 <script type = "text/javascript" src = "/js/multiattach.js"></script>
 <script type = "text/javascript">
 	function unlink(pid,gid)
@@ -89,13 +91,7 @@ echo $this->tabContainer("UpgradeEdit",array());
             }
        });
 	}
-	$("#submitbutton").click(function() {
-		var file = document.getElementById("content").value;
-		if (file != "")
-		{
-			document.getElementById("spinnerimage").style.display = "block";
-		}
-	});
+	
     $("#sysId").change( function() {
         $.ajax({
             type: "POST",

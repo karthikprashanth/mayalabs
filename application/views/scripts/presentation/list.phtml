@@ -1,10 +1,11 @@
 <?php
-	if(!count($this->presentations))
+	if(!count($this->findings))
 	{
-		echo "<center>No Presentations Added</center>";
-	} 
-?>
-<table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
+		echo "<center>No Attachments Added</center>";
+		
+	}
+	else {
+		echo"<table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
     <thead>
         <tr>
             <th>Title</th>
@@ -12,7 +13,10 @@
             <th>User</th>
             <th>Date</th>
         </tr>
-    </thead>
+    </thead>";
+	}
+?>
+
     <tbody>
         <?php 
         $prestype['pdf'] = "PDF File";

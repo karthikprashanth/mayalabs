@@ -150,6 +150,11 @@ class LteController extends Zend_Controller_Action {
                         $fid = $userp->add($inscontent);
                         $this->_redirect('/lte/view?id=' . $fid);
                     } else {
+                    	$x = 1;
+						for($x=1;$x<=5;$x++)
+						{
+							$formData['prestitle' . $x] = "";
+						}
                         $form->populate($formData);
                     }
                 }
@@ -251,10 +256,7 @@ class LteController extends Zend_Controller_Action {
 						$presid = "";
 					}
                     $content['presentationId'] = $presid;
-					$r = array_diff($content,$gtdata);
-					if(count($r) > 0)
-					{
-								
+							
 						$filenames = array(
 							1 => $form->content1->getFileName(),
 							2 => $form->content2->getFileName(),
@@ -273,6 +275,7 @@ class LteController extends Zend_Controller_Action {
 						$pmodel = new Model_DbTable_Presentation();
 						$funcs = new Model_Functions();
 						$i=1;
+						$noPresAdded = 0;
 						for($i=1;$i<=5;$i++)
 						{
 							$pres=file_get_contents($filenames[$i]);
@@ -313,6 +316,7 @@ class LteController extends Zend_Controller_Action {
 									return;
 								}
 								$p = $pmodel->insert($data);
+								$noPresAdded++;
 								$checked[$i] = true;
 									
 							}
@@ -351,12 +355,13 @@ class LteController extends Zend_Controller_Action {
 							'DOF' => $content['DOF'],
 							'TOI' => $content['TOI']
 						);
-                    	$finding->updateLTE($content);
-                    	$nf = new Model_DbTable_Notification();
-                        $formD = $this->_getParam('id', 0);
-                        $nf->add($formD, 'lte', 0);
-                    }
-
+                    	$affRows = $finding->updateLTE($content);
+						if($affRows + $noPresAdded > 0)
+						{
+	                    	$nf = new Model_DbTable_Notification();
+	                        $formD = $this->_getParam('id', 0);
+	                        $nf->add($formD, 'lte', 0);
+						}
                     $this->_redirect('/lte/view?id=' . $id);
                     if (Zend_Auth::getInstance()->getStorage()->read()->lastlogin == '') {
                         $this->_redirect('lte/list');
@@ -369,6 +374,11 @@ class LteController extends Zend_Controller_Action {
 					if($formData['EOH'] == 0)
 					{
 						$formData['EOH'] == "";
+					}
+					$x = 1;
+					for($x=1;$x<=5;$x++)
+					{
+						$formData['prestitle' . $x] = "";
 					}
                     $form->populate($formData);
                 }

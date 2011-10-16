@@ -2,19 +2,22 @@
 	if(!count($this->upgrades))
 	{
 		echo "<center>No Upgrades Added</center>";
+		
+	}
+	else {
+		echo"<table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
+		<tr>
+		<th>Title</th>
+		<th>System/Subsystem</th>
+		<th>EOH</th>
+		<th>Type of Inspection</th>
+		<th>User</th>
+		<th>Date</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+		</tr>";
 	}
 ?>
-<table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
-<tr>
-<th>Title</th>
-<th>System/Subsystem</th>
-<th>EOH</th>
-<th>Type of Inspection</th>
-<th>User</th>
-<th>Date</th>
-<th>&nbsp;</th>
-<th>&nbsp;</th>
-</tr>
 <?php
 foreach($this->upgrades as $upgrade) :?>
 
@@ -28,7 +31,7 @@ $username = $user['firstName'] . " " . $user['lastName'] . " - " . $user['plantN
 	
 	$ssModel = $this->subSysModel;
 	$ss = $ssModel->getSubSystem($upgrade['subSysId']);
-	$system = $this->sysModel->getSystem($ss['sysId']);
+	$system = $this->sysModel->getSystem($upgrade['sysId']);
 	
 ?>
 <?php if($ss['subSysName'] == '-') : ?>

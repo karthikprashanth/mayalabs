@@ -29,7 +29,7 @@ class Model_DbTable_Finding extends Zend_Db_Table_Abstract {
     }
 
     public function updateFinding($content) {
-        $this->update($content, $this->getAdapter()->quoteInto("id = ?", $content['id']));
+        return $this->update($content, $this->getAdapter()->quoteInto("id = ?", $content['id']));
     }
 
     public function deleteFinding($id) {

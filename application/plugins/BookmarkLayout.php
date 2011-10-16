@@ -22,6 +22,8 @@ class Plugin_BookmarkLayout extends Zend_Controller_Plugin_Abstract  {
 			$valid = true;
 		if($request->getControllerName() == 'schedule' && $request->getActionName() == 'view')
 			$valid = false;
+		if($request->getControllerName() == 'notification' || $request->getControllerName() == 'search')
+			$valid = false;
 		if(!$valid)
 			return;
         $front = Zend_Controller_Front::getInstance();

@@ -104,7 +104,7 @@ class Model_DbTable_User extends Zend_Db_Table_Abstract {
             $mailbody = "<div style='width: 100%; '><div style='border-bottom: solid 1px #aaa; margin-bottom: 10px;'>";
             $mailbody = $mailbody . "<a href='http://www.hiveusers.com' style='text-decoration: none;'><span style='font-size: 34px; color: #2e4e68;'><b>hive</b></span>";
             $mailbody = $mailbody . "<span style='font-size: 26px; color: #83ac52; text-decoration:none;'><b>users.com</b></span></a><br/><br/>Password Reset</div>";
-            $mailbody = $mailbody . "<div style='margin-bottom:10px;'><span style='color: #000;'><i>Hello</i>,<br/><br/>Your Password has been Reset to <b>" . $rpassword ."</b></span></div>";
+            $mailbody = $mailbody . "<div style='margin-bottom:10px;'><span style='color: #000;'><i>Hello</i>,<br/><br/>Your Password has been Reset to <b>" . $rpassword ."</b></span><br><span>After logging in change your password <a href = 'http://www.hiveusers.com/userprofile/changepassword'>here</a></span></div>";
             $mailbody = $mailbody . "<div style='border-top: solid 1px #aaa; color:#aaa; padding: 5px;'><center>This is a generated mail, please do not Reply.</center></div></div>";
 
             $mcon = Zend_Registry::get('mailconfig');

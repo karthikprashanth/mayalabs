@@ -4,14 +4,21 @@
 		protected $_name = 'forum_posts';
 		
 		public function getPost($id)
-		{	
-			$row = $this->fetchRow('post_id = '.$id);
-			if(!$row)
-			{
-				$row = array();
-				return $row;
+		{
+			try
+			{	
+				$row = $this->fetchRow('post_id = '.$id);
+				if(!$row)
+				{
+					$row = array();
+					return $row;
+				}
+				return $row->toArray();
 			}
-			return $row->toArray();
+			catch(Exception $e)
+			{
+				return 0;
+			}
 			
 		}
 		

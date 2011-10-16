@@ -26,19 +26,11 @@ class Model_DbTable_Presentation extends Zend_Db_Table_Abstract {
         }
 
         public function listPresentation($id){
-//            $db=Zend_Db_Table::getDefaultAdapter();
-//            $selectPresentaion= new Zend_Db_Select($db);
-//            $selectPresentaion->from('presentations')
-//                              ->where('GTId=?', $id);
-            $id=(int)$id;
-            $row = $this->fetchAll('GTId = ' . $id);
-		if (!$row) {
-			throw new Exception("Could not find row $id");
-		}
-		return $row->toArray();
-
-//            return $selectPresentaion;
-
+			$select = $this->select()
+					->where("GTId = " . $id)
+				   ->order('timeupdate DESC');
+		$rSet = $this->fetchAll($select);
+		return $rSet->toArray();
         }
 }
 

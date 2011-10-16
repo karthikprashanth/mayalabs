@@ -2,19 +2,23 @@
 	if(!count($this->findings))
 	{
 		echo "<center>No Findings Added</center>";
+		
+	}
+	else {
+		echo"<table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
+		<tr>
+		<th>Title</th>
+		<th>System/Subsystem</th>
+		<th>EOH</th>
+		<th>Type of Inspection</th>
+		<th>User</th>
+		<th>Date</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+		</tr>";
 	}
 ?>
-<table cellspacing='0' cellpadding='0' onmouseover='tablecloth();'>
-<tr>
-<th>Title</th>
-<th>System/Subsystem</th>
-<th>EOH</th>
-<th>Type of Inspection</th>
-<th>User</th>
-<th>Date</th>
-<th>&nbsp;</th>
-<th>&nbsp;</th>
-</tr>
+
 
 <?php
 foreach($this->findings as $finding) : ?>
@@ -28,7 +32,7 @@ $username = $user['firstName'] . " " . $user['lastName'] . " - " . $user['plantN
 <?php
 	$ssModel = $this->subSysModel;
 	$ss = $ssModel->getSubSystem($finding['subSysId']);
-	$system = $this->sysModel->getSystem($ss['sysId']);
+	$system = $this->sysModel->getSystem($finding['sysId']);
 ?>
 <?php if($ss['subSysName'] == '-') : ?>
 	<td><?php echo $system['sysName']; ?></td>

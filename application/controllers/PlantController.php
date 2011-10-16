@@ -70,7 +70,7 @@ class PlantController extends Zend_Controller_Action {
             $PView = new Model_DbTable_Plant();
             $PData = $PView->getPlant($id);
             $this->view->id = $id;
-            $this->view->headTitle("View Plant - " . $GTData['corporateName'], 'PREPEND');
+            $this->view->headTitle("View Plant " . $GTData['corporateName'], 'PREPEND');
 
             $this->view->plantData = $PData;
         } catch (Exception $e) {

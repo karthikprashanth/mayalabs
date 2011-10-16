@@ -145,6 +145,17 @@ class UserprofileController extends Zend_Controller_Action {
 			$plant = $pmodel->getPlant($profileData['plantId']);
 			$this->view->uPlantName = $plant['plantName'];
 			$this->view->uPlantId = $profileData['plantId'];
+			
+			$uModel = new Model_DbTable_User();
+			$iscc = $uModel->is_confchair($myUser);
+    		$this->view->iscc = $iscc;
+			if($this->view->iscc)
+			{
+				$this->view->iscc = " (Conference Chairman)";
+			}
+			else {
+				$this->view->iscc = "";
+			}
             $this->view->headTitle('View User - ' . $profileData['firstName'] . ' ' . $profileData['lastName'], 'PREPEND');
 
             $this->view->profileData = $profileData;

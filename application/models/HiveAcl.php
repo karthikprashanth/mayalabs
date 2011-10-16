@@ -122,7 +122,7 @@ class Model_HiveAcl extends Zend_Acl {
         $this->allow('us','advertisement',array('view','randomad','list'));
         $this->allow('us','bookmark');
         $this->allow('us','conference');
-        $this->allow('us','schedule',array('delevent','edit','view','add','add-event-list','delete'));
+        $this->allow('us','schedule',array('delevent','edit','view','add','add-event-list','delete','delsch'));
         $this->allow('us','notification');
 		$this->allow('us','attachments');
         $this->allow('us','search');

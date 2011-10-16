@@ -55,6 +55,7 @@ class FindingsController extends Zend_Controller_Action {
 								}
 	                        }
 	                    }
+						
 						$pmodel = new Model_DbTable_Presentation();
 						$funcs = new Model_Functions();
 						
@@ -102,7 +103,6 @@ class FindingsController extends Zend_Controller_Action {
 							);
 							
 							/* checking for presentation title conflcts */
-							
 							$gtpres = $pmodel->fetchAll('GTId = '. $gtid['gtid']);
 							$exists = false;
 							foreach($gtpres as $gtp)
@@ -156,6 +156,11 @@ class FindingsController extends Zend_Controller_Action {
                         $fid = $userp->add($inscontent);
                         $this->_redirect('/findings/view?id=' . $fid);
                     } else {
+                    	$x = 1;
+						for($x=1;$x<=5;$x++)
+						{
+							$formData['prestitle' . $x] = "";
+						}
                         $form->populate($formData);
                     }
                 }
@@ -197,8 +202,7 @@ class FindingsController extends Zend_Controller_Action {
 					}
                     $content['presentationId'] = $presid;
 					$r = array_diff($content,$gtdata);
-					if(count($r) > 0)
-					{
+					
 								
 						$filenames = array(
 							1 => $form->content1->getFileName(),
@@ -218,6 +222,7 @@ class FindingsController extends Zend_Controller_Action {
 						$pmodel = new Model_DbTable_Presentation();
 						$funcs = new Model_Functions();
 						$i=1;
+						$noPresAdded = 0;
 						for($i=1;$i<=5;$i++)
 						{
 							$pres=file_get_contents($filenames[$i]);
@@ -258,6 +263,7 @@ class FindingsController extends Zend_Controller_Action {
 									return;
 								}
 								$p = $pmodel->insert($data);
+								$noPresAdded++;
 								$checked[$i] = true;
 									
 							}
@@ -296,12 +302,13 @@ class FindingsController extends Zend_Controller_Action {
 							'DOF' => $content['DOF'],
 							'TOI' => $content['TOI']
 						);
-                    	$finding->updateFinding($content);
-                    	$nf = new Model_DbTable_Notification();
-                        $formD = $this->_getParam('id', 0);
-                        $nf->add($formD, 'finding', 0);
-                    }
-
+                    	$affRows = $finding->updateFinding($content);
+						if($affRows + $noPresAdded > 0)
+						{
+	                    	$nf = new Model_DbTable_Notification();
+	                        $formD = $this->_getParam('id', 0);
+                        	$nf->add($formD, 'finding', 0);
+						}
                     $this->_redirect('/findings/view?id=' . $id);
                     if (Zend_Auth::getInstance()->getStorage()->read()->lastlogin == '') {
                         $this->_redirect('finding/list');
@@ -314,6 +321,11 @@ class FindingsController extends Zend_Controller_Action {
 					if($formData['EOH'] == 0)
 					{
 						$formData['EOH'] == "";
+					}
+					$x = 1;
+					for($x=1;$x<=5;$x++)
+					{
+						$formData['prestitle' . $x] = "";
 					}
                     $form->populate($formData);
                 }
