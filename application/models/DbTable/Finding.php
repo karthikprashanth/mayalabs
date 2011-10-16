@@ -39,8 +39,11 @@ class Model_DbTable_Finding extends Zend_Db_Table_Abstract {
     }
 
     public function listFinding($id) {
-        $row = $this->fetchAll("type = 'finding' AND gtid = " . $id);
-		return $row->toArray();
+        $select = $this->select()
+					->where("type = 'finding' AND gtid = " . $id)
+				   ->order('updatedate DESC');
+		$rSet = $this->fetchAll($select);
+		return $rSet->toArray();
     }
     
     public function listGTFindings($gtid) {

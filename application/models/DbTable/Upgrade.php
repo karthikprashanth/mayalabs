@@ -39,8 +39,11 @@ class Model_DbTable_Upgrade extends Zend_Db_Table_Abstract {
     }
 
     public function listUpgrade($id) {
-        $row = $this->fetchAll("type = 'upgrade' AND gtid = " . $id);
-		return $row->toArray();
+        $select = $this->select()
+					->where("type = 'upgrade' AND gtid = " . $id)
+				   ->order('updatedate DESC');
+		$rSet = $this->fetchAll($select);
+		return $rSet->toArray();
     }
     
     public function listGTUpgrade($gtid) {

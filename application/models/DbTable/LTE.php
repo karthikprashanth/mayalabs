@@ -39,8 +39,11 @@ class Model_DbTable_LTE extends Zend_Db_Table_Abstract {
     }
 
     public function listLTE($id) {
-        $row = $this->fetchAll("type = 'lte' AND gtid = " . $id);
-		return $row->toArray();
+        $select = $this->select()
+					->where("type = 'lte' AND gtid = " . $id)
+				   ->order('updatedate DESC');
+		$rSet = $this->fetchAll($select);
+		return $rSet->toArray();
     }
     
     public function listGTLTE($gtid) {
