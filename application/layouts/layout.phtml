@@ -133,6 +133,9 @@
                         <div id="sidebar2">
 						<?php 
 							if(!Zend_Registry::isRegistered('sidebar2')) {
+							$gtdatamodel = new Model_DbTable_Gtdata();
+							$unmailed = $gtdatamodel->fetchAll("mailed = 0");
+							$unmailed = count($unmailed);
                         ?>
 							<div id="advert"><?php echo $this->layout()->advert; ?></div>
                             <div id="bookmark"><?php echo $this->layout()->bookmark; ?></div><br><br>
@@ -142,7 +145,7 @@
                             		<input class = "reset-button" type = "submit" value = "Search Index">
                             	</form>
                             	<br><form action = "/administration/mailnotify">
-                            		<input class = "reset-button" type = "submit" value = "Fortnight Mail">
+                            		<input class = "reset-button" type = "submit" value = "Fortnight Mail (<?php echo $unmailed;?>)">
                             	</form>
                             </div>
 						<?php } ?>
@@ -163,7 +166,8 @@
                 </div>
             </div>
         </div>
+        <p><div><a href="https://www.sitelock.com/verify.php?site=www.hiveusers.com" target="_blank"><img alt="website security" title="SiteLock" border="0" height = 80 width = 140 src="//shield.sitelock.com/shield/www.hiveusers.com"/></a></div></p>
         <div style='clear:both;'>&nbsp;</div>
-        <div id="footer">Copyright 2010</div>
+        <div id="footer">Copyright 2011</div>
     </body>
 </html>
