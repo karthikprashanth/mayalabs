@@ -321,31 +321,16 @@
 	<!-- PHP -->
 		global $phpbb_root_path;
 		require($phpbb_root_path . 'config.php');
-		echo $dbhost . "," . $dbuser . "," . $dbpasswd . "," . $dbname . "<br>";
-		$c = mysql_connect($dbhost,$dbuser,$dbpasswd);
-		if($c)
-		{
-			echo "Connected" . "<br>";
-		}
-		else
-		{
-			echo "Not connected" . "<br>";
-		}
-		$c = mysql_select_db($dbname);
-		if($c)
-		{
-			echo "connected" . "<br>";
-		}
-		else
-		{
-			echo "not connected" . "<br>";
-		}
+		
+		mysql_connect($dbhost,$dbuser,$dbpasswd);
+		
+		mysql_select_db($dbname);
+		
 		$host = $_SERVER['HTTP_HOST'];
 		$uri = $_SERVER['PHP_SELF'];
 		$uri = substr($uri,8);
 		$separator = " &gt; ";
 		$breadcrumb = "<a href = 'http://" . $host . "'>Home</a>" . $separator;
-		echo "URI = " . $uri;
 		switch($uri)
 		{
 			case "index.php":
@@ -353,7 +338,6 @@
 				break;
 			case "viewforum.php":
 				$params = $_SERVER['QUERY_STRING'];
-				echo "Params = " . $params;
 				$f = (int)substr($params,2);
 				$sql = "SELECT * FROM forum_forums WHERE forum_id = " . $f;
 				$result = mysql_query($sql);
@@ -363,7 +347,6 @@
 				}
 				$row = mysql_fetch_row($result);
 				$fname = $row[5];
-				echo "Forum name = " . $fname;
 				$breadcrumb .= "<a href = 'http://" . $host . "/forums'>Forums</a>" . $separator . "<a href = 'http://" .$host . "/forums/viewforum.php?f=" . $f . "'>" . $fname . "</a>";
 				break;
 			case "viewtopic.php":
