@@ -319,7 +319,8 @@
 	<div id="container">
 		<div id = "breadcrumbs">
 	<!-- PHP -->
-		global $phpbb_root_path,$dbms,$phpEx,$dbhost, $dbuser, $dbpasswd, $dbname, $dbport;
+		global $phpbb_root_path;
+		require($phpbb_root_path . 'config.' . $phpEx);
 		echo $dbhost . "," . $dbuser . "," . $dbpasswd . "," . $dbname . "<br>";
 		$c = mysql_connect($dbhost,$dbuser,$dbpasswd);
 		if($c)
