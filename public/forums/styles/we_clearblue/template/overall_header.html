@@ -325,8 +325,9 @@
 		$host = $_SERVER['HTTP_HOST'];
 		$uri = $_SERVER['PHP_SELF'];
 		$uri = substr($uri,8);
-		$separator = " -> ";
+		$separator = " &gt; ";
 		$breadcrumb = "<a href = 'http://" . $host . "'>Home</a>" . $separator;
+		echo "URI = " . $uri;
 		switch($uri)
 		{
 			case "index.php":
@@ -334,15 +335,17 @@
 				break;
 			case "viewforum.php":
 				$params = $_SERVER['QUERY_STRING'];
+				echo "Params = " . $params;
 				$f = (int)substr($params,2);
 				$sql = "SELECT * FROM forum_forums WHERE forum_id = " . $f;
 				$result = mysql_query($sql);
 				if(!$result)
 				{
-					return;
+					break;
 				}
 				$row = mysql_fetch_row($result);
 				$fname = $row[5];
+				echo "Forum name = " . $fname;
 				$breadcrumb .= "<a href = 'http://" . $host . "/forums'>Forums</a>" . $separator . "<a href = 'http://" .$host . "/forums/viewforum.php?f=" . $f . "'>" . $fname . "</a>";
 				break;
 			case "viewtopic.php":
@@ -354,7 +357,7 @@
 				$result = mysql_query($sql);
 				if(!$result)
 				{
-					return;
+					break;
 				}
 				$row = mysql_fetch_row($result);
 				$fname = $row[5];
@@ -362,7 +365,7 @@
 				$result = mysql_query($sql);
 				if(!$result)
 				{
-					return;
+					break;
 				}
 				$row = mysql_fetch_row($result);
 				$tname = $row[6];
@@ -381,7 +384,7 @@
 						$result = mysql_query($sql);
 						if(!$result)
 						{
-							return;
+							break;
 						}
 						$row = mysql_fetch_row($result);
 						$fname = $row[5];
@@ -397,7 +400,7 @@
 						$result = mysql_query($sql);
 						if(!$result)
 						{
-							return;
+							break;
 						}
 						$row = mysql_fetch_row($result);
 						$fname = $row[5];
@@ -405,7 +408,7 @@
 						$result = mysql_query($sql);
 						if(!$result)
 						{
-							return;
+							break;
 						}
 						$row = mysql_fetch_row($result);
 						$tname = $row[6];
@@ -422,7 +425,7 @@
 						$result = mysql_query($sql);
 						if(!$result)
 						{
-							return;
+							break;
 						}
 						$row = mysql_fetch_row($result);
 						$fname = $row[5];
@@ -430,7 +433,7 @@
 						$result = mysql_query($sql);
 						if(!$result)
 						{
-							return;
+							break;
 						}
 						$row = mysql_fetch_row($result);
 						$pname = $row[14];
@@ -439,7 +442,7 @@
 						$result = mysql_query($sql);
 						if(!$result)
 						{
-							return;
+							break;
 						}
 						$row = mysql_fetch_row($result);
 						$tname = $row[6];
@@ -457,7 +460,7 @@
 						$result = mysql_query($sql);
 						if(!$result)
 						{
-							return;
+							break;
 						}
 						$row = mysql_fetch_row($result);
 						$fname = $row[5];
@@ -465,7 +468,7 @@
 						$result = mysql_query($sql);
 						if(!$result)
 						{
-							return;
+							break;
 						}
 						$row = mysql_fetch_row($result);
 						$pname = $row[14];
@@ -474,7 +477,7 @@
 						$result = mysql_query($sql);
 						if(!$result)
 						{
-							return;
+							break;
 						}
 						$row = mysql_fetch_row($result);
 						$tname = $row[6];
@@ -492,7 +495,7 @@
 						$result = mysql_query($sql);
 						if(!$result)
 						{
-							return;
+							break;
 						}
 						$row = mysql_fetch_row($result);
 						$fname = $row[5];
@@ -500,7 +503,7 @@
 						$result = mysql_query($sql);
 						if(!$result)
 						{
-							return;
+							break;
 						}
 						$row = mysql_fetch_row($result);
 						$pname = $row[14];
@@ -509,7 +512,7 @@
 						$result = mysql_query($sql);
 						if(!$result)
 						{
-							return;
+							break;
 						}
 						$row = mysql_fetch_row($result);
 						$tname = $row[6];
@@ -521,9 +524,6 @@
 				}
 				
 		}
-		
-		
-		
 		echo $breadcrumb;
 	<!-- ENDPHP -->
 	</div>

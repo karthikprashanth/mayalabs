@@ -109,7 +109,7 @@ class Model_HiveAcl extends Zend_Acl {
 		
 		$this->allow('us','userprofile');
 		$this->deny('us','userprofile','add');
-		$this->allow('us','gasturbine',array('index','view','list','details','plantlist'));
+		$this->allow('us','gasturbine',array('index','view','details','plantlist'));
 		$this->allow('us','plant',array('view','index','clist','results'));
 		$this->allow('us','authentication','logout');
 		$this->allow('us','dashboard');
@@ -145,6 +145,7 @@ class Model_HiveAcl extends Zend_Acl {
 		$this->allow('sa','userprofile');
 		$this->allow('ca','administration',array('list','deleteacc','resetpassword'));
         $this->allow('sa','plant');
+		$this->allow('sa','gasturbine');
 		$this->allow('sa','search');
 		$this->allow('sa','administration');
 

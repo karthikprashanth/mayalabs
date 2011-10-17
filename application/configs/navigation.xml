@@ -267,6 +267,11 @@
 						</list>
 					</pages>
 				</users>
+				<mailnotify>
+					<label>Fortnight Mail</label>
+					<controller>administration</controller>
+					<action>mailnotify</action>
+				</mailnotify>
 				<bookmarks>
 					<label>Bookmarks</label>
 					<controller>bookmark</controller>
