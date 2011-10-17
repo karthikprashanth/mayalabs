@@ -54,7 +54,7 @@ class Form_GTDataForm extends Zend_Form {
         $sys = new Zend_Form_Element_Select('sysId');
         $sys->setLabel('System Name')
                 ->addMultiOptions($sysNames)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                
                 ->setRequired(true)
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim')
@@ -68,7 +68,7 @@ class Form_GTDataForm extends Zend_Form {
         $subsys = new Zend_Form_Element_Select('subSysId');
         $subsys->setLabel('Sub System Name')
                 ->addMultiOptions($sysSubNames)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim')
                 ->addValidator('NotEmpty');
@@ -82,7 +82,7 @@ class Form_GTDataForm extends Zend_Form {
 
         $eoh = new Zend_Form_Element_Text('EOH');
         $eoh->setLabel('EOH at Occurence')
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim')
                 ->addValidator(Model_Validators::int());
@@ -95,7 +95,7 @@ class Form_GTDataForm extends Zend_Form {
         $dof = new ZendX_JQuery_Form_Element_DatePicker('DOF',
                         array('jQueryParams' => array('dateFormat' => 'yy-mm-dd', 'defaultDate' => '0', 'changeYear' => 'true')));
         $dof->setLabel('Date of ' . $doflabel)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                
                 ->addValidator(Model_Validators::dateval())
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim');
@@ -125,7 +125,7 @@ class Form_GTDataForm extends Zend_Form {
 
         $prestitle1 = new Zend_Form_Element_Text('prestitle1');
         $prestitle1->setLabel('Attachment Title')
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                
                 ->addValidator('NotEmpty')
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim');
@@ -241,7 +241,7 @@ class Form_GTDataForm extends Zend_Form {
         $pid = new Zend_Form_Element_Multiselect('presentationId');
         $pid->setLabel('Or Choose an Existing Presentation')
                 ->addMultiOptions($data)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim');
         $pid->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
@@ -260,7 +260,7 @@ class Form_GTDataForm extends Zend_Form {
         $Title = new Zend_Form_Element_Text('title');
         $Title->setLabel('Title')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                
                 ->addValidator('NotEmpty')
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim');
@@ -274,7 +274,7 @@ class Form_GTDataForm extends Zend_Form {
         $Data = new Zend_Form_Element_Textarea('data');
         $Data->setLabel('Data')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                
                 ->addValidator('NotEmpty')
                 ->addFilter('StringTrim');
         $Data->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),

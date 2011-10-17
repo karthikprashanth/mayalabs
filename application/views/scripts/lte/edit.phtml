@@ -1,4 +1,5 @@
 <?php
+echo $this->headScript()->prependFile($this->baseUrl().'/js/ajaxvalidation.js');
 $existPresList = "<b>Attachments already added to this</b><br><br>";
 $pres_str = substr($this->gtdata['presentationId'],0,strlen($this->gtdata['presentationId'])-1);
 $pres_array = explode(",",$pres_str);
@@ -104,4 +105,16 @@ echo $this->tabContainer("LTEEdit",array());
         });
     });
 });
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+	    $("input").blur(function(){
+	    	if(this.value == "" || this.value == null)
+	    	{
+	    		return;
+	    	}
+	        var formElementId = ($(this).parent().prev().find('label').attr('for'));
+	        doValidationPlant($(this).attr('id'),'../validation/validate?form=gtdata&type=lte');
+	   });
+	});
 </script>

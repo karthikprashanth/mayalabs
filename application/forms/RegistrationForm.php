@@ -13,7 +13,6 @@ class Form_RegistrationForm extends Zend_Form
     ->addFilter('StripTags')
     ->addFilter('StringTrim')
     ->addValidator('NotEmpty')
-    ->addDecorator('Htmltag',array('tag' => 'br'))
     ->addValidator(Model_Validators::alnum());
 
     $role = new Zend_Form_Element_Select('role');
@@ -22,7 +21,6 @@ class Form_RegistrationForm extends Zend_Form
     ->setRequired(true)
     ->addFilter('StripTags')
     ->addFilter('StringTrim')
-    ->addDecorator('Htmltag',array('tag' => 'br'))
     ->addValidator('NotEmpty');
 
     $submit = new Zend_Form_Element_Submit('submit');

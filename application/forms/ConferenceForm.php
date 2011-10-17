@@ -51,8 +51,7 @@ class Form_ConferenceForm extends Zend_Form {
                 ->addDecorator('Htmltag', array('tag' => 'br'))
                 ->setRequired(true)
                 ->addFilter('StripTags')
-                ->addFilter('StringTrim')
-                ->addValidator('NotEmpty');
+                ->addFilter('StringTrim');
         $host->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
             'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),
             array('Label', array('tag' => 'td')),
@@ -72,7 +71,6 @@ class Form_ConferenceForm extends Zend_Form {
                 ->setAttrib('COLS', '16')
                 ->setAttrib('ROWS', '5')
                 ->addDecorator('Htmltag', array('tag' => 'br'))
-                ->addValidator('NotEmpty')
                 ->addFilter('StringTrim');
         $abstract->setDecorators(array('ViewHelper', array('Description', array('tag' => '', 'escape' => false)),
             'Errors', array(array('data' => 'HtmlTag'), array('tag' => 'td')),

@@ -11,7 +11,6 @@ class Form_GalleryForm extends Zend_Form {
         $Title = new Zend_Form_Element_Text('tag');
         $Title->setLabel('Photo Tag')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
                 ->addValidator('NotEmpty')
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim');
@@ -20,8 +19,7 @@ class Form_GalleryForm extends Zend_Form {
         $appath = substr(APPLICATION_PATH, 0, strlen(APPLICATION_PATH) - 12);
         $content = new Zend_Form_Element_File('data');
         $content->setLabel('Upload the Photo')
-                ->setDestination($appath . '/public/uploads')
-                ->addDecorator('Htmltag', array('tag' => 'br'));
+                ->setDestination($appath . '/public/uploads');
 
         $info = new Zend_Form_Element_Hidden('info');
         $info->setLabel("(allowed formats - jpg,jpeg,png,gif)");

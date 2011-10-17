@@ -29,6 +29,7 @@ class Model_HiveAcl extends Zend_Acl {
         $this->add(new Zend_Acl_Resource('gasturbine:addvalidate'), 'gasturbine');
         $this->add(new Zend_Acl_Resource('gasturbine:details'), 'gasturbine');
                 
+		$this->add(new Zend_Acl_Resource('validation'));
 
 		$this->add(new Zend_Acl_Resource('plant'));
 		$this->add(new Zend_Acl_Resource('plant:index'), 'plant');
@@ -126,7 +127,9 @@ class Model_HiveAcl extends Zend_Acl {
         $this->allow('us','notification');
 		$this->allow('us','attachments');
         $this->allow('us','search');
+		$this->allow('us','validation');
 		$this->deny('us','search','searchindex');
+		
 		
 //		access privilages for editor
 //

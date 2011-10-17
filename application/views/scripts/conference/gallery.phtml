@@ -2,6 +2,7 @@
 $data = $this->form.$this->message;
 $this->tabPane("ConfGall",$data,array('title' => 'Conference Gallery'));
 echo $this->tabContainer("ConfGall",array());
+echo $this->headScript()->prependFile($this->baseUrl().'/js/ajaxvalidation.js');
 ?>
 <script type = "text/javascript">
 	$("#data").change(function(){
@@ -19,5 +20,17 @@ echo $this->tabContainer("ConfGall",array());
 			document.getElementById("data").value = "";
 		}
 			
+	});
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+	    $("input").blur(function(){
+	    	if(this.value == "" || this.value == null)
+	    	{
+	    		return;
+	    	}
+	        var formElementId = ($(this).parent().prev().find('label').attr('for'));
+	        doValidationPlant($(this).attr('id'),'../validation/validate?form=gallery');
+	   });
 	});
 </script>

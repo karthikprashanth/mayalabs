@@ -52,16 +52,17 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $corporateName = new Zend_Form_Element_Text('corporateName');
         $corporateName->setLabel('Corporate Name')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::alpha())
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim');
+		
 
         $corporateLocation = new Zend_Form_Element_Text('corporateLocation');
         $corporateLocation->setLabel('Corporate Location')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::alpha())
                 ->addFilter('StripTags')
@@ -70,7 +71,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $corporateProvince = new Zend_Form_Element_Text('corporateProvince');
         $corporateProvince->setLabel('Corporate Province')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::alpha())
                 ->addFilter('StripTags')
@@ -79,7 +80,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $corporateState = new Zend_Form_Element_Text('corporateState');
         $corporateState->setLabel('Corporate State')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::alpha())
                 ->addFilter('StripTags')
@@ -88,7 +89,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $corporateCountry = new Zend_Form_Element_Text('corporateCountry');
         $corporateCountry->setLabel('Corporate Country')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::alpha())
                 ->addFilter('StripTags')
@@ -97,7 +98,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $corporateZip = new Zend_Form_Element_Text('corporateZip');
         $corporateZip->setLabel('Corporate Zip')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::int())
                 ->addFilter('StripTags')
@@ -106,7 +107,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $corporateTelephone = new Zend_Form_Element_Text('corporateTelephone');
         $corporateTelephone->setLabel('Corporate Telephone')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addFilter('StripTags')
                 ->addValidator(Model_Validators::regex('/[^0-9+-]+/'))
@@ -115,7 +116,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $corporateFax = new Zend_Form_Element_Text('corporateFax');
         $corporateFax->setLabel('Corporate Fax')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addFilter('StripTags')
                 ->addValidator(Model_Validators::regex('/[^0-9+-]+/'))
@@ -124,7 +125,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $corporateWebsite = new Zend_Form_Element_Text('corporateWebsite');
         $corporateWebsite->setLabel('Corporate Website')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::regex('/[^a-z0-9_.@]+/'))
                 ->addFilter('StripTags')
@@ -146,7 +147,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $plantName = new Zend_Form_Element_Text('plantName');
         $plantName->setLabel('Plant Name')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::alpha())
                 ->addFilter('StripTags')
@@ -155,7 +156,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $plantLocation = new Zend_Form_Element_Text('plantLocation');
         $plantLocation->setLabel('Plant Location')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::alpha())
                 ->addFilter('StripTags')
@@ -165,7 +166,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $plantState = new Zend_Form_Element_Text('plantState');
         $plantState->setLabel('Plant State')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::alpha())
                 ->addFilter('StripTags')
@@ -174,7 +175,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $plantCountry = new Zend_Form_Element_Text('plantCountry');
         $plantCountry->setLabel('Plant Country')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::alpha())
                 ->addFilter('StripTags')
@@ -183,7 +184,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $plantZip = new Zend_Form_Element_Text('plantZip');
         $plantZip->setLabel('Plant Zip')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::int())
                 ->addFilter('StripTags')
@@ -192,7 +193,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $plantTelephone = new Zend_Form_Element_Text('plantTelephone');
         $plantTelephone->setLabel('Plant Telephone')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addFilter('StripTags')
                 ->addValidator(Model_Validators::regex('/[^0-9+-]+/'))
@@ -201,7 +202,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $plantFax = new Zend_Form_Element_Text('plantFax');
         $plantFax->setLabel('Plant Fax')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::regex('/[^0-9+-]+/'))
                 ->addFilter('StripTags')
@@ -210,7 +211,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $plantWebsite = new Zend_Form_Element_Text('plantWebsite');
         $plantWebsite->setLabel('Plant Website')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::regex('/[^a-z0-9_.@]+/'))
                 ->addFilter('StripTags')
@@ -219,7 +220,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $numOfGT = new Zend_Form_Element_Text('numOfGT');
         $numOfGT->setLabel('Number Of GT')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::int())
                 ->addFilter('StripTags')
@@ -239,7 +240,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $GTMake = new Zend_Form_Element_Select('GTMake');
         $GTMake->setLabel('GT Make')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addMultiOptions(array('Siemens' => 'Siemens'))
                 ->addValidator(Model_Validators::alpha())
@@ -249,7 +250,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $GTBaseModel = new Zend_Form_Element_Select('GTBaseModel');
         $GTBaseModel->setLabel('GT Base Model')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addMultiOptions(array('v93.4A' => 'v93.4A'))
                 ->addValidator('NotEmpty')
                 ->addFilter('StripTags')
@@ -258,7 +259,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $plantAmbientTempMax = new Zend_Form_Element_Text('plantAmbientTempMax');
         $plantAmbientTempMax->setLabel('Plant Ambient Temp Max')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::int())
                 ->addFilter('StripTags')
@@ -267,7 +268,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $plantAmbientTempMin = new Zend_Form_Element_Text('plantAmbientTempMin');
         $plantAmbientTempMin->setLabel('Plant Ambient Temp Min')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::int())
                 ->addFilter('StripTags')
@@ -276,7 +277,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $plantAmbientTempAvg = new Zend_Form_Element_Text('plantAmbientTempAvg');
         $plantAmbientTempAvg->setLabel('Plant Ambient Temp Avg')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::int())
                 ->addFilter('StripTags')
@@ -285,7 +286,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $PLFMax = new Zend_Form_Element_Text('PLFMax');
         $PLFMax->setLabel('PLF Max')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::int())
                 ->addFilter('StripTags')
@@ -294,7 +295,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $PLFMin = new Zend_Form_Element_Text('PLFMin');
         $PLFMin->setLabel('PLF Min')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::int())
                 ->addFilter('StripTags')
@@ -304,7 +305,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $PLFAvg = new Zend_Form_Element_Text('PLFAvg');
         $PLFAvg->setLabel('PLF Avg')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::int())
                 ->addFilter('StripTags')
@@ -315,7 +316,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $GTStartMax = new Zend_Form_Element_Text('GTStartMax');
         $GTStartMax->setLabel('GT Start Max')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::int())
                 ->addFilter('StripTags')
@@ -326,7 +327,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $GTStartMin = new Zend_Form_Element_Text('GTStartMin');
         $GTStartMin->setLabel('GT Start Min')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::int())
                 ->addFilter('StripTags')
@@ -335,7 +336,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $GTStartAvg = new Zend_Form_Element_Text('GTStartAvg');
         $GTStartAvg->setLabel('GT Start Avg')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::int())
                 ->addFilter('StripTags')
@@ -345,7 +346,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $GTTripMax = new Zend_Form_Element_Text('GTTripMax');
         $GTTripMax->setLabel('GT Trip Max')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::int())
                 ->addFilter('StripTags')
@@ -355,7 +356,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $GTTripMin = new Zend_Form_Element_Text('GTTripMin');
         $GTTripMin->setLabel('GT Trip Min')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::int())
                 ->addFilter('StripTags')
@@ -365,7 +366,7 @@ class Form_PlantForm extends ZendX_JQuery_Form {
         $GTTripAvg = new Zend_Form_Element_Text('GTTripAvg');
         $GTTripAvg->setLabel('GT Trip Avg')
                 ->setRequired(true)
-                ->addDecorator('Htmltag', array('tag' => 'br'))
+                ->addDecorator('Htmltag', array('tag' => 'div'))
                 ->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::int())
                 ->addFilter('StripTags')

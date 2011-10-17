@@ -14,6 +14,8 @@ class Form_ChangePasswordForm extends Zend_Form
     ->addFilter('StringTrim')
     ->addValidator('NotEmpty')
     ->addValidator(Model_Validators::regex('/[^a-zA-Z0-9$_.@]+/'));
+	
+	
     
     //new password
 			

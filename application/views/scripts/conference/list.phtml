@@ -10,10 +10,11 @@ $synopsis = "<center>" . $conf['abstract'] . "</center>";
 
 
 $i = 0;
+$role = Zend_Registry::get("role");
 if($role == "sa" || $this->iscc)
 	$gallery = $gallery . "<a href = '/conference/gallery?id=".$conf['cId']."'>Add a new photo</a><br><br>";
 $tag[] = array();
-$role = Zend_Registry::get("role");
+
 foreach ($this->confGallery as $photos) {
     $img = 'random/confgal' . $i;
     file_put_contents($img, $photos['data']);

@@ -10,8 +10,12 @@ echo $this->message;
 <script type="text/javascript">
     $(document).ready(function(){
 	    $("input").blur(function(){
+	    	if(this.value == "" || this.value == null)
+	    	{
+	    		return;
+	    	}
 	        var formElementId = ($(this).parent().prev().find('label').attr('for'));
-	        doValidation($(this).attr('id'),'../gasturbine/addvalidate/');
+	        doValidation($(this).attr('id'),'../validation/validate?form=gasturbine');
 	   });
 	});
 </script>

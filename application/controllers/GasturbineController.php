@@ -155,36 +155,6 @@ class GasturbineController extends Zend_Controller_Action
         }
     }
 
-    public function addvalidateAction()
-    {
-        try {
-            $this->_helper->viewRenderer->setNoRender();
-            $this->_helper->getHelper('layout')->disableLayout();
-            $form = new Form_GasturbineForm();
-            $formData = $this->getRequest()->getPost();
-            $form->isValid($formData);
-            $json = $form->getMessages();
-            echo Zend_Json::encode($json);
-        } catch (Exception $e) {
-            echo $e;
-            }
-    }
-
-    public function editvalidateAction()
-    {
-        try {
-            $this->_helper->viewRenderer->setNoRender();
-            $this->_helper->getHelper('layout')->disableLayout();
-            $form = new Form_GasturbineForm();
-            $formData = $this->getRequest()->getPost();
-            $form->isValid($formData);
-            $json = $form->getMessages();
-            echo Zend_Json::encode($json);
-        } catch (Exception $e) {
-            echo $e;
-            }
-    }
-
     public function detailsAction()
     {
         if ($this->_request->isXmlHttpRequest()) {

@@ -46,9 +46,14 @@ if($lastlogin == NULL)
 	});
 	
     $(document).ready(function(){
-    $("input").blur(function(){
-        var formElementId = ($(this).parent().prev().find('label').attr('for'));
-        doValidation(formElementId,'/hive/public/plant/editvalidate/');
-   });
-});
+    	
+	    $("input").blur(function(){
+	    	if(this.value == "" || this.value == null)
+	    	{
+	    		return;
+	    	}
+	        var formElementId = ($(this).parent().prev().find('label').attr('for'));
+	        doValidationPlant($(this).attr('id'),'../validation/validate?form=plant');
+	   });
+	});
 </script>

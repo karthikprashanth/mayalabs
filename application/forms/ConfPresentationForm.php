@@ -10,7 +10,6 @@ class Form_ConfPresentationForm extends Zend_Form{
                 $Title = new Zend_Form_Element_Text('title');
                 $Title->setLabel('Attachment Title')
                 ->setRequired(true)
-                ->addDecorator('Htmltag',array('tag' => 'br'))
                 ->addValidator('NotEmpty')
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim');
@@ -29,7 +28,6 @@ class Form_ConfPresentationForm extends Zend_Form{
                 
                 $plantName = new Zend_Form_Element_Select('plantId');
                 $plantName->setLabel('Plant Name')
-                		  ->addDecorator('Htmltag',array('tag'=>'br'))
                 		  ->addMultiOptions($data)
                 		  ->setRequired(true)
 					      ->addFilter('StripTags')
@@ -40,8 +38,7 @@ class Form_ConfPresentationForm extends Zend_Form{
 				
                 $content=new Zend_Form_Element_File('content');
                 $content->setLabel('Upload the File')
-                        ->setDestination($appath . '/public/uploads')
-                        ->addDecorator('Htmltag',array('tag' => 'br'));
+                        ->setDestination($appath . '/public/uploads');
 				
 				$info= new Zend_Form_Element_Hidden('info');
     			$info->setLabel("(allowed formats - pdf,ppt,pptx,xls,xlsx,doc,docx)");
