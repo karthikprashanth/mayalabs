@@ -320,7 +320,7 @@
 		<div id = "breadcrumbs">
 	<!-- PHP -->
 		global $phpbb_root_path;
-		require($phpbb_root_path . 'config.' . $phpEx);
+		require($phpbb_root_path . 'config.php');
 		echo $dbhost . "," . $dbuser . "," . $dbpasswd . "," . $dbname . "<br>";
 		$c = mysql_connect($dbhost,$dbuser,$dbpasswd);
 		if($c)
