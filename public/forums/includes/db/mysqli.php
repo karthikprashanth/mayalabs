@@ -470,5 +470,4 @@ class dbal_mysqli extends dbal
 		return $r;
 	}
 }
-
 ?>
