@@ -140,7 +140,11 @@
 							<div id="advert"><?php echo $this->layout()->advert; ?></div>
                             <div id="bookmark"><?php echo $this->layout()->bookmark; ?></div><br><br>
                             <div id = "demovideo" style = "margin-left: 10px"><iframe width="190" height="150" src="http://www.youtube.com/embed/iXixiKCPNrM" frameborder="0" allowfullscreen></iframe></div>
-                            <br><div id = "adminbuttons" style = "margin-left:10px">
+                            <br>
+                            <?php 
+                            	if($role == 'sa') :
+							?>
+                            <div id = "adminbuttons" style = "margin-left:10px">
                             	<form action = "/search/searchindex">
                             		<input class = "reset-button" type = "submit" value = "Search Index">
                             	</form>
@@ -148,6 +152,7 @@
                             		<input class = "reset-button" type = "submit" value = "Fortnight Mail (<?php echo $unmailed;?>)">
                             	</form>
                             </div>
+                          <?php endif; ?>
 						<?php } ?>
                         </div>
   
