@@ -112,7 +112,10 @@ if($this->tgr != 0) :?>
 	                $searchData = substr($data['data'], 0, 400) . " ...";
 	            }
 			}
-			
+			if($this->displayMode == 'full')
+			{
+				$searchData = $data['data'];
+			}
 			if($data['type'] == 'finding')
 			{
 				$dofstr = "Finding";

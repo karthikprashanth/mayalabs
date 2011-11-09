@@ -35,7 +35,7 @@ class AuthenticationController extends Zend_Controller_Action {
 
     public function loginAction() {
 
-		
+		$this->_helper->getHelper('Layout')->disableLayout();
        	$this->view->headTitle('Login', 'PREPEND');
         if (Zend_Auth::getInstance()->hasIdentity()) {
             Zend_Registry::set('id', Zend_Auth::getInstance()->getStorage()->read()->id);
@@ -65,16 +65,17 @@ class AuthenticationController extends Zend_Controller_Action {
             	$t_url = 'dashboard/index';
 			}
 		}
-                           
+        
         $form = new Form_LoginForm(array('t'=>$t_url));
 
         if ($request->isPost()) {
             if ($form->isValid($this->_request->getPost())) {
 
-
+				
                 $authAdapter = $this->getAuthAdapter();
 
                 $username = $form->getValue('username');
+				
 				$umodel = new Model_DbTable_User();
 				$user  = $umodel->fetchRow("username = '" . $username . "'");
 				$id = $user['id'];
@@ -88,7 +89,7 @@ class AuthenticationController extends Zend_Controller_Action {
                     if ($result->isValid()) {
                     	
                         $identity = $authAdapter->getResultRowObject();
-
+						
                         $authStorage = $auth->getStorage();
                         $authStorage->write($identity);
 
@@ -137,7 +138,39 @@ class AuthenticationController extends Zend_Controller_Action {
         }
         $this->view->form = $form;
     }
-
+	
+	public function apiloginAction()
+	{
+		$this->_helper->getHelper('Layout')->disableLayout();
+		
+		//Getting the user credentials
+		$username = $this->_getParam("username","");
+		$password = $this->_getParam("password","");
+		
+		$umodel = new Model_DbTable_User();
+		$user  = $umodel->fetchRow("username = '" . $username . "'");
+		$id = $user['id'];
+        
+        $password = md5($password . "{" . $id . "}");
+		
+		$authAdapter = $this->getAuthAdapter();
+		$authAdapter->setIdentity($username)
+                    ->setCredential($password);
+        
+        $auth = Zend_Auth::getInstance();
+		
+        $result = $auth->authenticate($authAdapter);
+		if($result->isValid())
+		{
+			echo "true";
+		}
+		else
+		{
+			echo "false";		
+		}
+		
+	}
+	
     public function logoutAction() {
         //logout from forum
         $uid = Zend_Auth::getInstance()->getStorage()->read()->id;

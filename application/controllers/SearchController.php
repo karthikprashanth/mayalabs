@@ -62,9 +62,12 @@ class SearchController extends Zend_Controller_Action
 	
 	public function viewAction()
 	{
-		
-		if($this->getRequest()->isGet())
+		$keyword = $this->_getParam('keyword');
+		$displayMode = $this->_getParam('displaymode');
+		$this->view->displayMode = $displayMode;
+		if($this->getRequest()->isGet() || $keyword != "")
 		{
+			
 			$cat = $this->_getParam('cat');
 			$ll = $this->_getParam('ll');
 			$ul = $this->_getParam('ul');

@@ -45,7 +45,7 @@
 	$luckyNumArr = explode(" ",$astro[2]);
 	$luckyNum = (int)substr($luckyNumArr[4],0);
 	
-	//Contructing the JSON Array
+	//Constructing the JSON Array
 	
 	$json = array(
 		'sunSign' => $sunSign,
