@@ -62,9 +62,11 @@ class SearchController extends Zend_Controller_Action
 	
 	public function viewAction()
 	{
+		$this->_helper->getHelper('layout')->disableLayout();
 		$keyword = $this->_getParam('keyword');
 		$displayMode = $this->_getParam('displaymode');
 		$this->view->displayMode = $displayMode;
+		
 		if($this->getRequest()->isGet() || $keyword != "")
 		{
 			
@@ -83,7 +85,7 @@ class SearchController extends Zend_Controller_Action
 				$this->view->eohto = $to;
 			}
 			$queryStr = $this->_getParam('keyword',0);
-			$this->_helper->getHelper('layout')->disableLayout();
+			
 			$t1= time();
 			$appath = substr(APPLICATION_PATH,0,strlen(APPLICATION_PATH)-12);
 			$path = $appath . DIRECTORY_SEPARATOR . "search" . DIRECTORY_SEPARATOR . "gtdata";
@@ -149,7 +151,7 @@ class SearchController extends Zend_Controller_Action
 					$data[$count]['url'] = "/" . $type[$gtdata['type']] . "/view?id=" . $data[$count]['id'];				
 					$data[$count]['gtid'] = $gtdata['gtid'];
 					$data[$count]['updatedate'] = $gtdata['updatedate'];
-					$data[$count]['data'] = $gtdata['data'];
+					$data[$count]['data'] = strip_tags($gtdata['data']);
 					$data[$count]['type'] = $gtdata['type'];
 					$data[$count]['userupdate'] = $gtdata['userupdate'];
 					$data[$count]['userplantname'] = $uplantname;
@@ -221,7 +223,7 @@ class SearchController extends Zend_Controller_Action
 					$fdata[$count]['forum_id'] = $fid;
 					$fdata[$count]['poster_id'] = $uid;
 					$fdata[$count]['post_subject'] = $post['post_subject'];
-					$fdata[$count]['post_text'] = $post['post_text'];
+					$fdata[$count]['post_text'] = strip_tags($post['post_text']);
 					$fdata[$count]['topicname'] = $topicname;
 					$fdata[$count]['forumname'] = $forumname;
 					$fdata[$count]['userplantname'] = $uplantname;
@@ -235,6 +237,7 @@ class SearchController extends Zend_Controller_Action
 				$this->view->fgr = $i-1;
 				
 			}
+			
 			if($ul > $i)
 			{
 				$ul = $i-1;
@@ -244,7 +247,75 @@ class SearchController extends Zend_Controller_Action
 			$this->view->queryStr = $queryStr;
 			$t2=time();	                	 
 		}
-
+		$sid = $this->getRequest()->getPost("sid");
+		$uname = $this->getRequest()->getPost("uname");
+		if($sid != "") {
+			$umodel = new Model_DbTable_User();
+			$user = $umodel->fetchRow("username = '" . $uname . "'");
+			$secureId = explode(",",$user['sid']);
+			$valid=false;
+			foreach($secureId as $s)
+			{
+				if($s==$sid)
+				{
+					$valid=true;
+					break;
+				}
+			}
+			$this->view->jsonvalid = $valid;
+			$umodel = new Model_DbTable_Userprofile();
+			if($cat=='gt')
+			{
+				$results = array();
+				$results['noOfResults'] = $this->view->tgr;
+				$i=1;
+				
+				foreach($data as $row)
+				{
+					$user = $umodel->getUser($row['userupdate']);
+					$username = $user['firstName'] . " " . $user['lastName'];
+					$result = array(
+						'title'         => $row['title'],
+						'type'       	=> $row['type'],
+						'data'       	=> $row['data'],
+						'sysname'       => $row['sysname'],
+						'subsysname'    => $row['subsysname'],
+						'eoh'  			=> $row['eoh'],
+						'dof'			=> $row['dof'],
+						'toi'			=> $row['toi'],
+						'username'   	=> $username,
+						'userplantname' => $row['userplantname'],
+						'updatedate' 	=> $row['updatedate']
+					);
+					$results['result#'.$i++] = $result;
+				}
+			}
+			else {
+				$results = array();
+				$results['noOfResults'] = $this->view->fgr;
+				$i=1;
+				foreach($fdata as $row)
+				{
+					if(count($row) < 11)
+					{
+						continue;
+					}
+					$user = $umodel->getUser($row['poster_id']);
+					$username = $user['firstName'] . " " . $user['lastName']; 
+					$result = array(
+						'postsubject'         => $row['post_subject'],
+						'posttext'       	  => $row['post_text'],
+						'topicname'       	  => $row['topicname'],
+						'forumname'           => $row['forumname'],
+						'postername'   	      => $username,
+						'userplantname'       => $row['userplantname']
+					);
+					$results['result#'.$i++] = $result;
+				}
+			}
+			$this->view->jsondata = json_encode($results);
+			$this->view->jsonview = "true";
+		}
    	}
 	
 	public function searchindexAction()

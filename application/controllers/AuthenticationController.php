@@ -32,7 +32,7 @@ class AuthenticationController extends Zend_Controller_Action {
     public function indexAction() {
         // action body
     }
-
+	
     public function loginAction() {
 
 		$this->_helper->getHelper('Layout')->disableLayout();
@@ -89,10 +89,24 @@ class AuthenticationController extends Zend_Controller_Action {
                     if ($result->isValid()) {
                     	
                         $identity = $authAdapter->getResultRowObject();
-						
+							
                         $authStorage = $auth->getStorage();
                         $authStorage->write($identity);
-
+						
+						//Generate secure ID for third party applications
+						$ext = $this->getRequest()->getPost("ext");
+						
+						if($ext=="yes")
+						{
+							$sid = Model_DbTable_User::generateRandom(16) 
+							. md5($username . $password . time()) . 
+							Model_DbTable_User::generateRandom(16);
+							
+							$umodel->setSecureId($id,$sid);
+							echo $sid;
+							
+						}
+						
                         // create object for registration for timestamp method
                         Zend_Registry::set('id', Zend_Auth::getInstance()->getStorage()->read()->id);
                         $time = new Model_DbTable_User();
@@ -139,38 +153,19 @@ class AuthenticationController extends Zend_Controller_Action {
         $this->view->form = $form;
     }
 	
-	public function apiloginAction()
+	public function extlogoutAction()
 	{
 		$this->_helper->getHelper('Layout')->disableLayout();
-		
-		//Getting the user credentials
-		$username = $this->_getParam("username","");
-		$password = $this->_getParam("password","");
-		
-		$umodel = new Model_DbTable_User();
-		$user  = $umodel->fetchRow("username = '" . $username . "'");
-		$id = $user['id'];
-        
-        $password = md5($password . "{" . $id . "}");
-		
-		$authAdapter = $this->getAuthAdapter();
-		$authAdapter->setIdentity($username)
-                    ->setCredential($password);
-        
-        $auth = Zend_Auth::getInstance();
-		
-        $result = $auth->authenticate($authAdapter);
-		if($result->isValid())
+		$sid = $this->getRequest()->getPost('sid');
+		$uname = $this->getRequest()->getPost('uname');
+		echo $sid.$uname;
+		if($sid != "" && $uname != "")
 		{
-			echo "true";
+			$umodel = new Model_DbTable_User();
+			$user = $umodel->fetchRow("username = '" . $uname . "'");
+			$umodel->unSetSecureId($user['id'],$sid);
 		}
-		else
-		{
-			echo "false";		
-		}
-		
 	}
-	
     public function logoutAction() {
         //logout from forum
         $uid = Zend_Auth::getInstance()->getStorage()->read()->id;
@@ -184,7 +179,15 @@ class AuthenticationController extends Zend_Controller_Action {
         // Start session management
         $user->session_kill();
         $user->session_begin();
-
+		//Unset the third pary secure id
+		$ext = $this->getRequest()->getPost("ext");
+		$sid = $this->getRequest()->getPost("sid");
+		
+		if($ext == "yes" && $sid != "")
+		{
+			$umodel = new Model_DbTable_User();
+			$umodel->unSetSecureId($uid,$sid);
+		}
         //logout from hive
         Zend_Auth::getInstance()->clearIdentity();
         $this->_redirect('');

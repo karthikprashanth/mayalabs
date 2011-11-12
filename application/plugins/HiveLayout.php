@@ -12,6 +12,7 @@ class Plugin_HiveLayout extends Zend_Controller_Plugin_Abstract  {
     public function  dispatchLoopStartup(Zend_Controller_Request_Abstract $request) {
         parent::dispatchLoopStartup($request);
         $controller = $request->getControllerName();
+		$action = $request->getActionName();
         if($request->isXmlHttpRequest())
             return;
         $front = Zend_Controller_Front::getInstance();
@@ -22,14 +23,19 @@ class Plugin_HiveLayout extends Zend_Controller_Plugin_Abstract  {
         else{
             $actionStack = $front->getPlugin('Zend_Controller_Plugin_ActionStack');
         }
-        
-        $myProfileAction = clone($request);
-        $myProfileAction->setActionName('index')->setControllerName('myprofile');
-        $actionStack->pushStack($myProfileAction);
-
-        $nameAction = clone($request);
-        $nameAction->setActionName('displayname')->setControllerName('userprofile');
-        $actionStack->pushStack($nameAction);
+    	
+		//for search/view - rendering content through the API
+		$sid = $request->getPost('sid');
+		if($sid == "")
+		{
+	        $myProfileAction = clone($request);
+	        $myProfileAction->setActionName('index')->setControllerName('myprofile');
+	        $actionStack->pushStack($myProfileAction);
+			
+			$nameAction = clone($request);
+	        $nameAction->setActionName('displayname')->setControllerName('userprofile');
+	        $actionStack->pushStack($nameAction);
+		}
 
         if($controller!='dashboard'){
 			Zend_Registry::set('sidebar2',true);

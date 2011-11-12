@@ -1,3 +1,6 @@
+<?php 
+	if($this->jsonview != "true") :
+?>
 <script type = "text/javascript">
 	
 	function gtpaginate(i)
@@ -37,8 +40,23 @@
         });
 	}
 </script>
-
-
+<?php endif; ?>
+<?php
+	if($this->jsonview == "true")
+	{
+		if($this->jsonvalid)
+		{
+			echo $this->jsondata;
+			return;
+		}
+		else {
+			echo "invalid";
+			return;	
+		}
+		
+	}
+	
+?>
 <div id='search-results'>
 	<div id = "gtdata-search-results">
 		<?php 
@@ -134,18 +152,18 @@ if($this->tgr != 0) :?>
 	    	<div class='search-result-details'><span class='search-result-ss'><?php echo Model_Functions::highlightResults($this->queryStr,$data['sysname']) . " / " . Model_Functions::highlightResults($this->queryStr,$data['subsysname']); ?>   </span></div>
 	    <?php endif;?>
 	    <?php if($data['eoh'] != "") : ?>
-	    	<div class='search-result-details'><span class='search-result-ss'><b>EOH at Occurence:</b><?php echo Model_Functions::highlightEOH($this->eohfrom,$this->eohto,$data['eoh']); ?>   </span></div>
+	    	<div class='search-result-details'><span class='search-result-eoh'><b>EOH at Occurence:</b><?php echo Model_Functions::highlightEOH($this->eohfrom,$this->eohto,$data['eoh']); ?>   </span></div>
 		<?php endif; ?>
 		<?php if($data['toi'] != "") : ?>
-			<div class='search-result-details'><span class='search-result-ss'><b>Type of Inspection:</b><?php echo Model_Functions::highlightResults($this->queryStr,$data['toi']); ?>   </span></div>
+			<div class='search-result-details'><span class='search-result-toi'><b>Type of Inspection:</b><?php echo Model_Functions::highlightResults($this->queryStr,$data['toi']); ?>   </span></div>
 		<?php endif; ?>
 		<?php if($data['dof'] != "") : ?>
-			<b><div class='search-result-details'><span class='search-result-ss'><b>Date of <?php echo $dofstr;?> :</b><?php echo $data['dof']; ?>   </span></div>
+			<b><div class='search-result-details'><span class='search-result-dof'><b>Date of <?php echo $dofstr;?> :</b><?php echo $data['dof']; ?>   </span></div>
 		<?php endif; ?>
 	    <span class='search-result-gt'><?php echo "<a href = '/gasturbine/view?id=" . $gt['GTId'] . "'>" . $gt['GTName'] . "</a>"; ?></span>
 		<span class='search-result-plant'><?php echo "<a href = '/plant/view?id=" . $plant['plantId'] . "'>" . Model_Functions::highlightResults($this->queryStr,$plant['plantName']) . "</a>"; ?></span></b>
 	    <div class='search-result-data'><?php echo Model_Functions::highlightResults($this->queryStr,$searchData) ?></div>
-	    <div class='search-result-updatedby'><i> Updated by <?php echo "<a href = '/userprofile/view?id=" . $data['userupdate'] . "'>" .$username . "</a> - <a href = '/plant/view?id=" . $user['plantId'] . "'>"  .Model_Functions::highlightResults($this->queryStr,$data['userplantname']) . "</a>" ; ?> &nbsp;on <?php echo $data['updatedate']; ?></i></div>
+	    <div class='search-result-updatedby'><i> Updated by <?php echo "<a href = '/userprofile/view?id=" . $data['userupdate'] . "' class = 'updateUName'>" .$username . "</a> - <a href = '/plant/view?id=" . $user['plantId'] . "' class = 'uPlantName'>"  .Model_Functions::highlightResults($this->queryStr,$data['userplantname']) . "</a>" ; ?> &nbsp;on <span class = "updateDate"><?php echo $data['updatedate']; ?></span></i></div>
 		
 		</div><br>
 <?php

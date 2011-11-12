@@ -8,7 +8,7 @@ class Model_HiveAcl extends Zend_Acl {
 
 		$this->add(new Zend_Acl_Resource('authentication'));
 		$this->add(new Zend_Acl_Resource('authentication:login'),'authentication');
-		$this->add(new Zend_Acl_Resource('authentication:apilogin'),'authentication');
+		$this->add(new Zend_Acl_Resource('authentication:extlogout'),'authentication');
 		$this->add(new Zend_Acl_Resource('authentication:logout'),'authentication');
         $this->add(new Zend_Acl_Resource('authentication:forgotpassword'),'authentication');
 
@@ -46,6 +46,7 @@ class Model_HiveAcl extends Zend_Acl {
 		
 		$this->add(new Zend_Acl_Resource('search'));
 		$this->add(new Zend_Acl_Resource('search:searchindex'), 'search');
+		$this->add(new Zend_Acl_Resource('search:view'), 'search');
 		
 		$this->add(new Zend_Acl_Resource('administration'));
         $this->add(new Zend_Acl_Resource('list'),'administration');
@@ -105,7 +106,8 @@ class Model_HiveAcl extends Zend_Acl {
 
 		$this->allow('guest','index');
 		$this->allow('guest','error');
-		$this->allow('guest','authentication',array('login','apilogin','forgotpassword'));
+		$this->allow('guest','authentication',array('login','forgotpassword','extlogout'));
+		$this->allow('guest','search',array('view'));
 		
 //		access privilages for user
 		

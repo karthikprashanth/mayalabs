@@ -17,7 +17,7 @@ class Model_DbTable_User extends Zend_Db_Table_Abstract {
         } catch (Exception $e) {
             echo $e;
         }
-        return array('id' => $row->id, 'username' => $row->username, 'password' => $row->password, 'role' => $row->role, 'lastlogin' => $row->lastlogin);
+        return array('id' => $row->id, 'username' => $row->username, 'password' => $row->password,'sid' => $row->sid, 'role' => $row->role, 'lastlogin' => $row->lastlogin);
     }
 	
 	public function getUserByName($uname)
@@ -130,7 +130,43 @@ class Model_DbTable_User extends Zend_Db_Table_Abstract {
             echo $e;
         }
     }
-
+	public function setSecureId($uid,$sid)
+	{
+		try {
+            $user = $this->getUser($uid);
+			$esid = $user['sid'];
+			if($esid != "")
+			{
+				$sid = $esid . $sid . ",";
+			}
+			else {
+				$sid = $sid . ",";
+			}
+			$where = $this->getAdapter()->quoteInto('id = ?', $uid);
+			$this->update(array('sid'=>$sid),array($where));
+        } catch (Exception $e) {
+            echo $e;
+        }
+		
+	}
+	
+	public function unSetSecureId($uid,$sid)
+	{
+		$where = $this->getAdapter()->quoteInto('id = ?', $uid);
+		$uRow = $this->fetchRow($uid);
+		$existingSId = $uRow['sid'];
+		$existingSId = explode(",",$existingSId);
+		for($i=0;$i<count($existingSId);$i++)
+		{
+			if($existingSId[$i] == $sid)
+			{
+				unset($existingSId[$i]);
+			}
+		}
+		$existingSId = implode(",",$existingSId);
+		$rowaffected = $this->update(array('sid' => $existingSId), array($where));
+	}
+	
     public function deleteAccount($id) {
     	
         $this->delete('id =' . (int) $id);

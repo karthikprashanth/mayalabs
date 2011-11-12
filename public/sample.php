@@ -9,7 +9,7 @@
 	curl_setopt ($ch, CURLOPT_POST, 1);
 	
 	// SET POST PARAMETERS : FORM VALUES FOR EACH FIELD
-	curl_setopt ($ch, CURLOPT_POSTFIELDS, 'username=admin&password=reason');
+	curl_setopt ($ch, CURLOPT_POSTFIELDS, 'username=admin&password=reason&ext=yes');
 	
 	// IMITATE CLASSIC BROWSER'S BEHAVIOUR : HANDLE COOKIES
 	curl_setopt ($ch, CURLOPT_COOKIEJAR, 'cookie.txt');
@@ -21,14 +21,29 @@
 	curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
 	
 	// EXECUTE 1st REQUEST (FORM LOGIN)
-	$store = curl_exec ($ch);
+	$sid = curl_exec ($ch);
 	
-	// SET FILE TO DOWNLOAD
-	curl_setopt($ch, CURLOPT_URL, 'http://hive.dev/search/view?keyword=hive&eoh=&ll=1&ul=10&cat=gt&displaymode=full');
+	echo "Your secure ID is : $sid<br>";
 	
-	// EXECUTE 2nd REQUEST (FILE DOWNLOAD)
-	$content = curl_exec ($ch);
-	echo $content;
+	curl_setopt($ch, CURLOPT_URL, 'http://hive.dev/search/view?keyword=hive&eoh=&ll=1&ul=10&cat=forum');
+	
+	
+	curl_setopt ($ch, CURLOPT_POST, 1);
+	
+	
+	curl_setopt ($ch, CURLOPT_POSTFIELDS, 'uname=admin&sid='.$sid);
+	$searchresults = curl_exec ($ch);
+	echo $searchresults;
+	
+	curl_setopt($ch, CURLOPT_URL, 'http://hive.dev/authentication/extlogout');
+	
+	
+	curl_setopt ($ch, CURLOPT_POST, 1);
+	
+	
+	curl_setopt ($ch, CURLOPT_POSTFIELDS, 'uname=admin&sid='.$sid);
+	$logout = curl_exec ($ch);
+	
 	// CLOSE CURL
 	curl_close ($ch); 
 
