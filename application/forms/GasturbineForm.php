@@ -108,9 +108,9 @@ class Form_GasturbineForm extends Zend_Form {
 
         $numStarts = new Zend_Form_Element_Text('numStarts');
         $numStarts->setLabel('Number of Starts')
-                ->setRequired(true)
+                //->setRequired(true)
                 ->addDecorator('Htmltag', array('tag' => 'br'))
-                ->addValidator('NotEmpty')
+                //->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::int())
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim');
@@ -122,9 +122,9 @@ class Form_GasturbineForm extends Zend_Form {
 
         $numTrips = new Zend_Form_Element_Text('numTrips');
         $numTrips->setLabel('Number of Trips')
-                ->setRequired(true)
+                //->setRequired(true)
                 ->addDecorator('Htmltag', array('tag' => 'br'))
-                ->addValidator('NotEmpty')
+                //->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::int())
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim');
@@ -136,9 +136,9 @@ class Form_GasturbineForm extends Zend_Form {
 
         $minorInspInter = new Zend_Form_Element_Text('minorInspInter');
         $minorInspInter->setLabel('Minor Inspection Inter')
-                ->setRequired(true)
+                //->setRequired(true)
                 ->addDecorator('Htmltag', array('tag' => 'br'))
-                ->addValidator('NotEmpty')
+                //->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::int())
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim');
@@ -150,9 +150,9 @@ class Form_GasturbineForm extends Zend_Form {
 
         $HGPIInspInter = new Zend_Form_Element_Text('HGPIInspInter');
         $HGPIInspInter->setLabel('HGPI Inspection Inter')
-                ->setRequired(true)
+                //->setRequired(true)
                 ->addDecorator('Htmltag', array('tag' => 'br'))
-                ->addValidator('NotEmpty')
+                //->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::int())
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim');
@@ -164,9 +164,9 @@ class Form_GasturbineForm extends Zend_Form {
 
         $EHGPIInspInter = new Zend_Form_Element_Text('EHGPIInspInter');
         $EHGPIInspInter->setLabel('EHGPI Inspection Inter')
-                ->setRequired(true)
+                //->setRequired(true)
                 ->addDecorator('Htmltag', array('tag' => 'br'))
-                ->addValidator('NotEmpty')
+                //->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::int())
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim');
@@ -180,9 +180,9 @@ class Form_GasturbineForm extends Zend_Form {
                         array('jQueryParams' => array('dateFormat' => 'yy-mm-dd', 'defaultDate' => '0', 'changeYear' => 'true'))
         );
         $nextMinor->setLabel('Next Minor Inspection')
-                ->setRequired(true)
+                //->setRequired(true)
                 ->addDecorator('Htmltag', array('tag' => 'br'))
-                ->addValidator('NotEmpty')
+                //->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::dateval())
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim');
@@ -200,9 +200,9 @@ class Form_GasturbineForm extends Zend_Form {
                         array('jQueryParams' => array('dateFormat' => 'yy-mm-dd', 'defaultDate' => '0', 'changeYear' => 'true'))
         );
         $nextMajor->setLabel('Next Major Inspection')
-                ->setRequired(true)
+                //->setRequired(true)
                 ->addDecorator('Htmltag', array('tag' => 'br'))
-                ->addValidator('NotEmpty')
+                //->addValidator('NotEmpty')
                 ->addValidator(Model_Validators::dateval())
                 ->addFilter('StripTags')
                 ->addFilter('StringTrim');

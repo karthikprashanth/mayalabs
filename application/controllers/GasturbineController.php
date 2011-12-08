@@ -125,7 +125,11 @@ class GasturbineController extends Zend_Controller_Action
                 
                             $this->view->headTitle("View GT - " . $GTData['GTName'], 'PREPEND');
                 
+							
                             $this->view->GTData = $GTData;
+							
+							
+							
                             $this->view->id = $id;
                         } catch (Exception $e) {
                             echo $e;
@@ -167,6 +171,13 @@ class GasturbineController extends Zend_Controller_Action
             $this->view->id = $id;
             $GTView = new Model_DbTable_Gasturbine();
             $GTData = $GTView->getGT($id);
+			foreach($GTData as $key=>$value)
+			{
+				if(is_int($value) && $value == 0)
+				{
+					$GTData[$key] = "-";		
+				}
+			}
             $this->view->GTData = $GTData;
             $plantModel = new Model_DbTable_Plant();
             $plant = $plantModel->getPlant($GTData['plantId']);

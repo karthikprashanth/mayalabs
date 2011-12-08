@@ -32,8 +32,23 @@ class Model_DbTable_Gasturbine extends Zend_Db_Table_Abstract {
 			$upid = $user['plantId'];
 			$content['plantId'] = $upid;
 		}
-
+		
+		
+		//Increase numOfGT by one before adding the gasturbine
+		
+		$pmodel = new Model_DbTable_Plant();
+		$pid = intval($content['plantid']);
+		$plant = $pmodel->fetchRow("plantId = " . $pid);
+		$numOfGT = (int)$plant['numOfGT'];
+		$numOfGT++;
+		$where['plantId = ?'] = $pid;
+		$data['numOfGT'] = $numOfGT;
+		$pmodel->update($data,$where);
+		
         $this->insert($content);
+		
+		
+				
 		$newid = $this->getAdapter()->lastInsertId();
         
         $nf = new Model_DbTable_Notification();

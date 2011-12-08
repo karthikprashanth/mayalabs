@@ -711,7 +711,8 @@ class Plugin_Breadcrumbs extends Zend_Controller_Plugin_Abstract {
                     $page = array(
                         'label' => 'Add',
                         'controller' => $controller,
-                        'action' => 'add'
+                        'action' => 'add',
+                        
                     );
                     $breadcontainer->findOneBy('label', $name)->addPage($page);
                 } else {
