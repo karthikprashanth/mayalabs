@@ -333,6 +333,17 @@ p
     font-weight: normal;
 }
 
+#breadcrumbs {
+    margin-left: 10px;
+    padding: 2px;
+    font-style: italic;
+    font-size: 11px;
+    color: #0e4b78;
+    font-family: Avantgarde, sans-serif;
+    text-decoration: none;
+    font-weight: normal;
+}
+
 /* Bookmarks */
 
 #bookmark{
