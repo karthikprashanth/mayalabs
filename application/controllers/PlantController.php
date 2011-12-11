@@ -71,7 +71,14 @@ class PlantController extends Zend_Controller_Action {
             $PData = $PView->getPlant($id);
             $this->view->id = $id;
             $this->view->headTitle("View Plant " . $GTData['corporateName'], 'PREPEND');
-
+			
+			foreach($PData as $key=>$value)
+			{
+				if((is_int($value) && $value == 0) || $value == "")
+				{
+					$PData[$key] = '-';
+				}
+			}
             $this->view->plantData = $PData;
         } catch (Exception $e) {
             echo $e;

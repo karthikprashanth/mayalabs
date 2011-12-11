@@ -161,7 +161,7 @@
                             $breadcontainer = Zend_Registry::get('breadcontainer');
                             echo $this->navigation($breadcontainer)
                                         ->breadcrumbs()
-                                        ->setLinkLast(true)
+                                        ->setLinkLast(false)
                                         ->setMinDepth(1)
                                         ->render();
                         ?>

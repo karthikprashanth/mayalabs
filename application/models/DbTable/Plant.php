@@ -5,12 +5,16 @@ class Model_DbTable_Plant extends Zend_Db_Table_Abstract {
     protected $_name = 'plants';
 
     public function getPlant($pid) {
-        $pid = (int) $pid;
-        $row = $this->fetchRow('plantId = ' . $pid);
-        if (!$row) {
-            throw new Exception("Could not find row $pid");
+        try {
+	        $dbAdapter = Zend_Db_Table_Abstract::getDefaultAdapter();
+	        $stmt = $dbAdapter->query("SELECT * FROM plants where plantId = $pid");
+	        $row = $stmt->fetchAll();
+			array($row);
+			return $row[0];
         }
-        return $row->toArray();
+        catch(Exception $e) {
+            echo $e;
+        }
     }
     
     public function getPlantList()

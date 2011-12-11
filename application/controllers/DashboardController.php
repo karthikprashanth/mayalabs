@@ -16,6 +16,7 @@ class DashboardController extends Zend_Controller_Action
         $this->view->username = $username;
         $this->view->role = $role;
         $this->view->lastlogin = Zend_Auth::getInstance()->getStorage()->read()->lastlogin;
+		
     } 
 
     public function showmenuAction()

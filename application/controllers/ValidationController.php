@@ -75,8 +75,7 @@ class ValidationController extends Zend_Controller_Action
 				$form = new Form_UserprofileForm();
 			}
 			else if($formname == "registration")
-			{
-				echo "hey";
+			{	
 				$form = new Form_RegistrationForm();
 			}
 			if($formname != 'plant')
