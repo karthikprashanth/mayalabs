@@ -41,11 +41,18 @@
 				$pres = "";
 				for($i=0;$i<count($presdata);$i++)
 				{
+					if($presdata[$i] == 0)
+					{
+						continue;
+					}
 					$presentation = $presmodel->getPresentation($presdata[$i]);
 					$pres = $pres . $presentation['title'] . ",";
 				}
 				$pres = substr($pres,0,strlen($pres)-1);
-				
+				if($pres == "" || $pres == NULL)
+				{
+					$pres = "<i>No attachments added</i>";
+				}
 				if($mode == '')
 				{
 					$bodycontent = "<center><h1>".$plantname."</h1></center>";
@@ -54,7 +61,7 @@
 				$bodycontent .= "<center><h2>" . $title . "</h2></center>";
 				$bodycontent .= "<center><h3>System/Subsystem : " . $sys . "/" . $subsys . "</h3></center>";
 				$bodycontent .= "<center>" . $data . "</center><br><br>";
-				$bodycontent .= "<b>Presentations : </b>" . $pres . "<br>";
+				$bodycontent .= "<b>Attachments : </b>" . $pres . "<br>";
 				$bodycontent .= "<i><b>Last updated on </b>" . $datetime . " <b>by</b> " . $username . " (" . $uplantname . ")</i><br><br>";
 				
 			}
