@@ -3,7 +3,16 @@
 class Model_DbTable_Plant extends Zend_Db_Table_Abstract {
 
     protected $_name = 'plants';
-
+	
+	protected $plantId;
+	protected $plantName;
+	protected $corporateName;
+	
+    /*function __construct()
+	{
+		
+	}*/
+    
     public function getPlant($pid) {
         try {
 	        $dbAdapter = Zend_Db_Table_Abstract::getDefaultAdapter();
