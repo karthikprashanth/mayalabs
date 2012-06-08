@@ -10,7 +10,12 @@ class ReportsController extends Zend_Controller_Action
 
     public function indexAction()
     {
-    
+        $phpLiveDocx = new Zend_Service_LiveDocx_MailMerge(array('username' => 'hiveusers','password' => '$wordfish123'));
+        $phpLiveDocx->setLocalTemplate("test.docx");
+        $phpLiveDocx->assign('name',"Srivathsa");
+        $phpLiveDocx->createDocument();
+        $document = $phpLiveDocx->retrieveDocument('pdf');
+        file_put_contents("test_res.pdf",$document);
     }
 
     public function generateAction()
